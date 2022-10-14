@@ -192,7 +192,7 @@ class SukajadiController extends Controller
             $history->room_reserved     = $room_reserved->room_reserved;
             $history->room_notavailable = $room_maintenance;
             $history->room_available    = $room_avail;
-            $history->save();       
+            $history->save();
 
             // Update Pendapatan
             $income = DB::table('tbl_reservations')
@@ -209,7 +209,7 @@ class SukajadiController extends Controller
                             'pnbp_total_room'   => $income->total_room,
                             'pnbp_total_income' => $income->total_income
                 ]);
-                
+
             }
 
             return redirect('admin-sukajadi/reservasi/daftar')->with('success','Berhasil menambah pembayaran');
@@ -227,7 +227,7 @@ class SukajadiController extends Controller
             ReservationModel::where('id_reservation', $idreservation)
                 ->update([
                     'status_reservation' => 'checkout'
-                ]);  
+                ]);
 
             $roomid = DB::table('tbl_reservations_details')->select('id_room')
                         ->join('tbl_reservations','tbl_reservations.id_reservation','tbl_reservations_details.reservation_id')
@@ -244,16 +244,16 @@ class SukajadiController extends Controller
                     ]);
             }
 
-                        
+
 
             return redirect('admin-sukajadi/kwitansi/buat/'. $idreservation)->with('success','Berhasil Check Out');
         }elseif ($process == 'batal') {
             ReservationModel::where('id_reservation', $idreservation)
                 ->update([
                     'status_reservation' => 'cancel'
-                ]); 
+                ]);
 
-            return redirect('admin-sukajadi/reservasi/daftar')->with('success','Berhasil Membatalkan Reservasi'); 
+            return redirect('admin-sukajadi/reservasi/daftar')->with('success','Berhasil Membatalkan Reservasi');
         }
     }
 
@@ -280,13 +280,14 @@ class SukajadiController extends Controller
             if ($request->hasfile('identity_img')){
                 $file = $request->file('identity_img');
                 $extension = $file->getClientOriginalExtension();
-                $filename = $file->getClientOriginalName();
+                $filename = time().'.'.$extension;
                 $file->move('images/admin/pengunjung/', $filename);
                 $visitor->identity_img = $filename;
             } else {
                 return $request;
                 $visitor->identity_img='';
             }
+
             $visitor_img = $visitor->identity_img;
             $visitor->id_visitor             = $request->input('id_visitor');
             $visitor->identity_num           = strtolower($request->input('identity_num'));
@@ -350,7 +351,7 @@ class SukajadiController extends Controller
             }else{
                 $assignment_letter = $request->assignment_letter;
             }
-            
+
             // Payment dan reservasi
             $reservation->id_reservation    = $request->input('id_reservation');
             $reservation->visitor_id        = strtolower($request->input('id_visitor'));
@@ -360,7 +361,7 @@ class SukajadiController extends Controller
             $reservation->payment_total     = $total_price;
             $reservation->payment_img       = $payment_img;
             $reservation->reservation_date  = Carbon::now();
- 
+
             if ($request->billing_code == null) {
                 $reservation->status_reservation = 'payment';
                 $reservation->payment_status     = 'belum bayar';
@@ -397,7 +398,7 @@ class SukajadiController extends Controller
                                 'pnbp_total_room'   => $income->total_room,
                                 'pnbp_total_income' => $income->total_income
                     ]);
-                    
+
                 }
 
                 // Update History Kamar
@@ -423,7 +424,7 @@ class SukajadiController extends Controller
                 $history->room_reserved     = $room_reserved->room_reserved;
                 $history->room_notavailable = $room_maintenance;
                 $history->room_available    = $room_avail;
-                $history->save();       
+                $history->save();
             }
 
             return redirect('admin-sukajadi/reservasi/daftar')->with('success','Berhasil melakukan reservasi');
@@ -434,7 +435,7 @@ class SukajadiController extends Controller
     public function menuRoom(Request $request, $id)
     {
         if ($id == 'daftar') {
-            
+
             $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
                         ->groupBy('room_status')->get();
             $rooms = RoomModel::with('rentalrate')->paginate(6);
@@ -442,7 +443,7 @@ class SukajadiController extends Controller
             return view('v_admin_sukajadi.daftar_kamar', compact('rooms','total'));
 
         }elseif ($id == 'tersedia') {
-            
+
             $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
                         ->groupBy('room_status')->get();
             $rooms = RoomModel::with('rentalrate')->where('room_status','tersedia')->paginate(6);
@@ -450,7 +451,7 @@ class SukajadiController extends Controller
             return view('v_admin_sukajadi.daftar_kamar', compact('rooms','total'));
 
         }elseif ($id == 'tidak tersedia') {
-            
+
             $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
                         ->groupBy('room_status')->get();
             $rooms = RoomModel::with('rentalrate')->where('room_status','tidak tersedia')->paginate(6);
@@ -458,7 +459,7 @@ class SukajadiController extends Controller
             return view('v_admin_sukajadi.daftar_kamar', compact('rooms','total'));
 
         }elseif ($id == 'maintenance') {
-            
+
             $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
                         ->groupBy('room_status')->get();
             $rooms = RoomModel::with('rentalrate')->where('room_status','maintenance')->paginate(6);
@@ -486,7 +487,7 @@ class SukajadiController extends Controller
             return view('v_admin_sukajadi.laporan_kamar', compact('rooms'));
 
         }
-        
+
     }
 
     public function detailRoom(Request $request, $aksi, $id)
@@ -524,17 +525,17 @@ class SukajadiController extends Controller
 
                 return redirect('admin-sukajadi/kamar/detail/'. $request->room_id)->with('success','Berhasil memperbarui tarif sewa');
             }
-                 
+
         }elseif($aksi == 'keterangan'){
             $reservasi  = DB::table('tbl_reservations')
                             ->join('tbl_visitors','tbl_visitors.id_visitor','tbl_reservations.visitor_id')
-                            ->where('id_reservation', $id)->first();  
+                            ->where('id_reservation', $id)->first();
 
             $room       = DB::table('tbl_reservations_details')
                                 ->join('tbl_reservations','tbl_reservations.id_reservation','tbl_reservations_details.reservation_id')
                                 ->join('tbl_rental_rates','tbl_rental_rates.id_rental_rate','tbl_reservations_details.rental_rate_id')
                                 ->join('tbl_rooms','tbl_rooms.id_room','tbl_rental_rates.room_id')
-                                ->where('id_reservation', $id)->get();  
+                                ->where('id_reservation', $id)->get();
 
             return view('v_admin_sukajadi.tambah_catatan', compact('reservasi','room'));
         }elseif($aksi == 'tambah-keterangan'){
@@ -577,7 +578,7 @@ class SukajadiController extends Controller
 
             return view('v_admin_sukajadi.laporan_pnbp', compact('pnbp'));
         }elseif($id == 'setor-pnbp'){
-            
+
             $pnbp = new PnbpModel();
             if ($request->hasfile('transaction_img')){
                 $file       = $request->file('transaction_img');
@@ -630,7 +631,7 @@ class SukajadiController extends Controller
                                 ->join('tbl_reservations','tbl_reservations.id_reservation','tbl_reservations_details.reservation_id')
                                 ->join('tbl_rental_rates','tbl_rental_rates.id_rental_rate','tbl_reservations_details.rental_rate_id')
                                 ->join('tbl_rooms','tbl_rooms.id_room','tbl_rental_rates.room_id')
-                                ->where('id_reservation', $id)->get();         
+                                ->where('id_reservation', $id)->get();
             return view('v_admin_sukajadi.tambah_kwitansi', compact('reservasi','reservasidetail'));
 
         }elseif($aksi == 'cetak'){
@@ -642,10 +643,10 @@ class SukajadiController extends Controller
                                 ->join('tbl_reservations','tbl_reservations.id_reservation','tbl_reservations_details.reservation_id')
                                 ->join('tbl_rental_rates','tbl_rental_rates.id_rental_rate','tbl_reservations_details.rental_rate_id')
                                 ->join('tbl_rooms','tbl_rooms.id_room','tbl_rental_rates.room_id')
-                                ->where('id_reservation', $id)->get();    
+                                ->where('id_reservation', $id)->get();
 
             $customPaper = array(0,0,567.00,283.80);
-            $pdf = PDF::loadView('v_admin_sukajadi.cetak_kwitansi', compact('reservasi','reservasidetail'))->setPaper($customPaper, 'landscape');     
+            $pdf = PDF::loadView('v_admin_sukajadi.cetak_kwitansi', compact('reservasi','reservasidetail'))->setPaper($customPaper, 'landscape');
 
             return view('v_admin_sukajadi.cetak_kwitansi', compact('reservasi','reservasidetail'));
         }
@@ -699,7 +700,7 @@ class SukajadiController extends Controller
     }
 
     // ================
-    // Bar Chart 
+    // Bar Chart
     // ================
 
     public function getChartVisitor()
@@ -707,7 +708,7 @@ class SukajadiController extends Controller
         $result     = DB::table('tbl_visits')
                         ->select(DB::raw("(DATE_FORMAT(visit_date, '%M %Y')) as month"), DB::raw("count(id_visit) as total_visitor "))
                         ->groupBy('month')
-                        ->get(); 
+                        ->get();
 
         return response()->json($result);
     }

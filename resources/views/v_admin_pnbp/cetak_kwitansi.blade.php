@@ -47,7 +47,7 @@
           <div class="row">
             <div class="col-12">
               <h4>
-                <img src="{{ asset('images/admin/logo-kemenkes-icon.png') }}" width="50" style="margin-top: -8px;"> 
+                <img src="{{ asset('images/admin/logo-kemenkes-icon.png') }}" width="50" style="margin-top: -8px;">
                 Wisma Sukajadi Bandung
                 <small class="float-right mt-3">
                   {{ \Carbon\Carbon::parse($reservasi->reservation_date)->isoFormat('DD MMMM Y') }}
@@ -152,7 +152,7 @@
                 1. Disimpan sebagai bukti pembayaran yang SAH. <br>
                 2. Harga sudah termasuk pajak. <br>
                 3. Uang yang sudah dibayarkan tidak dapat diminta kembali.
-                
+
               </p>
             </div>
 
