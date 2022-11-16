@@ -19,7 +19,7 @@
       </div><!-- Row end -->
     </div><!-- Container end -->
   </div><!-- Banner text end -->
-</div><!-- Banner area end --> 
+</div><!-- Banner area end -->
 
 
 <section id="main-container" class="main-container">
@@ -34,13 +34,13 @@
       <div class="col-lg-4 col-md-6">
         <div class="quote-item quote-border mt-5">
           <div class="quote-text-border">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+          Tempat nyaman untuk kegiatan training atau acara keluarga...
           </div>
 
           <div class="quote-item-footer">
             <img loading="lazy" class="testimonial-thumb" src="https://cdn-icons-png.flaticon.com/512/599/599305.png" alt="testimonial">
             <div class="quote-item-info">
-              <h3 class="quote-author">Gabriel Denis</h3>
+              <h3 class="quote-author">Cheppy Junaedi</h3>
               <span class="quote-subtext">Pengunjung</span>
             </div>
           </div>
@@ -50,13 +50,13 @@
       <div class="col-lg-4 col-md-6">
         <div class="quote-item quote-border mt-5">
          <div class="quote-text-border">
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+            Pelayanan staff ramah, security 24 jam, kamar bersih rapih
         </div>
 
         <div class="quote-item-footer">
           <img loading="lazy" class="testimonial-thumb" src="https://cdn-icons-png.flaticon.com/512/599/599305.png" alt="testimonial">
           <div class="quote-item-info">
-           <h3 class="quote-author">Weldon Cash</h3>
+           <h3 class="quote-author">Andre S</h3>
            <span class="quote-subtext">Pengunjung</span>
           </div>
         </div>
@@ -66,13 +66,13 @@
       <div class="col-lg-4 col-md-6">
         <div class="quote-item quote-border mt-5">
           <div class="quote-text-border">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+            Harga murah dan sangat strategis untuk pergi kemana-mana.
           </div>
 
           <div class="quote-item-footer">
             <img loading="lazy" class="testimonial-thumb" src="https://cdn-icons-png.flaticon.com/512/599/599305.png" alt="testimonial">
             <div class="quote-item-info">
-              <h3 class="quote-author">Hyram Izzy</h3>
+              <h3 class="quote-author">Asyeh Haqiq</h3>
               <span class="quote-subtext">Pengunjung</span>
             </div>
           </div>
