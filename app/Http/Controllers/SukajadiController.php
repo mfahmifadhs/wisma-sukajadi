@@ -280,7 +280,7 @@ class SukajadiController extends Controller
             if ($request->hasfile('identity_img')){
                 $file = $request->file('identity_img');
                 $extension = $file->getClientOriginalExtension();
-                $filename = time().'.'.$extension;
+                $filename   = $file->getClientOriginalName();
                 $file->move('images/admin/pengunjung/', $filename);
                 $visitor->identity_img = $filename;
             } else {
