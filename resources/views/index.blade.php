@@ -273,7 +273,7 @@
                   <img loading="lazy" src="https://cdn-icons-png.flaticon.com/512/3405/3405818.png" width="50" alt="service-icon">
               </div>
               <div class="ts-service-info">
-                  <h3 class="service-box-title">Kategori Sosial</h3>
+                  <h3 class="service-box-title">Kategori Sosials</h3>
                   <p>Kategori tamu untuk pegawai Kemenkes RI (Pejabat Administrasi, Es III, Es IV, Gol IV, Gol III) dengan surat tugas</p>
                   <p>Kategori I : Pegawai Kementerian Kesehatan (Pejabat Administrasi ke atas, Eselon III ke atas, Golongan IV dan/atau setara).</p>
                   <p>Kategori II : Pegawai Kementerian Kesehatan dengan surat Tugas (Pejabat Pengawas ke bawah, Golongan III ke bawah, Eselon IV dan/atau setara).</p>
