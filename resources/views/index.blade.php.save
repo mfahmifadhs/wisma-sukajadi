@@ -103,7 +103,7 @@
               <h2 class="into-title">Tentang</h2>
               <h3 class="into-sub-title">Wisma Sukajadi</h3>
               <p style="text-align: justify;">Wisma Kemenkes RI Sukajadi Bandung adalah penginapan yang terbuka untuk umum untuk seluruh masyarakat yang ingin menginap. Dengan lokasi yang terletak
-                di Jl. Sukajadi No.155, Cipedes, Kec. Sukajadi, Kota Bandung. yang dekat dengan Pusat Kota Bandung. Selain itu, dengan lokasi yang strategis, fasilitas
+                di Jl. Sukajadi No.155, Cipedes, Kec. Sukajadi, Kota Bandung. yang dekat dengan Pusat Kota Bandung. Selain itu, dengan lokasi yang strategis, fasilitas 
                 yang bersih dan nyaman. Wisma Kemenkes Sukajadi Bandung memberikan harga yang sangat bersahabat untuk para pengunjung yang menginap.
               </p>
           </div><!-- Intro box end -->
@@ -162,7 +162,7 @@
         <div class="col-lg-6 mt-4 mt-lg-0">
           <h2 class="into-title">Testimoni</h2>
           <h3 class="into-sub-title mb-lg-4">Penilaian</h3>
-
+          
             <div id="testimonial-slide" class="testimonial-slide">
               <div class="item">
                 <div class="quote-item">
@@ -184,7 +184,7 @@
               <div class="item">
                 <div class="quote-item">
                     <span class="quote-text">
-                      Pelayanan staff ramah, security 24 jam, kamar bersih rapih
+                      Pelayanan staff ramah, security GC banget buat parkirin, kamar bersih rapih
                     </span>
 
                     <div class="quote-item-footer">
@@ -201,7 +201,7 @@
               <div class="item">
                 <div class="quote-item">
                     <span class="quote-text">
-                      Harga murah dan sangat strategis untuk pergi kemana-mana.
+                      Ini murah sekali menginap disini. penginapan paling murah
                     </span>
 
                     <div class="quote-item-footer">
@@ -231,12 +231,15 @@
     <div class="row">
       <div class="col-lg-4 col-md-6 mb-5">
         <div class="ts-service-box">
+            <div class="ts-service-image-wrapper">
+              <img loading="lazy" class="w-100" src="{{ asset('images/main/services/kategori-1.png') }}" alt="service-image">
+            </div>
             <div class="d-flex">
               <div class="ts-service-box-img">
-                  <img loading="lazy" src="https://cdn-icons-png.flaticon.com/512/3405/3405818.png" width="50" alt="service-icon">
+                  <img loading="lazy" src="" width="50" alt="service-icon">
               </div>
               <div class="ts-service-info">
-                  <h3 class="service-box-title">Kategori Bisnis</h3>
+                  <h3 class="service-box-title"><a href="service-single.html">Kategori Bisnis</a></h3>
                   <p>Kategori untuk tamu yang berasal dari luar lingkungan Kementerian Kesehatan RI baik itu Perseorangan, Golongan atau Perusahaan.</p>
                   <a class="btn btn-primary" href="{{ url('beranda/tarif-sewa/daftar') }}" aria-label="service-details">
                     <i class="fa fa-caret-right"></i> Tarif Sewa
@@ -248,16 +251,19 @@
 
       <div class="col-lg-4 col-md-6 mb-5">
         <div class="ts-service-box">
+            <div class="ts-service-image-wrapper">
+              <img loading="lazy" class="w-100" src="{{ asset('images/main/services/kategori-2.png') }}" alt="service-image">
+            </div>
             <div class="d-flex">
               <div class="ts-service-box-img">
-                  <img loading="lazy" src="https://cdn-icons-png.flaticon.com/512/3405/3405818.png" width="50">
+                  <img loading="lazy" src="https://cdn-icons.flaticon.com/png/512/2946/premium/2946766.png?token=exp=1659433478~hmac=8ebefdcad634ec544e7041cece6b3ee5" width="50">
               </div>
               <div class="ts-service-info">
-                  <h3 class="service-box-title">Kategori Non Bisnis</h3>
+                  <h3 class="service-box-title"><a href="service-single.html">Kategori Non Bisnis</a></h3>
                   <p>Kategori untuk tamu yang berasal dari Instansi Swasta, Instansi Pemerintah, Pegawai, ASN dan lainya tanpa surat tugas.</p>
                   <a class="btn btn-primary" href="{{ url('beranda/tarif-sewa/daftar') }}" aria-label="service-details">
                     <i class="fa fa-caret-right"></i> Tarif Sewa
-                  </a>
+                  </a>    
               </div>
             </div>
         </div><!-- Service2 end -->
@@ -265,16 +271,19 @@
 
       <div class="col-lg-4 col-md-6 mb-5">
         <div class="ts-service-box">
+            <div class="ts-service-image-wrapper">
+              <img loading="lazy" class="w-100" src="{{ asset('images/main/services/kategori-3.png') }}" alt="service-image">
+            </div>
             <div class="d-flex">
               <div class="ts-service-box-img">
-                  <img loading="lazy" src="https://cdn-icons-png.flaticon.com/512/3405/3405818.png" width="50" alt="service-icon">
+                  <img loading="lazy" src="https://cdn-icons.flaticon.com/png/512/2946/premium/2946766.png?token=exp=1659433478~hmac=8ebefdcad634ec544e7041cece6b3ee5" width="50" alt="service-icon">
               </div>
               <div class="ts-service-info">
-                  <h3 class="service-box-title">Kategori Sosial</h3>
+                  <h3 class="service-box-title"><a href="service-single.html">Kategori Sosial</a></h3>
                   <p>Kategori tamu untuk pegawai Kemenkes RI (Pejabat Administrasi, Es III, Es IV, Gol IV, Gol III) dengan surat tugas</p>
                   <a class="btn btn-primary" href="{{ url('beranda/tarif-sewa/daftar') }}" aria-label="service-details">
                     <i class="fa fa-caret-right"></i> Tarif Sewa
-                  </a>
+                  </a>    
               </div>
             </div>
         </div><!-- Service3 end -->
@@ -287,7 +296,7 @@
 
 <section id="main-container" class="main-container">
   <div class="container dark">
-
+    
     <div class="row text-center">
       <div class="col-lg-12">
         <h2 class="section-title">Frequently Asked Question</h2>
@@ -296,13 +305,15 @@
     </div>
     <div class="row">
       <div class="col-lg-12">
+        <h3 class="border-title border-left mar-t0">Construction general</h3>
+
         <div class="accordion accordion-group accordion-classic" id="construction-accordion">
           <div class="card">
             <div class="card-header p-0 bg-transparent" id="headingOne">
               <h2 class="mb-0">
                 <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne"
                   aria-expanded="true" aria-controls="collapseOne">
-                  Bagaimana Reservasi di Wisma Sukajadi Bandung ?
+                  Does the law require head protection on construction sites?
                 </button>
               </h2>
             </div>
@@ -310,8 +321,8 @@
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
               data-parent="#construction-accordion">
               <div class="card-body">
-                Cara reservasi di Wisma Sukajadi Bandung, caranya cukup mudah yaitu pengunjung dapat datang langsung ke Wisma Sukajadi
-                Bandung dan melakukan reservasi ke bagian resepsionis.
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
+                moon officia aute, non cupidata
               </div>
             </div>
           </div>
@@ -320,13 +331,16 @@
               <h2 class="mb-0">
                 <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
                   data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  Apakah Menginap di Wisma Sukajadi Bandung Hanya Untuk Pegawai Kemenkes RI ?
+                  What are the first aid requirements for sites?
                 </button>
               </h2>
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#construction-accordion">
               <div class="card-body">
-                Tidak, Wisma Sukajadi Bandung terbuka untuk umum dengan harga yang sangat terjangkau di tengah pusat kota Bandung.
+                Anemi nim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea com modo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                Excepteur sint occaecat cupid henderit in voluptate velit esse cillu oris nisi ut aliquip ex ea com
+                matat.
               </div>
             </div>
           </div>
@@ -335,15 +349,16 @@
               <h2 class="mb-0">
                 <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
                   data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  Bagaimana Metode Pembayaran Yang Dapat dilakukan Untuk Reservasi ?
+                  What is an appointed person?
                 </button>
               </h2>
             </div>
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
               data-parent="#construction-accordion">
               <div class="card-body">
-                Untuk metode pembayaran, pengunjung harus melakukan reservasi terlebih dahulu, selanjutnya pengunjung akan mendapatkan
-                <i> Virtual Billing Account</i> yang digunakan untuk melakukan pembayaran.
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                scrambled it to make a type specimen book.
               </div>
             </div>
           </div>
@@ -398,9 +413,9 @@
         <div class="google-map">
         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15844.155643129408!2d107.5962878!
           3d-6.8859428!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8915931e2cb95952!2swisma%20kementrian%20ke
-          sehatan%20RI!5e0!3m2!1sen!2sid!4v1648020030923!5m2!1sen!2sid" style="width: 100%;height:  66.8vh;"
+          sehatan%20RI!5e0!3m2!1sen!2sid!4v1648020030923!5m2!1sen!2sid" style="width: 100%;height:  66.8vh;" 
           allowfullscreen="" loading="lazy">
-        </iframe>
+        </iframe>  
         </div>
       </div><!-- Col 3 end -->
 
@@ -408,7 +423,7 @@
 
     <div class="gap-60"></div>
 
-
+    
 
     <div class="gap-40"></div>
 

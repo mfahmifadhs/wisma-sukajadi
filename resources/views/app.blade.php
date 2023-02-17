@@ -36,7 +36,7 @@
 </head>
 <body>
   <div class="body-inner">
-    
+
 <!-- Header start -->
 <header id="header" class="header-one">
   <div class="bg-white">
@@ -44,11 +44,11 @@
       <div class="logo-area">
           <div class="row align-items-center">
             <div class="logo col-lg-3 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
-                <a class="d-block" href="index.html">
-                  <img loading="lazy" src="{{ asset('images/main/kemenkeslogo.png') }}" alt="Wisma Sukajadi Bandung">
+                <a class="d-block" href="{{ url('/') }}">
+                  <img loading="lazy" src="https://raw.githubusercontent.com/mfahmifadhs/wisma-sukajadi/master/public/images/main/KemenkesLogo.png" style="width:65%;height:70%;"  alt="Wisma Sukajadi Bandung">
                 </a>
             </div><!-- logo end -->
-  
+
             <div class="col-lg-9 header-right">
                 <ul class="top-info-box">
                   <li>
@@ -77,7 +77,7 @@
                 </ul><!-- Ul end -->
             </div><!-- header right end -->
           </div><!-- logo area end -->
-  
+
       </div><!-- Row end -->
     </div><!-- Container end -->
   </div>
@@ -90,7 +90,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div id="navbar-collapse" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav mr-auto">
                       <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
@@ -99,7 +99,7 @@
                       <li class="nav-item {{ Request::is('beranda/tentang') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('beranda/tentang') }}">Tentang</a>
                       </li>
-                      
+
                       <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Kamar & Fasilitas <i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu" role="menu">
@@ -178,41 +178,40 @@
         <div class="row justify-content-between">
           <div class="col-lg-4 col-md-6 footer-widget footer-about">
             <h3 class="widget-title">Tentang Kami</h3>
-            <img loading="lazy" width="200px" class="footer-logo" src="{{ asset('images/main/kemenkeslogowhite.png')}}" alt="Constra">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor inci done idunt ut
-              labore et dolore magna aliqua.</p>
+            <img loading="lazy" width="200px" class="footer-logo" src="https://raw.githubusercontent.com/mfahmifadhs/wisma-sukajadi/master/public/images/main/KemenkesLogoWhite.png" alt="Constra">
+            <p>
+                Wisma Sukajadi Bandung <br>
+                Kementerian Kesehatan Republik Indonesia.
+            </p>
             <div class="footer-social">
               <ul>
-                <li><a href="https://facebook.com/themefisher" aria-label="Facebook"><i
+                <li><a href="#" aria-label="Facebook"><i
                       class="fab fa-facebook-f"></i></a></li>
-                <li><a href="https://twitter.com/themefisher" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                 </li>
-                <li><a href="https://instagram.com/themefisher" aria-label="Instagram"><i
+                <li><a href="#" aria-label="Instagram"><i
                       class="fab fa-instagram"></i></a></li>
-                <li><a href="https://github.com/themefisher" aria-label="Github"><i class="fab fa-github"></i></a></li>
+                <li><a href="#" aria-label="Github"><i class="fab fa-github"></i></a></li>
               </ul>
             </div><!-- Footer social end -->
           </div><!-- Col end -->
 
           <div class="col-lg-4 col-md-6 footer-widget mt-5 mt-md-0">
-            <h3 class="widget-title">Jam Kerja</h3>
+            <h3 class="widget-title">Prosedur</h3>
             <div class="working-hours">
-              We work 7 days a week, every day excluding major holidays. Contact us if you have an emergency, with our
-              Hotline and Contact form.
-              <br><br> Monday - Friday: <span class="text-right">10:00 - 16:00 </span>
-              <br> Saturday: <span class="text-right">12:00 - 15:00</span>
-              <br> Sunday and holidays: <span class="text-right">09:00 - 12:00</span>
+              Reservasi dapat dilakukan di jam kerja, diluar jam kerja pengunjung tetap dapat menginap namun
+              pembayaran dilakukan di jam kerja.
+              <br><br> Waktu Check In: <span class="text-right">14:00</span>
+              <br> Waktu Check Out: <span class="text-right">11:00</span>
             </div>
           </div><!-- Col end -->
 
           <div class="col-lg-3 col-md-6 mt-5 mt-lg-0 footer-widget">
             <h3 class="widget-title">Layanan</h3>
             <ul class="list-arrow">
-              <li><a href="service-single.html">Pre-Construction</a></li>
-              <li><a href="service-single.html">General Contracting</a></li>
-              <li><a href="service-single.html">Construction Management</a></li>
-              <li><a href="service-single.html">Design and Build</a></li>
-              <li><a href="service-single.html">Self-Perform Construction</a></li>
+              <li>Aula</li>
+              <li>Gym / Fitnes</li>
+              <li>Ruang Rapat</li>
             </ul>
           </div><!-- Col end -->
         </div><!-- Row end -->
@@ -273,4 +272,4 @@
   </div><!-- Body inner end -->
   </body>
 
-  </html> 
+  </html>
