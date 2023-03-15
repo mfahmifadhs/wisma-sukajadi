@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Hash;
 use Auth;
@@ -15,6 +16,21 @@ class AuthController extends Controller
     public function index()
     {
         return view ('auth.masuk');
+    }
+
+    public function redirect()
+    {
+        // redirect to SSO DTO
+        return 'sso redirect';
+    }
+
+    public function callback()
+    {
+        // callback
+        // $auth = get user from SSO DTO
+        // $user = User::where('nip', $auth->nip)->first();
+        return 'sso callback';
+
     }
 
     public function masuk(Request $request)
@@ -38,7 +54,7 @@ class AuthController extends Controller
     }
 
     public function customRegistration(Request $request)
-    {  
+    {
         $request->validate([
             'id' => 'required',
             'full_name' => 'required',
@@ -51,7 +67,7 @@ class AuthController extends Controller
     }
 
 
-    public function create(array $data) 
+    public function create(array $data)
     {
         return User::create([
             'id'        => $data['id'],
@@ -61,8 +77,8 @@ class AuthController extends Controller
             'password'  => Hash::make($data['password']),
             'status_id' => '1',
         ]);
-    }    
-    
+    }
+
 
     public function dashboard()
     {
@@ -70,11 +86,11 @@ class AuthController extends Controller
         {
             return redirect('admin-master/dashboard');
         }
-        elseif (Auth::check() && Auth::user()->role_id == 4 && Auth::user()->status == 'aktif') 
+        elseif (Auth::check() && Auth::user()->role_id == 4 && Auth::user()->status == 'aktif')
         {
             return redirect('admin-sukajadi/dashboard');
         }
-        elseif (Auth::check() && Auth::user()->role_id == 3 && Auth::user()->status == 'aktif') 
+        elseif (Auth::check() && Auth::user()->role_id == 3 && Auth::user()->status == 'aktif')
         {
             return redirect('admin-pnbp/dashboard');
         }
@@ -82,7 +98,7 @@ class AuthController extends Controller
             return redirect("login")->with('failed', 'Anda tidak memiliki akses!');
         }
     }
-    
+
 
     public function keluar() {
         Session::flush();
