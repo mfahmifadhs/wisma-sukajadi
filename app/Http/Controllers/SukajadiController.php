@@ -434,39 +434,7 @@ class SukajadiController extends Controller
     // KAMAR ========================================
     public function menuRoom(Request $request, $id)
     {
-        if ($id == 'daftar') {
-
-            $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
-                        ->groupBy('room_status')->get();
-            $rooms = RoomModel::with('rentalrate')->paginate(6);
-
-            return view('v_admin_sukajadi.daftar_kamar', compact('rooms','total'));
-
-        }elseif ($id == 'tersedia') {
-
-            $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
-                        ->groupBy('room_status')->get();
-            $rooms = RoomModel::with('rentalrate')->where('room_status','tersedia')->paginate(6);
-
-            return view('v_admin_sukajadi.daftar_kamar', compact('rooms','total'));
-
-        }elseif ($id == 'tidak tersedia') {
-
-            $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
-                        ->groupBy('room_status')->get();
-            $rooms = RoomModel::with('rentalrate')->where('room_status','tidak tersedia')->paginate(6);
-
-            return view('v_admin_sukajadi.daftar_kamar', compact('rooms','total'));
-
-        }elseif ($id == 'maintenance') {
-
-            $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
-                        ->groupBy('room_status')->get();
-            $rooms = RoomModel::with('rentalrate')->where('room_status','maintenance')->paginate(6);
-
-            return view('v_admin_sukajadi.daftar_kamar', compact('rooms','total'));
-
-        }elseif($id == 'laporan'){
+        if($id == 'laporan'){
             if ($request->all() == []) {
                 $rooms = DB::table('tbl_room_historys')
                         ->join('tbl_reservations','tbl_reservations.id_reservation','tbl_room_historys.reservation_id')
@@ -485,7 +453,14 @@ class SukajadiController extends Controller
             }
 
             return view('v_admin_sukajadi.laporan_kamar', compact('rooms'));
+        } else {
+            if ($id == 'daftar') {
+                $rooms = RoomModel::withTrashed()->get();
+            } else {
+                $rooms = RoomModel::where('room_status', $id)->whereNull('deleted_at')->withTrashed()->get();
+            }
 
+            return view('v_admin_sukajadi.daftar_kamar', compact('rooms'));
         }
 
     }
@@ -713,5 +688,3 @@ class SukajadiController extends Controller
         return response()->json($result);
     }
 }
-
-?>

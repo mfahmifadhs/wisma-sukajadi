@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 use Illuminate\Http\Request;
 
 class CheckRole
@@ -17,6 +18,9 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, string $role)
     {
+        if (Auth::user() == null) {
+            return redirect('/')->with('failed', 'Anda tidak memiliki akses!');
+        }
         if ($role == 'admin-master' && auth()->user()->role_id != 1) {
             abort(403);
         }
