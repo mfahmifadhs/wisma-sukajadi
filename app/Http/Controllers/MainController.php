@@ -17,7 +17,7 @@ class MainController extends Controller
     public function menuRoom($id)
     {
         if ($id == 'daftar') {
-            $rooms = RoomModel::with('rentalrate')->paginate(6);
+            $rooms = RoomModel::get();
             return view('m_kamar', compact('rooms'));
         }else{
             $rooms = RoomModel::with('rentalrate')->where('id_room', $id)->get();

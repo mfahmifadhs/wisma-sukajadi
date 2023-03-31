@@ -35,7 +35,12 @@
     @endif
     <div class="card card-primary card-outline">
       <div class="card-header">
-        <h3 class="card-title"><b>Daftar Reservasi Kamar</b></h3>
+        <h4 class="card-title mt-2"><b>Daftar Reservasi Kamar</b></h4>
+        <div class="card-tools">
+            <a href="{{ url('admin-sukajadi/reservasi/buat') }}" class="btn btn-primary">
+                <i class="fas fa-plus-circle"></i> Buat Reservasi
+            </a>
+        </div>
       </div>
       <!-- /.card-header -->
       <div class="card-body">
@@ -86,7 +91,7 @@
                   @if($reservasi->status_reservation == 'cancel')
 
                   @else
-                  <a href="{{ url('admin-sukajadi/reservasi/bayar/'.$reservasi->id_reservation) }}" class="btn btn-success btn-xs" 
+                  <a href="{{ url('admin-sukajadi/reservasi/bayar/'.$reservasi->id_reservation) }}" class="btn btn-success btn-xs"
                     onclick="return confirm('Melakukan pembayaran ?')"><i class="fas fa-check"></i> <br>Bayar
                   </a>
                   <a href="{{ url('admin-sukajadi/reservasi/batal/'.$reservasi->id_reservation) }}" class="btn btn-danger btn-xs"
@@ -95,18 +100,18 @@
                   @endif
                 @elseif($reservasi->payment_status == 'sudah bayar')
                   @if($reservasi->status_reservation == 'reserved')
-                  <a href="{{ url('admin-sukajadi/reservasi/checkin/'.$reservasi->id_reservation) }}" class="btn btn-success btn-xs" 
+                  <a href="{{ url('admin-sukajadi/reservasi/checkin/'.$reservasi->id_reservation) }}" class="btn btn-success btn-xs"
                     onclick="return confirm('Check In ?')"><i class="fas fa-check"></i> <br>Check In
                   </a>
                   @elseif($reservasi->status_reservation == 'checkin')
-                  <a href="{{ url('admin-sukajadi/reservasi/checkout/'.$reservasi->id_reservation) }}" class="btn btn-danger btn-xs" 
+                  <a href="{{ url('admin-sukajadi/reservasi/checkout/'.$reservasi->id_reservation) }}" class="btn btn-danger btn-xs"
                     onclick="return confirm('Check Out ?')"><i class="fas fa-check"></i> <br>Check Out
                   </a>
                   @elseif($reservasi->status_reservation == 'checkout')
-                  <a href="{{ url('admin-sukajadi/kamar/keterangan/'.$reservasi->id_reservation) }}" class="btn btn-primary btn-xs" 
+                  <a href="{{ url('admin-sukajadi/kamar/keterangan/'.$reservasi->id_reservation) }}" class="btn btn-primary btn-xs"
                     onclick="return confirm('Tambah Catatan ?')"><i class="fas fa-file"></i> <br>Catatan
                   </a>
-                  <a href="{{ url('admin-sukajadi/kwitansi/buat/'.$reservasi->id_reservation) }}" class="btn btn-primary btn-xs" 
+                  <a href="{{ url('admin-sukajadi/kwitansi/buat/'.$reservasi->id_reservation) }}" class="btn btn-primary btn-xs"
                     onclick="return confirm('Cetak Kwitansi ?')"><i class="fas fa-file-invoice"></i> <br>Kwitansi
                   </a>
                   @endif
