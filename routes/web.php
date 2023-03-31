@@ -23,22 +23,24 @@ Route::get('/', function () {
 });
 
 // Authentication
-Route::get('dashboard', [AuthController::class, 'dashboard']); 
+Route::get('dashboard', [AuthController::class, 'dashboard']);
 Route::get('halaman-masuk', [AuthController::class, 'index'])->name('halamanMasuk');
 Route::get('halaman-daftar', [AuthController::class, 'Pendaftaran'])->name('halamanDaftar');
+Route::get('auth/sso/redirect', [AuthController::class, 'redirect']);
+Route::get('auth/sso/callback', [AuthController::class, 'callback']);
 
-Route::post('masuk', [AuthController::class, 'Masuk'])->name('masuk'); 
-Route::post('daftar', [AuthController::class, 'Daftar'])->name('daftar'); 
+Route::post('masuk', [AuthController::class, 'Masuk'])->name('masuk');
+Route::post('daftar', [AuthController::class, 'Daftar'])->name('daftar');
 Route::get('keluar', [AuthController::class, 'Keluar'])->name('keluar');
 
-Route::group(['prefix' => 'beranda', 'as' => 'beranda.'], 
+Route::group(['prefix' => 'beranda', 'as' => 'beranda.'],
     function () {
         Route::get('masuk', function() { return view('auth.masuk'); });
         Route::get('tentang', function() { return view('m_tentang'); });
         Route::get('kamar/{id}', [MainController::class, 'menuRoom']);
         Route::get('tarif-sewa/{id}', [MainController::class, 'menuRoom']);
         Route::get('kunjungan/{id}', [MainController::class, 'menuVisit']);
-        
+
         Route::post('kunjungan/{id}', [MainController::class, 'menuVisit']);
 
         Route::get('detail_kamar', function() { return view('m_detail_kamar'); });
@@ -67,7 +69,7 @@ Route::group(['middleware' => ['role:admin-master'], 'prefix' => 'admin-master',
     Route::post('laporan/{id}', [MasterController::class, 'showReport']);
     Route::get('chart-visitor', [MasterController::class,'getChartVisitor']);
     Route::get('chart-income', [MasterController::class,'getChartIncome']);
-    
+
 });
 
 Route::group(['middleware' => ['role:admin-pnbp'], 'prefix' => 'admin-pnbp', 'as' => 'admin-pnbp.'], function () {
@@ -89,7 +91,7 @@ Route::group(['middleware' => ['role:admin-pnbp'], 'prefix' => 'admin-pnbp', 'as
     Route::post('laporan/{id}', [PnbpController::class, 'showReport']);
     Route::get('chart-visitor', [PnbpController::class,'getChartVisitor']);
     Route::get('chart-income', [PnbpController::class,'getChartIncome']);
-    
+
 });
 
 Route::group(['middleware' => ['role:admin-sukajadi'], 'prefix' => 'admin-sukajadi', 'as' => 'admin-sukajadi.'], function () {
@@ -117,5 +119,5 @@ Route::group(['middleware' => ['role:admin-sukajadi'], 'prefix' => 'admin-sukaja
     Route::get('json-get-category', [SukajadiController::class, 'jsonGetCategory']);
     Route::get('json-get-price', [SukajadiController::class, 'jsonGetPrice']);
     Route::get('chart-visitor', [SukajadiController::class,'getChartVisitor']);
-    
+
 });
