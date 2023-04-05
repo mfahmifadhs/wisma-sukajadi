@@ -53,47 +53,47 @@
                   <th style="width: 15%;">Total Kamar</th>
                   <th style="width: 15%;">Total Pendapatan</th>
                   <th style="width: 10%;">Status</th>
-                  <th></th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <?php $no = 1; ?>
               <tbody class="text-center">
                 @foreach($income as $income)
                 <tr>
-                  <td class="pt-4">{{ $no++ }}</td>
-                  <td class="pt-4">{{ \Carbon\Carbon::parse($income->pnbp_date)->isoFormat('DD MMMM Y') }}</td>
-                  <td class="pt-3">
+                  <td>{{ $no++ }}</td>
+                  <td>{{ \Carbon\Carbon::parse($income->pnbp_date)->isoFormat('DD MMMM Y') }}</td>
+                  <td>
                     @if($income->transaction_img != null)
                       <img src="{{ asset('images/admin/bukti-setor-pnbp/'. $income->transaction_img )}}" width="80">
                     @else
                       -
                     @endif
                   </td>
-                  <td class="pt-4">
+                  <td>
                     @if($income->transaction_num != null)
                       {{ $income->transaction_num }}
                     @else
                       -
                     @endif
                   </td>
-                  <td class="pt-4">
+                  <td>
                     @if($income->pnbp_total_room != null)
                       {{ $income->pnbp_total_room }}
                     @else
                       -
                     @endif
                   </td>
-                  <td class="pt-4">Rp {{ number_format($income->pnbp_total_income, 0, ',', '.') }}</td>
-                  <td class="pt-4">
+                  <td>Rp {{ number_format($income->pnbp_total_income, 0, ',', '.') }}</td>
+                  <td>
                     @if($income->pnbp_status == 'belum')
-                      <p>Belum Setor</p>
+                      Belum Setor
                     @else
-                      <p>Sudah Setor</p>
+                      Sudah Setor
                     @endif
                   </td>
-                  <td class="pt-3">
-                    <a href="{{ url('admin-sukajadi/detail-pendapatan/'. $income->pnbp_date) }}" class="btn btn-primary btn-xs">
-                      <i class="fas fa-info-circle"></i> <br>Detail
+                  <td>
+                    <a href="{{ url('admin-sukajadi/detail-pendapatan/'. $income->pnbp_date) }}" class="btn btn-primary btn-sm btn-block">
+                      <i class="fas fa-info-circle"></i> Detail
                     </a>
                   </td>
                 </tr>

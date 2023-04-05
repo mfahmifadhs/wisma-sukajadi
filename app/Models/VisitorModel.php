@@ -12,7 +12,7 @@ class VisitorModel extends Model
     protected $table = "tbl_visitors";
     protected $primary_key = "id_visitor";
     public $timestamps = false;
-    
+
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +20,7 @@ class VisitorModel extends Model
      * @var array
      */
     protected $fillable = [
-        'id_alumni',
+        'id_visitor',
         'identity_num',
         'identity_img',
         'visitor_name',
