@@ -53,7 +53,7 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">NIK</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" name="identity_num" placeholder="nomor induk kependudukan (NIK)">
+                  <input type="number" class="form-control" name="identity_num" placeholder="nomor induk kependudukan (NIK)">
                 </div>
               </div>
               <div class="form-group row">
@@ -114,35 +114,37 @@
                   <span class="help-block" style="font-size: 12px;">Format PDF (Max. 5MB)</span>
                 </div>
               </div>
-              <div class="form-group row">
-                <label class="col-sm-12 col-form-label text-center">Pembayaran <hr></label>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Status</label>
-                <div class="col-sm-10">
-                  <select class="form-control" name="status_reservation">
-                    <option value="reservation">reservasi</option>
-                  </select>
+              <!-- <div class="section-payment">
+                <div class="form-group row">
+                    <label class="col-sm-12 col-form-label text-center">Pembayaran <hr></label>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Kode Biling</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" name="billing_code" placeholder="diisi setelah pengunjung melakukan pembayaran">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" name="status_reservation">
+                        <option value="reservation">reservasi</option>
+                    </select>
+                    </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Bukti Pembayaran</label>
-                <div class="col-sm-8">
-                  <div class="btn btn-default btn-file">
-                    <i class="fas fa-paperclip"></i> Upload Bukti Pembayaran
-                    <input type="file" name="payment_img" class="image-payment">
-                    <img id="preview-image-payment" style="max-height: 80px;">
-                  </div>
-                  <p class="help-block" style="font-size: 12px;">Max. 5MB</p>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Kode Biling</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" name="billing_code" placeholder="diisi setelah pengunjung melakukan pembayaran">
+                    </div>
                 </div>
-              </div>
-              <div class="section-more-room">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Bukti Pembayaran</label>
+                    <div class="col-sm-8">
+                    <div class="btn btn-default btn-file">
+                        <i class="fas fa-paperclip"></i> Upload Bukti Pembayaran
+                        <input type="file" name="payment_img" class="image-payment">
+                        <img id="preview-image-payment" style="max-height: 80px;">
+                    </div>
+                    <p class="help-block" style="font-size: 12px;">Max. 5MB</p>
+                    </div>
+                </div>
+              </div> -->
+              <!-- <div class="section-more-room">
                 <div class="form-group row">
                   <div class="col-md-12">
                     <hr>
@@ -164,12 +166,12 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">Tanggal Check In</label>
                   <div class="col-sm-4">
-                    <input type="date" class="form-control" name="checkin[]" value="{{ \Carbon\Carbon::now()->isoFormat('Y-MM-DD') }}" 
+                    <input type="date" class="form-control" name="checkin[]" value="{{ \Carbon\Carbon::now()->isoFormat('Y-MM-DD') }}"
                     min="<?= date('Y-m-d'); ?>">
                   </div>
                   <label class="col-sm-2 col-form-label">Tanggal Check Out</label>
                   <div class="col-sm-4">
-                    <input type="date" class="form-control" name="checkout[]" value="{{ \Carbon\Carbon::tomorrow()->isoFormat('Y-MM-DD') }}" 
+                    <input type="date" class="form-control" name="checkout[]" value="{{ \Carbon\Carbon::tomorrow()->isoFormat('Y-MM-DD') }}"
                     min="<?= date('Y-m-d'); ?>" >
                   </div>
                 </div>
@@ -212,7 +214,7 @@
                     <input type="text" id="price-room0" name="price[]" class="form-control" readonly>
                   </div>
                 </div>
-              </div>            
+              </div> -->
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
@@ -220,7 +222,7 @@
                 <button type="submit" class="btn btn-primary" onclick="return confirm('Buat Reservasi ?')">
                   <i class="fas fa-plus-square"></i> Buat Reservasi</button>
               </div>
-              <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Batal</button>
+              <!-- <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Batal</button> -->
             </div>
           </form>
         </div>
@@ -236,24 +238,24 @@
   // Upload Foto
   $('.image-ktp').change(function(){
     let reader = new FileReader();
-    reader.onload = (e) => { 
-      $('#preview-image-ktp').attr('src', e.target.result); 
-    }    
-    reader.readAsDataURL(this.files[0]); 
+    reader.onload = (e) => {
+      $('#preview-image-ktp').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(this.files[0]);
   });
   $('.image-payment').change(function(){
     let reader = new FileReader();
-    reader.onload = (e) => { 
-      $('#preview-image-payment').attr('src', e.target.result); 
-    }    
-    reader.readAsDataURL(this.files[0]); 
+    reader.onload = (e) => {
+      $('#preview-image-payment').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(this.files[0]);
   });
   $('.image-assignment-letter').change(function(){
     let reader = new FileReader();
-    reader.onload = (e) => { 
-      $('#preview-image-assignment-letter').attr('src', e.target.result); 
-    }    
-    reader.readAsDataURL(this.files[0]); 
+    reader.onload = (e) => {
+      $('#preview-image-assignment-letter').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(this.files[0]);
   });
   // Harga
   function updateTextView(_obj){
@@ -299,7 +301,7 @@
             $("#show-category" + target).empty();
             $("#show-category" + target).append('<option value="">-- Pilih Kategori --</option>');
             $.each(res, function(price_ctg, price_ctg) {
-              if (price_ctg == null) 
+              if (price_ctg == null)
               {
                 $("#show-category" + target).append(
                   '<option value="null"> - </option>'
@@ -320,7 +322,7 @@
     }
 
   });
-  
+
   // Menampilkan harga tarif sewa
   $(document).on('change', '.price', function() {
     ++i;
@@ -376,7 +378,7 @@
         type: "GET",
         url: "/admin-sukajadi/json-get-room",
         data: {
-          "dataroom": dataroom 
+          "dataroom": dataroom
         },
         dataType: 'JSON',
         success: function(res) {
@@ -438,7 +440,7 @@
                 '<label class="col-sm-2 col-form-label">Tarif Sewa</label>' +
                 '<div class="col-sm-4">' +
                   '<select class="form-control category" data-target="'+i+'" id="rentalrateid'+i+'">' +
-                    '<option value="">-- Pilih Tarif Sewa --</option>' + 
+                    '<option value="">-- Pilih Tarif Sewa --</option>' +
                     optRentalRate +
                   '</select>' +
                 '</div>' +
@@ -465,7 +467,7 @@
     $(document).on('click', '#remove-more-room', function() {
       $(this).parents('.more-room').remove();
     });
-  });  
+  });
 </script>
 
 

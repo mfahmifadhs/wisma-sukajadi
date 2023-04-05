@@ -46,7 +46,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Total Kamar Tersedia</span>
                                     <span class="info-box-number">
-                                        {{ $rooms->where('room_status','tersedia')->whereNull('deleted_at')->count() }} kamar
+                                        {{ $capacity->where('room_status','tersedia')->whereNull('deleted_at')->count() }} kamar
                                     </span>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Total Kamar Terisi</span>
                                     <span class="info-box-number">
-                                        {{ $rooms->where('room_status','tidak tersedia')->whereNull('deleted_at')->count() }} kamar
+                                        {{ $capacity->where('room_status','tidak tersedia')->whereNull('deleted_at')->count() }} kamar
                                     </span>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Total Kamar Tidak Tersedia</span>
                                     <span class="info-box-number">
-                                        {{ $rooms->where('room_status','maintenance')->whereNull('deleted_at')->count() }} kamar
+                                        {{ $capacity->where('room_status','maintenance')->whereNull('deleted_at')->count() }} kamar
                                     </span>
                                 </div>
                             </div>

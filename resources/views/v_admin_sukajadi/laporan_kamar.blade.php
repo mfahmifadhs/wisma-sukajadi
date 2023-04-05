@@ -63,15 +63,15 @@
               <tbody class="text-capitalize text-center">
                 @foreach($rooms as $rooms)
                 <tr class="clickable-row" data-href="{{ url('admin-sukajadi/rooms/detail/'.$rooms->id_reservation) }}">
-                  <td class="pt-3">{{ $no++ }}</td>
-                  <td class="pt-3">{{ $rooms->billing_code }}</td>
-                  <td class="pt-3">
+                  <td>{{ $no++ }}</td>
+                  <td>{{ $rooms->billing_code }}</td>
+                  <td>
                     {{ \Carbon\Carbon::parse($rooms->history_date)->isoFormat('DD/MM/Y HH:mm:ss') }}
                   </td>
-                  <td class="pt-3">{{ $rooms->total_room }} kamar</td>
-                  <td class="pt-3">{{ $rooms->room_reserved }} kamar</td>
-                  <td class="pt-3">{{ $rooms->room_notavailable }} kamar</td>
-                  <td class="pt-3">{{ $rooms->room_available }} kamar</td>
+                  <td>{{ $rooms->total_room }} kamar</td>
+                  <td>{{ $rooms->room_reserved }} kamar</td>
+                  <td>{{ $rooms->room_notavailable }} kamar</td>
+                  <td>{{ $rooms->room_available }} kamar</td>
                 </tr>
                 @endforeach
               </tbody>
@@ -99,7 +99,7 @@
                     <label>Pilih Tanggal :</label>
                     <input type="date" class="form-control" name="start_dt" value="{{ \Carbon\Carbon::now()->isoFormat('Y-MM-DD') }}">
                   </div>
-                  <div class="form-group col-md-6"> 
+                  <div class="form-group col-md-6">
                     <label>&nbsp;</label>
                     <input type="date" class="form-control" name="end_dt" value="{{ \Carbon\Carbon::now()->isoFormat('Y-MM-DD') }}">
                   </div>

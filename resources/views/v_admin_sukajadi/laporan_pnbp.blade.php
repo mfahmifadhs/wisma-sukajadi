@@ -62,19 +62,19 @@
               <tbody class="text-center">
                 @foreach($pnbp as $pnbp)
                 <tr>
-                  <td class="pt-4">{{ $no++ }}</td>
-                  <td class="pt-4">{{ \Carbon\Carbon::parse($pnbp->pnbp_date)->isoFormat('DD/MM/YY') }}</td>
-                  <td class="pt-4">{{ \Carbon\Carbon::parse($pnbp->transaction_date)->isoFormat('HH:mm') .' '.
-                         \Carbon\Carbon::parse($pnbp->transaction_date)->isoFormat('DD/MM/YY') 
+                  <td>{{ $no++ }}</tdclass=>
+                  <td>{{ \Carbon\Carbon::parse($pnbp->pnbp_date)->isoFormat('DD/MM/YY') }}</td>
+                  <td>{{ \Carbon\Carbon::parse($pnbp->transaction_date)->isoFormat('HH:mm') .' '.
+                         \Carbon\Carbon::parse($pnbp->transaction_date)->isoFormat('DD/MM/YY')
                       }}
                   </td>
-                  <td class="pt-4">{{ $pnbp->transaction_num }}</td>
-                  <td class="pt-4">Rp {{ number_format($pnbp->pnbp_total_income, 0, ',', '.') }}</td>
-                  <td class="pt-4">
+                  <td>{{ $pnbp->transaction_num }}</td>
+                  <td>Rp {{ number_format($pnbp->pnbp_total_income, 0, ',', '.') }}</td>
+                  <td>
                     @if($pnbp->pnbp_status == 'belum')
-                      <p>Belum Setor</p>
+                      Belum Stor
                     @else
-                      <p>Sudah Setor</p>
+                      Sudah Setor
                     @endif
                   </td>
                 </tr>
@@ -102,7 +102,7 @@
                     <label>Pilih Tanggal :</label>
                     <input type="date" class="form-control" name="start_dt" value="{{ \Carbon\Carbon::now()->isoFormat('Y-MM-DD') }}">
                   </div>
-                  <div class="form-group col-md-6"> 
+                  <div class="form-group col-md-6">
                     <label>&nbsp;</label>
                     <input type="date" class="form-control" name="end_dt" value="{{ \Carbon\Carbon::now()->isoFormat('Y-MM-DD') }}">
                   </div>

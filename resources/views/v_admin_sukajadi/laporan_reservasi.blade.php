@@ -57,26 +57,26 @@
           <tbody class="text-capitalize text-center">
             @foreach($reservasi as $reservasi)
             <tr class="clickable-row" data-href="{{ url('admin-sukajadi/reservasi/detail/'.$reservasi->id_reservation) }}">
-              <td class="pt-3">{{ $no++ }}</td>
-              <td class="pt-3">{{ $reservasi->billing_code }}</td>
-              <td class="pt-3">{{ $reservasi->visitor_name }}</td>
-              <td class="pt-3">
+              <td>{{ $no++ }}</td>
+              <td>{{ $reservasi->billing_code }}</td>
+              <td>{{ $reservasi->visitor_name }}</td>
+              <td>
                 {{ \Carbon\Carbon::parse($reservasi->check_in)->isoFormat('DD/MM/YY') }} - {{ \Carbon\Carbon::parse($reservasi->check_out)->isoFormat('DD/MM/YY') }}
               </td>
-              <td class="pt-3">{{ $reservasi->duration }} malam</td>
-              <td class="pt-3">{{ $reservasi->room_name }}</td>
-              <td class="pt-3">Rp {{ number_format($reservasi->detail_reservation_price, 0, ',', '.') }}</td>
-              <td class="pt-3" >
+              <td>{{ $reservasi->duration }} malam</td>
+              <td>{{ $reservasi->room_name }}</td>
+              <td>Rp {{ number_format($reservasi->detail_reservation_price, 0, ',', '.') }}</td>
+              <td>
                 @if($reservasi->status_reservation == 'payment')
-                <p>Menunggu Pembayaran</p>
+                    Menunggu Pembayaran
                 @elseif($reservasi->status_reservation == 'reserved')
-                <p>Dipesan</p>
+                    Dipesan
                 @elseif($reservasi->status_reservation == 'checkin')
-                <p>Check In</p>
+                    Check In
                 @elseif($reservasi->status_reservation == 'checkout')
-                <p>Check Out</p>
+                    Check Out
                 @else
-                <p>Batal</p>
+                    Batal
                 @endif
               </td>
             </tr>

@@ -59,14 +59,14 @@
               <tbody class="text-center">
                 @foreach($income as $income)
                 <tr>
-                  <td class="pt-2">{{ $no++ }}</td>
-                  <td class="pt-2">{{ \Carbon\Carbon::parse($income->reservation_date)->isoFormat('DD MMMM Y') }}</td>
-                  <td class="pt-2">{{ $income->billing_code }}</td>
-                  <td class="pt-2">{{ $income->total_room }}</td>
-                  <td class="pt-2">Rp {{ number_format($income->payment_total, 0, ',', '.') }}</td>
-                  <td class="pt-2">
-                    <a href="{{ url('admin-sukajadi/reservasi/detail/'. $income->id_reservation) }}" class="btn btn-primary btn-xs">
-                      <i class="fas fa-info-circle"></i> <br>Detail
+                  <td>{{ $no++ }}</td>
+                  <td>{{ \Carbon\Carbon::parse($income->reservation_date)->isoFormat('DD MMMM Y') }}</td>
+                  <td>{{ $income->billing_code }}</td>
+                  <td>{{ $income->total_room }}</td>
+                  <td>Rp {{ number_format($income->payment_total, 0, ',', '.') }}</td>
+                  <td>
+                    <a href="{{ url('admin-sukajadi/reservasi/detail/'. $income->id_reservation) }}" class="btn btn-primary btn-sm btn-block">
+                      <i class="fas fa-info-circle"></i> Detail
                     </a>
                   </td>
                 </tr>

@@ -19,18 +19,24 @@ class SukajadiController extends Controller
 {
     public function index()
     {
-        $room_av      = DB::table('tbl_rooms')->where('room_status','tersedia')->count();
-        $room_notav   = DB::table('tbl_rooms')->where('room_status','tidak tersedia')->count();
-        $room_mtc     = DB::table('tbl_rooms')->where('room_status','maintenance')->count();
-        $total_income = DB::table('tbl_reservations')
-                            ->select(DB::raw("(DATE_FORMAT(reservation_date, '%m')) as month"), DB::raw('sum(payment_total) as total_income'))
-                            ->groupBy('month')
-                            ->get();
+        $rooms = RoomModel::withTrashed()->get();
+        // $total_income = DB::table('tbl_reservations')
+        //                     ->select(DB::raw("(DATE_FORMAT(reservation_date, '%m')) as month"), DB::raw('sum(payment_total) as total_income'))
+        //                     ->groupBy('month')
+        //                     ->get();
+        $total_income = ReservationModel::select(
+            DB::raw('DATE_FORMAT(reservation_date, "%Y-%m") as month'),
+            DB::raw('SUM(payment_total) as payment_total')
+        )
+        ->whereNotNull('billing_code')
+        ->groupBy('month')
+        ->get();
+
         $visitor      = DB::table('tbl_visits')->limit(5)->get();
         $reservasi    = DB::table('tbl_reservations')
                             ->join('tbl_visitors','tbl_visitors.id_visitor','tbl_reservations.visitor_id')
                             ->limit(5)->get();
-        return view('v_admin_sukajadi.index', compact('room_av','room_notav','room_mtc','total_income','visitor','reservasi'));
+        return view('v_admin_sukajadi.index', compact('rooms','total_income','visitor','reservasi'));
     }
 
     public function showProfile($id)
@@ -45,25 +51,17 @@ class SukajadiController extends Controller
     public function menuReservation($id)
     {
         if ($id == 'buat') {
-
-            $room       = DB::table('tbl_rooms')->where('room_status','tersedia')->get();
+            $room       = RoomModel::where('room_status','tersedia')->get();
             $price      = DB::table('tbl_rental_rates')->select('rental_rate_ctg')->groupBy('rental_rate_ctg')->get();
             $price_ctg  = DB::table('tbl_rental_rates')->select('price_ctg')->groupBy('price_ctg')->get();
             return view('v_admin_sukajadi.tambah_reservasi', compact('room','price','price_ctg'));
 
         }elseif($id == 'daftar'){
 
-            $reservasi  = DB::table('tbl_reservations_details')
-                            ->select('id_reservation','visitor_name','visitor_phone_number','identity_img','status_reservation','payment_status',
-                              'reservation_date','payment_total',DB::raw('count(reservation_id) as total_room'))
-                            ->join('tbl_reservations', 'tbl_reservations.id_reservation','tbl_reservations_details.reservation_id')
-                            ->join('tbl_rental_rates','tbl_rental_rates.id_rental_rate','tbl_reservations_details.rental_rate_id')
-                            ->join('tbl_rooms','tbl_rooms.id_room','tbl_rental_rates.room_id')
-                            ->join('tbl_visitors', 'tbl_visitors.id_visitor','tbl_reservations.visitor_id')
-                            ->groupBy('id_reservation','visitor_name','visitor_phone_number','identity_img','status_reservation','payment_status',
-                                      'reservation_date','payment_total')
+            $reservasi  = ReservationModel::join('tbl_visitors', 'tbl_visitors.id_visitor','tbl_reservations.visitor_id')
                             ->orderby('reservation_date', 'DESC')
                             ->get();
+
             return view('v_admin_sukajadi.daftar_reservasi', compact('reservasi'));
 
         }elseif($id == 'laporan'){
@@ -85,7 +83,31 @@ class SukajadiController extends Controller
 
     public function processReservation(Request $request, $process, $idreservation)
     {
-        if ($process == 'bayar' || $process == 'detail') {
+        if ($process == 'pilih-kamar') {
+            $rsv        = ReservationModel::where('id_reservation', $idreservation)->first();
+            $room       = RoomModel::where('room_status','tersedia')->get();
+            $price      = DB::table('tbl_rental_rates')->select('rental_rate_ctg')->groupBy('rental_rate_ctg')->get();
+            $price_ctg  = DB::table('tbl_rental_rates')->select('price_ctg')->groupBy('price_ctg')->get();
+
+            return view('v_admin_sukajadi.reservasi.edit', compact('rsv','room','price','price_ctg'));
+
+        } elseif ($process == 'pembayaran') {
+            $rsv        = ReservationModel::where('id_reservation', $idreservation)->first();
+            $room       = RoomModel::where('room_status','tersedia')->get();
+            $price      = DB::table('tbl_rental_rates')->select('rental_rate_ctg')->groupBy('rental_rate_ctg')->get();
+            $price_ctg  = DB::table('tbl_rental_rates')->select('price_ctg')->groupBy('price_ctg')->get();
+
+            return view('v_admin_sukajadi.reservasi.edit', compact('rsv','room','price','price_ctg'));
+
+        } elseif ($process == 'proses') {
+            $rsv        = ReservationModel::where('id_reservation', $idreservation)->first();
+            $room       = RoomModel::where('room_status','tersedia')->get();
+            $price      = DB::table('tbl_rental_rates')->select('rental_rate_ctg')->groupBy('rental_rate_ctg')->get();
+            $price_ctg  = DB::table('tbl_rental_rates')->select('price_ctg')->groupBy('price_ctg')->get();
+
+            return view('v_admin_sukajadi.reservasi.edit', compact('rsv','room','price','price_ctg'));
+
+        } elseif ($process == 'bayar' || $process == 'detail') {
             $reservasi  = DB::table('tbl_reservations_details')
                             ->join('tbl_reservations', 'tbl_reservations.id_reservation','tbl_reservations_details.reservation_id')
                             ->join('tbl_rental_rates','tbl_rental_rates.id_rental_rate','tbl_reservations_details.rental_rate_id')
@@ -259,176 +281,205 @@ class SukajadiController extends Controller
 
     public function postReservation(Request $request)
     {
-        $valid_img  = Validator::make($request->all(), [
-            'identity_img'  => 'mimes: jpg,png,jpeg|max:4096',
-            'payment_img'   => 'mimes: jpg,png,jpeg|max:4096',
-        ]);
-        if ($valid_img->fails()) {
-            return redirect('admin-sukajadi/reservasi/buat')->with('failed', 'Format foto tidak sesuai, mohon cek kembali');
-        }else{
-            // Tambah tanggal pnbp
-            $cekpnbp = DB::table('tbl_pnbp')->where(DB::raw("(DATE_FORMAT(pnbp_date, '%Y-%m-%d'))"), Carbon::now()->format('Y-m-d'))->count();
-            if ($cekpnbp == 0) {
-                $addpnbp = new PnbpModel();
-                $addpnbp->pnbp_date = Carbon::now();
-                $addpnbp->pnbp_status = 'belum';
-                $addpnbp->save();
-            }
-
-            // Tambah informasi pengunjung
-            $visitor = new VisitorModel();
-            if ($request->hasfile('identity_img')){
-                $file = $request->file('identity_img');
-                $extension = $file->getClientOriginalExtension();
-                $filename   = $file->getClientOriginalName();
-                $file->move('images/admin/pengunjung/', $filename);
-                $visitor->identity_img = $filename;
-            } else {
-                return $request;
-                $visitor->identity_img='';
-            }
-
-            $visitor_img = $visitor->identity_img;
-            $visitor->id_visitor             = $request->input('id_visitor');
-            $visitor->identity_num           = strtolower($request->input('identity_num'));
-            $visitor->identity_img           = $visitor_img;
-            $visitor->visitor_name           = strtolower($request->input('visitor_name'));
-            $visitor->visitor_birthdate      = strtolower($request->input('visitor_birthdate'));
-            $visitor->visitor_phone_number   = strtolower($request->input('visitor_phone_number'));
-            $visitor->visitor_address        = strtolower($request->input('visitor_address'));
-            $visitor->visitor_instance       = strtolower($request->input('visitor_instance'));
-            $visitor->visitor_description    = strtolower($request->input('visitor_description'));
-            $visitor->save();
-
-            // Detail reservasi
+        if ($request->process == 'pemilihan-kamar') {
             $total_price  = 0;
-            $rentalrateid = $request->rental_rate_id;
-            foreach ($rentalrateid as $i => $rental_rate_id) {
-                $duration = Carbon::parse($request->checkin[$i])->diffInDays(Carbon::parse($request->checkout[$i]));
-                $res_detail[] = [
-                    'id_detail_reservation'    => random_int(10000,99999),
-                    'reservation_id'           => $request->id_reservation,
-                    'rental_rate_id'           => $rental_rate_id,
-                    'check_in'                 => $request->checkin[$i],
-                    'check_out'                => $request->checkout[$i],
-                    'duration'                 => $duration,
-                    'detail_reservation_price' => $request->price[$i] * $duration
-                ];
-                $total_price += $request->price[$i] * $duration;
+
+            if ($request->rental_rate_id != []) {
+                // Detail reservasi
+                $rentalrateid = $request->rental_rate_id;
+                foreach ($rentalrateid as $i => $rental_rate_id) {
+                    if (!$rental_rate_id) {
+                        return back()->with('failed-room', 'Belum memilih tarif sewa');
+                    }
+                    $duration = Carbon::parse($request->checkin[$i])->diffInDays(Carbon::parse($request->checkout[$i]));
+                    $res_detail[] = [
+                        'reservation_id'           => $request->id_reservation,
+                        'rental_rate_id'           => $rental_rate_id,
+                        'check_in'                 => $request->checkin[$i],
+                        'check_out'                => $request->checkout[$i],
+                        'duration'                 => $duration,
+                        'detail_reservation_price' => $request->price[$i] * $duration
+                    ];
+                    $total_price += $request->price[$i] * $duration;
+                }
+                ReservationDetailModel::insert($res_detail);
             }
 
-            ReservationDetailModel::insert($res_detail);
+            ReservationModel::where('id_reservation', $request->id_reservation)->update([
+                'total_room'         => count($request->rental_rate_id),
+                'payment_total'      => $total_price,
+                'status_reservation' => 'payment'
+            ]);
 
-            $reservation = new ReservationModel();
-            if ($request->payment_img != null) {
-                if ($request->hasfile('payment_img')){
+            // return redirect('admin-sukajadi/reservasi/pembayaran/'. $request->id_reservation)->with('success','Berhasil Melakukan Pemilihan Kamar');
+            return redirect('admin-sukajadi/reservasi/daftar/')->with('success','Berhasil Melakukan Pembayaran');
+
+        } elseif ($request->process == 'pembayaran') {
+            if ($request->hasfile('payment_img')){
                 $file       = $request->file('payment_img');
                 $extension  = $file->getClientOriginalExtension();
                 $filename   = $file->getClientOriginalName();
                 $file->move('images/admin/bukti-pembayaran/', $filename);
-                $reservation->payment_img = $filename;
-                } else {
-                    return $request;
-                    $reservation->payment_img='';
-                }
-                $payment_img = $reservation->payment_img;
-            }else{
-                $payment_img = $request->payment_img;
+                $url = 'images/admin/bukti-pembayaran/' . $filename;
             }
 
-            if ($request->assignment_letter != null) {
-                if ($request->hasfile('assignment_letter')){
-                $file       = $request->file('assignment_letter');
-                $extension  = $file->getClientOriginalExtension();
-                $filename   = $file->getClientOriginalName();
-                $file->move('images/admin/surat-tugas/', $filename);
-                $reservation->assignment_letter = $filename;
-                } else {
-                    return $request;
-                    $reservation->assignment_letter='';
-                }
-                $assignment_letter = $reservation->assignment_letter;
-            }else{
-                $assignment_letter = $request->assignment_letter;
+            ReservationModel::where('id_reservation', $request->id_reservation)->update([
+                'payment_img'        => $filename,
+                'payment_img_url'    => $url,
+                'billing_code'       => $request->billing_code,
+                'status_reservation' => 'reserved',
+                'payment_status'     => 'sudah bayar',
+                'payment_date'       => Carbon::now()
+            ]);
+
+            foreach ($request->room_id as $i => $room_id)
+            {
+                RoomModel::where('id_room', $room_id)->update([
+                    'room_status' => 'tidak tersedia'
+                ]);
             }
 
-            // Payment dan reservasi
-            $reservation->id_reservation    = $request->input('id_reservation');
-            $reservation->visitor_id        = strtolower($request->input('id_visitor'));
-            $reservation->assignment_letter = $assignment_letter;
-            $reservation->total_room        = count($request->rental_rate_id);
-            $reservation->billing_code      = $request->input('billing_code');
-            $reservation->payment_total     = $total_price;
-            $reservation->payment_img       = $payment_img;
-            $reservation->reservation_date  = Carbon::now();
-
-            if ($request->billing_code == null) {
-                $reservation->status_reservation = 'payment';
-                $reservation->payment_status     = 'belum bayar';
-            }else{
-                $reservation->status_reservation = 'reserved';
-                $reservation->payment_status     = 'sudah bayar';
-
-                // Update kamar
-                $roomid = $request->room_id;
-                foreach($roomid as $i => $room_id)
-                {
-                    RoomModel::where('id_room', $room_id)
-                        ->update([
-                            'room_status'       => 'tidak tersedia'
-                        ]);
-                }
-            }
-
-            $reservation->save();
-
+            // Update pendapatan
             if ($request->billing_code != null) {
                 // Update Pendapatan
-                $income = DB::table('tbl_reservations')
-                        ->select(DB::raw("(DATE_FORMAT(reservation_date, '%y-%m-%d')) as date"), DB::raw('sum(payment_total) as total_income'),
-                                 DB::raw('sum(total_room) as total_room'))
-                        ->where('billing_code','!=', null)
-                        ->groupBy('date')
-                        ->get();
+                $income = ReservationModel::select(DB::raw("(DATE_FORMAT(reservation_date, '%y-%m-%d')) as date"),
+                            DB::raw('sum(payment_total) as total_income'), DB::raw('sum(total_room) as total_room'))
+                            ->where('billing_code','!=', null)
+                            ->groupBy('date')
+                            ->get();
 
-                foreach($income as $income)
-                {
-                    PnbpModel::where('pnbp_date', $income->date)
-                            ->update([
-                                'pnbp_total_room'   => $income->total_room,
-                                'pnbp_total_income' => $income->total_income
+                foreach($income as $income) {
+                    PnbpModel::where('pnbp_date', $income->date)->update([
+                        'pnbp_total_room'   => $income->total_room,
+                        'pnbp_total_income' => $income->total_income
                     ]);
-
                 }
-
-                // Update History Kamar
-                $total_rooms = DB::table('tbl_rooms')->select('room_status', DB::raw('count(room_status) as total_room'))->groupBy('room_status')->get();
-                $room_reserved = DB::table('tbl_reservations_details')->select(DB::raw('count(reservation_id) as room_reserved'))
-                                    ->where('reservation_id', $request->id_reservation)->first();
-                $room_maintenance = 0;
-                foreach($total_rooms as $total_room)
-                {
-                    if ($total_room->room_status == 'tersedia'){
-                        $room_avail         = $total_room->total_room;
-                    }elseif($total_room->room_status == 'tidak tersedia'){
-                        $room_notavail      = $total_room->total_room;
-                    }elseif($total_room->room_status == 'maintenance'){
-                        $room_maintenance   = $total_room->total_room;
-                    }
-                }
-
-                $history = new RoomHistoryModel();
-                $history->reservation_id    = $request->id_reservation;
-                $history->history_date      = Carbon::now();
-                $history->total_room        = $room_avail + $room_notavail + $room_maintenance;
-                $history->room_reserved     = $room_reserved->room_reserved;
-                $history->room_notavailable = $room_maintenance;
-                $history->room_available    = $room_avail;
-                $history->save();
             }
 
-            return redirect('admin-sukajadi/reservasi/daftar')->with('success','Berhasil melakukan reservasi');
+            // Update History Kamar
+            $total_rooms    = RoomModel::select('room_status', DB::raw('count(room_status) as total_room'))
+                              ->groupBy('room_status')
+                              ->get();
+            $room_reserved  = ReservationDetailModel::select(DB::raw('count(reservation_id) as room_reserved'))
+                              ->where('reservation_id', $request->id_reservation)
+                              ->first();
+            $room_maintenance = 0;
+            foreach($total_rooms as $total_room)
+            {
+                if ($total_room->room_status == 'tersedia'){
+                    $room_avail         = $total_room->total_room;
+                }elseif($total_room->room_status == 'tidak tersedia'){
+                    $room_notavail      = $total_room->total_room;
+                }elseif($total_room->room_status == 'maintenance'){
+                    $room_maintenance   = $total_room->total_room;
+                }
+            }
+
+            $history = new RoomHistoryModel();
+            $history->reservation_id    = $request->id_reservation;
+            $history->history_date      = Carbon::now();
+            $history->total_room        = $room_avail + $room_notavail + $room_maintenance;
+            $history->room_reserved     = $room_reserved->room_reserved;
+            $history->room_notavailable = $room_maintenance;
+            $history->room_available    = $room_avail;
+            $history->save();
+
+            return redirect('admin-sukajadi/reservasi/daftar/')->with('success','Berhasil Melakukan Pembayaran');
+
+        } else {
+            $valid_img  = Validator::make($request->all(), [
+                'identity_img'  => 'mimes: jpg,png,jpeg|max:4096',
+                'payment_img'   => 'mimes: jpg,png,jpeg|max:4096',
+            ]);
+            if ($valid_img->fails()) {
+                return redirect('admin-sukajadi/reservasi/buat')->with('failed', 'Format foto tidak sesuai, mohon cek kembali');
+            }else{
+                // Tambah tanggal pnbp
+                $cekpnbp = DB::table('tbl_pnbp')->where(DB::raw("(DATE_FORMAT(pnbp_date, '%Y-%m-%d'))"), Carbon::now()->format('Y-m-d'))->count();
+                if ($cekpnbp == 0) {
+                    $addpnbp = new PnbpModel();
+                    $addpnbp->pnbp_date = Carbon::now();
+                    $addpnbp->pnbp_status = 'belum';
+                    $addpnbp->save();
+                }
+
+                // Tambah informasi pengunjung
+                $visitor = new VisitorModel();
+                if ($request->hasfile('identity_img')){
+                    $file = $request->file('identity_img');
+                    $extension = $file->getClientOriginalExtension();
+                    $filename   = $file->getClientOriginalName();
+                    $file->move('images/admin/pengunjung/', $filename);
+                    $visitor->identity_img = $filename;
+                } else {
+                    return $request;
+                    $visitor->identity_img='';
+                }
+
+                $visitor_img = $visitor->identity_img;
+                $visitor->id_visitor             = $request->input('id_visitor');
+                $visitor->identity_num           = strtolower($request->input('identity_num'));
+                $visitor->identity_img           = $visitor_img;
+                $visitor->visitor_name           = strtolower($request->input('visitor_name'));
+                $visitor->visitor_birthdate      = strtolower($request->input('visitor_birthdate'));
+                $visitor->visitor_phone_number   = strtolower($request->input('visitor_phone_number'));
+                $visitor->visitor_address        = strtolower($request->input('visitor_address'));
+                $visitor->visitor_instance       = strtolower($request->input('visitor_instance'));
+                $visitor->visitor_description    = strtolower($request->input('visitor_description'));
+                $visitor->save();
+
+                $total_price  = 0;
+
+                $reservation = new ReservationModel();
+
+                if ($request->assignment_letter != null) {
+                    if ($request->hasfile('assignment_letter')){
+                    $file       = $request->file('assignment_letter');
+                    $extension  = $file->getClientOriginalExtension();
+                    $filename   = $file->getClientOriginalName();
+                    $file->move('images/admin/surat-tugas/', $filename);
+                    $reservation->assignment_letter = $filename;
+                    } else {
+                        return $request;
+                        $reservation->assignment_letter='';
+                    }
+                    $assignment_letter = $reservation->assignment_letter;
+                }else{
+                    $assignment_letter = $request->assignment_letter;
+                }
+
+                // Payment dan reservasi
+                $reservation->id_reservation    = $request->input('id_reservation');
+                $reservation->visitor_id        = strtolower($request->input('id_visitor'));
+                $reservation->assignment_letter = $assignment_letter;
+                $reservation->total_room        = null;
+                $reservation->payment_total     = $total_price;
+                $reservation->reservation_date  = Carbon::now();
+
+                // if ($request->billing_code == null) {
+                //     $reservation->status_reservation = 'payment';
+                //     $reservation->payment_status     = 'belum bayar';
+                // }else{
+                //     $reservation->status_reservation = 'reserved';
+                //     $reservation->payment_status     = 'sudah bayar';
+
+                //     // Update kamar
+                //     $roomid = $request->room_id;
+                //     foreach($roomid as $i => $room_id)
+                //     {
+                //         RoomModel::where('id_room', $room_id)
+                //             ->update([
+                //                 'room_status'       => 'tidak tersedia'
+                //             ]);
+                //     }
+                // }
+
+                $reservation->save();
+
+                return redirect('admin-sukajadi/reservasi/daftar')->with('success','Berhasil melakukan reservasi');
+            }
         }
+
     }
 
     // KAMAR ========================================
@@ -455,12 +506,15 @@ class SukajadiController extends Controller
             return view('v_admin_sukajadi.laporan_kamar', compact('rooms'));
         } else {
             if ($id == 'daftar') {
-                $rooms = RoomModel::withTrashed()->get();
+                $capacity = RoomModel::withTrashed()->whereNull('deleted_at')->get();
+                $rooms    = RoomModel::withTrashed()->get();
             } else {
-                $rooms = RoomModel::where('room_status', $id)->whereNull('deleted_at')->withTrashed()->get();
+                $status   = $id == 'terisi' ? 'tidak tersedia' : $id;
+                $capacity = RoomModel::withTrashed()->whereNull('deleted_at')->get();
+                $rooms    = RoomModel::where('room_status', $status)->whereNull('deleted_at')->withTrashed()->get();
             }
 
-            return view('v_admin_sukajadi.daftar_kamar', compact('rooms'));
+            return view('v_admin_sukajadi.daftar_kamar', compact('capacity', 'rooms'));
         }
 
     }
@@ -537,8 +591,9 @@ class SukajadiController extends Controller
     {
         $income = DB::table('tbl_reservations')
                     ->where('status_reservation', '!=','cancel')
-                    ->where('reservation_date', $id)
+                    ->where(DB::raw("(DATE_FORMAT(reservation_date, '%Y-%m-%d'))"), $id)
                     ->get();
+
         return view('v_admin_sukajadi.detail_pendapatan', compact('id','income'));
     }
 
@@ -630,11 +685,11 @@ class SukajadiController extends Controller
     // JSON =========================================
     public function jsonGetCategory(Request $request)
     {
-        $result = DB::table('tbl_rental_rates')
-                    ->select('price_ctg')
+        $result = RentalrateModel::select('id_rental_rate','new_price')
                     ->where('rental_rate_ctg', $request->rentalrateid)
-                    ->groupBy('price_ctg')
-                    ->pluck('price_ctg','price_ctg');
+                    ->where('room_id', $request->roomid)
+                    ->groupBy('id_rental_rate','new_price')
+                    ->pluck('new_price', 'id_rental_rate');
 
         return response()->json($result);
     }
@@ -664,12 +719,13 @@ class SukajadiController extends Controller
                         ->whereNotIn('id_room', $request->dataroom)
                         ->where('room_status', 'tersedia')
                         ->get();
+
         $price      = DB::table('tbl_rental_rates')->select('rental_rate_ctg')->groupBy('rental_rate_ctg')->get();
-        $price_ctg  = DB::table('tbl_rental_rates')->select('price_ctg')->groupBy('price_ctg')->get();
+        // $price_ctg  = DB::table('tbl_rental_rates')->select('price_ctg')->groupBy('price_ctg')->get();
 
         $array['room']      = $room;
         $array['price']     = $price;
-        $array['price_ctg'] = $price_ctg;
+        // $array['price_ctg'] = $price_ctg;
 
         return response()->json($array);
     }
