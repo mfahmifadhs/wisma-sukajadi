@@ -46,7 +46,7 @@
           <div class="row">
             <div class="col-12">
               <h6>
-                <img src="{{ asset('images/admin/logo-kemenkes-icon.png') }}" width="50" style="margin-top: -5px;"> 
+                <img src="{{ asset('images/admin/logo-kemenkes-icon.png') }}" width="50" style="margin-top: -5px;">
                 Wisma Sukajadi Bandung
                 <small class="float-right mt-3">
                   {{ \Carbon\Carbon::parse($reservasi->reservation_date)->isoFormat('DD MMMM Y') }}
@@ -106,7 +106,7 @@
                   <tr>
                     <td>{{ $no++ }}</td>
                     <td>{{ $detail->room_name }}</td>
-                    <td>Rp {{ number_format($detail->price, 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($detail->new_price, 0, ',', '.') }}</td>
                     <td>
                       {{ \Carbon\Carbon::parse($detail->check_in)->isoFormat('DD/MM/YY') }} - {{ \Carbon\Carbon::parse($detail->check_out)->isoFormat('DD/MM/YY') }}
                     </td>
@@ -123,7 +123,7 @@
 
           <div class="row">
             <div class="col-6">
-              
+
             </div>
             <div class="col-6">
               <hr>
@@ -131,7 +131,7 @@
               <p class="lead float-right font-weight-bold">Rp {{ number_format($detail->payment_total, 0, ',', '.') }}</p>
             </div>
           </div>
-          
+
           <div class="row no-print">
             <div class="col-12">
               <a href="{{ url('admin-sukajadi/kwitansi/cetak/'. $reservasi->id_reservation) }}" rel="noopener" target="_blank" class="btn btn-primary float-right" style="margin-right: 5px;">
@@ -141,7 +141,7 @@
           </div>
         </div>
         <!-- /.invoice -->
-      </div><!-- /.col -->  
+      </div><!-- /.col -->
     </div>
   </div>
 </section>
