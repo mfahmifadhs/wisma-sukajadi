@@ -279,7 +279,7 @@ class SukajadiController extends Controller
             $visitor = VisitorModel::where('id_visitor', $request->id_visitor)->first();
             if ($request->identity_img) {
                 if ($visitor->identity_img) {
-                    $file_old   = public_path() . '\images\admin\pengunjung\\' . $visitor->identity_img;
+                    $file_old = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'pengunjung' . DIRECTORY_SEPARATOR . $visitor->identity_img;
                     unlink($file_old);
                 }
                 $file         = $request->file('identity_img');
@@ -303,7 +303,7 @@ class SukajadiController extends Controller
             $rsv = ReservationModel::where('id_reservation', $idreservation)->first();
             if ($request->assignment_letter) {
                 if ($rsv->assignment_letter) {
-                    $file_old   = public_path() . '\images\admin\surat-tugas\\' . $rsv->assignment_letter;
+                    $file_old = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'surat-tugas' . DIRECTORY_SEPARATOR . $rsv->assignment_letter;
                     unlink($file_old);
                 }
                 $file       = $request->file('assignment_letter');
@@ -322,7 +322,7 @@ class SukajadiController extends Controller
             if ($process == 'delete-file-identity') {
                 $rsv      = ReservationModel::where('id_reservation', $idreservation)->first();
                 $visitor  = VisitorModel::where('id_visitor', $rsv->visitor_id)->first();
-                $file_old = public_path() . '\images\admin\pengunjung\\' . $visitor->identity_img;
+                $file_old = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'pengunjung' . DIRECTORY_SEPARATOR . $visitor->identity_img;
                 unlink($file_old);
                 VisitorModel::where('id_visitor', $visitor->id_visitor)->update([
                     'identity_img' => null
@@ -332,7 +332,7 @@ class SukajadiController extends Controller
 
             if ($process == 'delete-file-letter') {
                 $letter   = ReservationModel::where('id_reservation', $idreservation)->first();
-                $file_old = public_path() . '\images\admin\surat-tugas\\' . $letter->assignment_letter;
+                $file_old = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'surat-tugas' . DIRECTORY_SEPARATOR . $letter->assignment_letter;
                 unlink($file_old);
                 ReservationModel::where('id_reservation', $idreservation)->update([
                     'assignment_letter' => null
