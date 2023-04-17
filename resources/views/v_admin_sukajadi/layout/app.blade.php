@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>WISMA SUKAJADI</title>
+  <!-- Icon Title -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mfahmifadhs/wisma-sukajadi/master/public/images/admin/logo-kemenkes-icon.png">
+
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -90,7 +93,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ asset('images/admin/logo-admin-mini.png') }}" class="img-circle elevation-2" alt="User Image">
+          <img src="https://raw.githubusercontent.com/mfahmifadhs/wisma-sukajadi/master/public/images/admin/logo-admin-mini.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block text-capitalize">{{ Auth::user()->name }}</a>
