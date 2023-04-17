@@ -74,7 +74,11 @@
                                 </div>
                             </td>
                             <td class="text-center">
+                                @if ($reservasi->identity_img)
                                 <img src="{{ asset('images/admin/pengunjung/'. $reservasi->identity_img )}}" width="80">
+                                @else
+                                -
+                                @endif
                             </td>
                             <td class="pt-4">{{ (int) $reservasi->total_room }} kamar</td>
                             <td class="pt-4">Rp {{ number_format($reservasi->payment_total, 0, ',', '.') }}</td>
@@ -107,51 +111,47 @@
                             </td>
                             <td class="text-center">
                                 @if ($reservasi->status_reservation == '')
-                                <a href="{{ url('admin-sukajadi/reservasi/pilih-kamar/'.$reservasi->id_reservation) }}" class="btn btn-info btn-sm btn-block" title="Pilih Kamar">
+                                <a href="{{ url('admin-sukajadi/reservasi/pilih-kamar/'.$reservasi->id_reservation) }}" class="btn btn-info btn-xs btn-block" title="Pilih Kamar">
                                     <i class="fas fa-door-open"></i> Pilih Kamar
                                 </a>
-                                <a href="{{ url('admin-sukajadi/reservasi/batal/'.$reservasi->id_reservation) }}" class="btn btn-danger btn-sm btn-block"
-                                onclick="return confirm('Batal melakukan reservasi ?')">
+                                <a href="{{ url('admin-sukajadi/reservasi/batal/'.$reservasi->id_reservation) }}" class="btn btn-danger btn-xs btn-block" onclick="return confirm('Batal melakukan reservasi ?')">
                                     <i class="fas fa-times-circle"></i> Batal
                                 </a>
                                 @endif
                                 @if($reservasi->status_reservation == 'payment' && $reservasi->status_reservation != 'cancel')
-                                <a href="{{ url('admin-sukajadi/reservasi/pembayaran/'.$reservasi->id_reservation) }}" class="btn btn-success btn-sm btn-block"
-                                onclick="return confirm('Melakukan pembayaran ?')">
+                                <a href="{{ url('admin-sukajadi/reservasi/pembayaran/'.$reservasi->id_reservation) }}" class="btn btn-success btn-xs btn-block" onclick="return confirm('Melakukan pembayaran ?')">
                                     <i class="fas fa-check-circle"></i> Bayar
                                 </a>
-                                <a href="{{ url('admin-sukajadi/reservasi/batal/'.$reservasi->id_reservation) }}" class="btn btn-danger btn-sm btn-block"
-                                onclick="return confirm('Batal melakukan reservasi ?')">
+                                <a href="{{ url('admin-sukajadi/reservasi/batal/'.$reservasi->id_reservation) }}" class="btn btn-danger btn-xs btn-block" onclick="return confirm('Batal melakukan reservasi ?')">
                                     <i class="fas fa-times-circle"></i> Batal
                                 </a>
                                 @endif
 
                                 @if($reservasi->payment_status == 'sudah bayar')
-                                    @if($reservasi->status_reservation == 'reserved')
-                                    <div class="pt-2">
-                                        <a href="{{ url('admin-sukajadi/reservasi/checkin/'.$reservasi->id_reservation) }}" class="btn btn-success mt-1 btn-sm btn-block"
-                                        onclick="return confirm('Check In ?')">
-                                            <i class="fas fa-check-circle"></i> Check In
-                                        </a>
-                                    </div>
-                                    @elseif($reservasi->status_reservation == 'checkin')
-                                    <div class="pt-2">
-                                        <a href="{{ url('admin-sukajadi/reservasi/checkout/'.$reservasi->id_reservation) }}" class="btn btn-danger mt-1 btn-sm btn-block"
-                                        onclick="return confirm('Check Out ?')">
-                                            <i class="fas fa-check-circle"></i> Check Out
-                                        </a>
-                                    </div>
-                                    @elseif($reservasi->status_reservation == 'checkout')
-                                    <a href="{{ url('admin-sukajadi/kamar/keterangan/'.$reservasi->id_reservation) }}" class="btn btn-primary btn-sm btn-block"
-                                    onclick="return confirm('Tambah Catatan ?')">
-                                        <i class="fas fa-file"></i> Catatan
+                                @if($reservasi->status_reservation == 'reserved')
+                                <div class="pt-2">
+                                    <a href="{{ url('admin-sukajadi/reservasi/checkin/'.$reservasi->id_reservation) }}" class="btn btn-success mt-1 btn-xs btn-block" onclick="return confirm('Check In ?')">
+                                        <i class="fas fa-check-circle"></i> Check In
                                     </a>
-                                    <a href="{{ url('admin-sukajadi/kwitansi/buat/'.$reservasi->id_reservation) }}" class="btn btn-primary btn-sm btn-block"
-                                    onclick="return confirm('Cetak Kwitansi ?')">
-                                        <i class="fas fa-file-invoice"></i> Kwitansi
+                                </div>
+                                @elseif($reservasi->status_reservation == 'checkin')
+                                <div class="pt-2">
+                                    <a href="{{ url('admin-sukajadi/reservasi/checkout/'.$reservasi->id_reservation) }}" class="btn btn-danger mt-1 btn-xs btn-block" onclick="return confirm('Check Out ?')">
+                                        <i class="fas fa-check-circle"></i> Check Out
                                     </a>
-                                    @endif
+                                </div>
+                                @elseif($reservasi->status_reservation == 'checkout')
+                                <a href="{{ url('admin-sukajadi/kamar/keterangan/'.$reservasi->id_reservation) }}" class="btn btn-primary btn-xs btn-block" onclick="return confirm('Tambah Catatan ?')">
+                                    <i class="fas fa-file"></i> Catatan
+                                </a>
+                                <a href="{{ url('admin-sukajadi/kwitansi/buat/'.$reservasi->id_reservation) }}" class="btn btn-primary btn-xs btn-block" onclick="return confirm('Cetak Kwitansi ?')">
+                                    <i class="fas fa-file-invoice"></i> Kwitansi
+                                </a>
                                 @endif
+                                @endif
+                                <a href="{{ url('admin-sukajadi/reservasi/edit/'.$reservasi->id_reservation) }}" class="btn btn-warning btn-xs btn-block mt-1">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
                             </td>
                         </tr>
                         @endforeach

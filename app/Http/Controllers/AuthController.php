@@ -15,7 +15,7 @@ class AuthController extends Controller
 
     public function index()
     {
-        return view ('auth.masuk');
+        return view('auth.masuk');
     }
 
     public function redirect()
@@ -30,7 +30,6 @@ class AuthController extends Controller
         // $auth = get user from SSO DTO
         // $user = User::where('nip', $auth->nip)->first();
         return 'sso callback';
-
     }
 
     public function masuk(Request $request)
@@ -41,7 +40,7 @@ class AuthController extends Controller
         ]);
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')->with('success','Berhasil Masuk !');
+            return redirect()->intended('dashboard')->with('success', 'Berhasil Masuk !');
         }
         return redirect("halaman-masuk")->with('failed', 'Username atau Password Salah !');
     }
@@ -82,27 +81,23 @@ class AuthController extends Controller
 
     public function dashboard()
     {
-        if(Auth::check() && Auth::user()->role_id == 1 && Auth::user()->status == 'aktif')
-        {
+        if (Auth::check() && Auth::user()->role_id == 1 && Auth::user()->status == 'aktif') {
             return redirect('admin-master/dashboard');
-        }
-        elseif (Auth::check() && Auth::user()->role_id == 4 && Auth::user()->status == 'aktif')
-        {
+        } elseif (Auth::check() && Auth::user()->role_id == 4 && Auth::user()->status == 'aktif') {
             return redirect('admin-sukajadi/dashboard');
-        }
-        elseif (Auth::check() && Auth::user()->role_id == 3 && Auth::user()->status == 'aktif')
-        {
+        } elseif (Auth::check() && Auth::user()->role_id == 3 && Auth::user()->status == 'aktif') {
             return redirect('admin-pnbp/dashboard');
-        }
-        else{
+        } else {
             return redirect("login")->with('failed', 'Anda tidak memiliki akses!');
         }
     }
 
 
-    public function keluar() {
+    public function keluar()
+    {
         Session::flush();
         Auth::logout();
         return Redirect('halaman-masuk');
     }
+
 }

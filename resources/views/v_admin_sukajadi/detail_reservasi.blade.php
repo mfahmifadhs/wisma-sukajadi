@@ -40,7 +40,9 @@
               </div>
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="img-fluid img-thumbnail" src="{{ asset('images/admin/pengunjung/'. $reservasi->identity_img) }}" alt="Foto KTP">
+                    @if($reservasi->identity_img != null)
+                    <img class="img-fluid img-thumbnail" src="{{ asset('images/admin/pengunjung/'. $reservasi->identity_img) }}" alt="Foto KTP">
+                    @endif
                 </div>
                 <h3 class="profile-username text-center">{{ $reservasi->visitor_name }}</h3>
                 <p class="text-muted text-center">{{ $reservasi->identity_num }}</p>
@@ -176,7 +178,7 @@
                   <p class="help-block" style="font-size: 12px;">Max. 5MB</p>
                 </div>
               </div>
-              <?php 
+              <?php
                 $i = 1; //Nomor
               ?>
               <div class="detail">
@@ -189,12 +191,12 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">Tanggal Check In</label>
                   <div class="col-sm-4">
-                    <input type="date" class="form-control" name="checkin[{{ $x }}]" 
+                    <input type="date" class="form-control" name="checkin[{{ $x }}]"
                     value="{{ \Carbon\Carbon::parse($details->check_in)->isoFormat('Y-MM-DD') }}" readonly>
                   </div>
                   <label class="col-sm-2 col-form-label">Tanggal Check Out</label>
                   <div class="col-sm-4">
-                    <input type="date" class="form-control" name="checkout[{{ $x }}]" 
+                    <input type="date" class="form-control" name="checkout[{{ $x }}]"
                     value="{{ \Carbon\Carbon::parse($details->check_out)->isoFormat('Y-MM-DD') }}" readonly>
                   </div>
                 </div>
@@ -204,8 +206,8 @@
                     @if($reservasi->payment_status == 'belum bayar')
                     <select class="form-control price" id="roomid{{ $x }}" name="room_id[{{ $x }}]" data-target="{{ $x }}">
                      @foreach ($room as $rooms)
-                        <option value="{{ $rooms->id_room }}" {{ ( $rooms->id_room == $details->id_room) ? 'selected' : '' }}> 
-                         {{ $rooms->room_name }} 
+                        <option value="{{ $rooms->id_room }}" {{ ( $rooms->id_room == $details->id_room) ? 'selected' : '' }}>
+                         {{ $rooms->room_name }}
                        </option>
                      @endforeach
                     </select>
@@ -220,7 +222,7 @@
                     <select class="form-control category" id="rentalrateid{{ $x }}" readonly>
                       @foreach ($price as $prices)
                         <option value="{{ $prices->rental_rate_ctg }}" {{ ( $prices->rental_rate_ctg == $details->rental_rate_ctg) ? 'selected' : '' }}>
-                          {{ $prices->rental_rate_ctg }} 
+                          {{ $prices->rental_rate_ctg }}
                         </option>
                       @endforeach
                     </select>
@@ -234,8 +236,8 @@
                         @if($prices_ctg->price_ctg == null)
                         <option value="">-</option>
                         @else
-                        <option value="{{ $prices_ctg->price_ctg }}" {{ ( $prices_ctg->price_ctg == $details->price_ctg) ? 'selected' : '' }}> 
-                          {{ $prices_ctg->price_ctg }} 
+                        <option value="{{ $prices_ctg->price_ctg }}" {{ ( $prices_ctg->price_ctg == $details->price_ctg) ? 'selected' : '' }}>
+                          {{ $prices_ctg->price_ctg }}
                         </option>
                         @endif
                       @endforeach
@@ -284,17 +286,17 @@
   // Upload Foto
   $('.image-ktp').change(function(){
     let reader = new FileReader();
-    reader.onload = (e) => { 
-      $('#preview-image-ktp').attr('src', e.target.result); 
-    }    
-    reader.readAsDataURL(this.files[0]); 
+    reader.onload = (e) => {
+      $('#preview-image-ktp').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(this.files[0]);
   });
   $('.image-payment').change(function(){
     let reader = new FileReader();
-    reader.onload = (e) => { 
-      $('#preview-image-payment').attr('src', e.target.result); 
-    }    
-    reader.readAsDataURL(this.files[0]); 
+    reader.onload = (e) => {
+      $('#preview-image-payment').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(this.files[0]);
   });
   // Harga
   function updateTextView(_obj){
@@ -339,7 +341,7 @@
             $("#show-category").empty();
             $("#show-category").append('<option value="">-- Pilih Kategori --</option>');
             $.each(res, function(price_ctg, price_ctg) {
-              if (price_ctg == null) 
+              if (price_ctg == null)
               {
                 $("#show-category").append(
                   '<option value="null"> - </option>'
@@ -360,7 +362,7 @@
     }
 
   });
-  
+
   // Menampilkan harga tarif sewa
   $(document).on('change', '.price', function() {
     i++;
