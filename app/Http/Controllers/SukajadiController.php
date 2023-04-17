@@ -76,7 +76,7 @@ class SukajadiController extends Controller
 
             return view('v_admin_sukajadi.laporan_reservasi', compact('reservasi'));
 
-        }else{
+        }else {
 
         }
     }
@@ -89,7 +89,7 @@ class SukajadiController extends Controller
             $price      = DB::table('tbl_rental_rates')->select('rental_rate_ctg')->groupBy('rental_rate_ctg')->get();
             $price_ctg  = DB::table('tbl_rental_rates')->select('price_ctg')->groupBy('price_ctg')->get();
 
-            return view('v_admin_sukajadi.reservasi.edit', compact('rsv','room','price','price_ctg'));
+            return view('v_admin_sukajadi.reservasi.proses', compact('rsv','room','price','price_ctg'));
 
         } elseif ($process == 'pembayaran') {
             $rsv        = ReservationModel::where('id_reservation', $idreservation)->first();
@@ -97,7 +97,7 @@ class SukajadiController extends Controller
             $price      = DB::table('tbl_rental_rates')->select('rental_rate_ctg')->groupBy('rental_rate_ctg')->get();
             $price_ctg  = DB::table('tbl_rental_rates')->select('price_ctg')->groupBy('price_ctg')->get();
 
-            return view('v_admin_sukajadi.reservasi.edit', compact('rsv','room','price','price_ctg'));
+            return view('v_admin_sukajadi.reservasi.proses', compact('rsv','room','price','price_ctg'));
 
         } elseif ($process == 'proses') {
             $rsv        = ReservationModel::where('id_reservation', $idreservation)->first();
@@ -105,14 +105,10 @@ class SukajadiController extends Controller
             $price      = DB::table('tbl_rental_rates')->select('rental_rate_ctg')->groupBy('rental_rate_ctg')->get();
             $price_ctg  = DB::table('tbl_rental_rates')->select('price_ctg')->groupBy('price_ctg')->get();
 
-            return view('v_admin_sukajadi.reservasi.edit', compact('rsv','room','price','price_ctg'));
+            return view('v_admin_sukajadi.reservasi.proses', compact('rsv','room','price','price_ctg'));
 
         } elseif ($process == 'bayar' || $process == 'detail') {
-            $reservasi  = DB::table('tbl_reservations_details')
-                            ->join('tbl_reservations', 'tbl_reservations.id_reservation','tbl_reservations_details.reservation_id')
-                            ->join('tbl_rental_rates','tbl_rental_rates.id_rental_rate','tbl_reservations_details.rental_rate_id')
-                            ->join('tbl_rooms','tbl_rooms.id_room','tbl_rental_rates.room_id')
-                            ->join('tbl_visitors', 'tbl_visitors.id_visitor','tbl_reservations.visitor_id')
+            $reservasi  = ReservationModel::join('tbl_visitors', 'tbl_visitors.id_visitor','tbl_reservations.visitor_id')
                             ->where('id_reservation', $idreservation)
                             ->first();
 
@@ -128,7 +124,7 @@ class SukajadiController extends Controller
             $price_ctg  = DB::table('tbl_rental_rates')->select('price_ctg')->groupBy('price_ctg')->get();
 
             return view('v_admin_sukajadi.detail_reservasi', compact('reservasi','detail','room','price','price_ctg'));
-        }elseif ($process == 'proses-pembayaran') {
+        } elseif ($process == 'proses-pembayaran') {
             // Update kamar
             $total_price = 0;
             $idresdetail = $request->res_detail_id;
@@ -235,7 +231,7 @@ class SukajadiController extends Controller
             }
 
             return redirect('admin-sukajadi/reservasi/daftar')->with('success','Berhasil menambah pembayaran');
-        }elseif ($process == 'checkin'){
+        } elseif ($process == 'checkin'){
 
             ReservationModel::where('id_reservation', $idreservation)
                 ->update([
@@ -244,7 +240,7 @@ class SukajadiController extends Controller
 
             return redirect('admin-sukajadi/reservasi/daftar')->with('success','Berhasil Chcek In');
 
-        }elseif ($process == 'checkout'){
+        } elseif ($process == 'checkout'){
 
             ReservationModel::where('id_reservation', $idreservation)
                 ->update([
@@ -269,13 +265,80 @@ class SukajadiController extends Controller
 
 
             return redirect('admin-sukajadi/kwitansi/buat/'. $idreservation)->with('success','Berhasil Check Out');
-        }elseif ($process == 'batal') {
+        } elseif ($process == 'batal') {
             ReservationModel::where('id_reservation', $idreservation)
                 ->update([
                     'status_reservation' => 'cancel'
                 ]);
 
             return redirect('admin-sukajadi/reservasi/daftar')->with('success','Berhasil Membatalkan Reservasi');
+        } elseif ($process == 'edit') {
+            $rsv = ReservationModel::where('id_reservation', $idreservation)->first();
+            return view('v_admin_sukajadi.reservasi.edit', compact('rsv'));
+        } elseif ($process == 'update') {
+            $visitor = VisitorModel::where('id_visitor', $request->id_visitor)->first();
+            if ($request->identity_img) {
+                if ($visitor->identity_img) {
+                    $file_old   = public_path() . '\images\admin\pengunjung\\' . $visitor->identity_img;
+                    unlink($file_old);
+                }
+                $file         = $request->file('identity_img');
+                $fileIdentity = $file->getClientOriginalName();
+                $file->move('images/admin/pengunjung/', $fileIdentity);
+            } else {
+                $fileIdentity   = $visitor->identity_img;
+            }
+
+            VisitorModel::where('id_visitor', $request->id_visitor)->update([
+                'identity_num'          => $request->identity_num,
+                'identity_img'          => $fileIdentity,
+                'visitor_name'          => $request->visitor_name,
+                'visitor_birthdate'     => $request->visitor_birthdate,
+                'visitor_phone_number'  => $request->visitor_phone_number,
+                'visitor_address'       => $request->visitor_address,
+                'visitor_instance'      => $request->visitor_instance,
+                'visitor_description'   => $request->visitor_description,
+            ]);
+
+            $rsv = ReservationModel::where('id_reservation', $idreservation)->first();
+            if ($request->assignment_letter) {
+                if ($rsv->assignment_letter) {
+                    $file_old   = public_path() . '\images\admin\surat-tugas\\' . $rsv->assignment_letter;
+                    unlink($file_old);
+                }
+                $file       = $request->file('assignment_letter');
+                $fileLetter   = $file->getClientOriginalName();
+                $file->move('images/admin/surat-tugas/', $fileLetter);
+            } else {
+                $fileLetter   = $rsv->assignment_letter;
+            }
+
+            ReservationModel::where('id_reservation', $idreservation)->update([
+                'assignment_letter' => $fileLetter
+            ]);
+
+            return back()->with('success', 'Berhasil menyimpan perubahan');
+        } else {
+            if ($process == 'delete-file-identity') {
+                $rsv      = ReservationModel::where('id_reservation', $idreservation)->first();
+                $visitor  = VisitorModel::where('id_visitor', $rsv->visitor_id)->first();
+                $file_old = public_path() . '\images\admin\pengunjung\\' . $visitor->identity_img;
+                unlink($file_old);
+                VisitorModel::where('id_visitor', $visitor->id_visitor)->update([
+                    'identity_img' => null
+                ]);
+                return back()->with('success', 'Berhasil menghapus file');
+            }
+
+            if ($process == 'delete-file-letter') {
+                $letter   = ReservationModel::where('id_reservation', $idreservation)->first();
+                $file_old = public_path() . '\images\admin\surat-tugas\\' . $letter->assignment_letter;
+                unlink($file_old);
+                ReservationModel::where('id_reservation', $idreservation)->update([
+                    'assignment_letter' => null
+                ]);
+                return back()->with('success', 'Berhasil menghapus file');
+            }
         }
     }
 
@@ -412,20 +475,19 @@ class SukajadiController extends Controller
                     $file->move('images/admin/pengunjung/', $filename);
                     $visitor->identity_img = $filename;
                 } else {
-                    return $request;
-                    $visitor->identity_img='';
+                    $visitor->identity_img= null;
                 }
 
                 $visitor_img = $visitor->identity_img;
                 $visitor->id_visitor             = $request->input('id_visitor');
-                $visitor->identity_num           = strtolower($request->input('identity_num'));
+                $visitor->identity_num           = $request->identity_num;
                 $visitor->identity_img           = $visitor_img;
-                $visitor->visitor_name           = strtolower($request->input('visitor_name'));
-                $visitor->visitor_birthdate      = strtolower($request->input('visitor_birthdate'));
-                $visitor->visitor_phone_number   = strtolower($request->input('visitor_phone_number'));
-                $visitor->visitor_address        = strtolower($request->input('visitor_address'));
-                $visitor->visitor_instance       = strtolower($request->input('visitor_instance'));
-                $visitor->visitor_description    = strtolower($request->input('visitor_description'));
+                $visitor->visitor_name           = $request->visitor_name;
+                $visitor->visitor_birthdate      = $request->visitor_birthdate;
+                $visitor->visitor_phone_number   = $request->visitor_phone_number;
+                $visitor->visitor_address        = $request->visitor_address;
+                $visitor->visitor_instance       = $request->visitor_instance;
+                $visitor->visitor_description    = $request->visitor_description;
                 $visitor->save();
 
                 $total_price  = 0;

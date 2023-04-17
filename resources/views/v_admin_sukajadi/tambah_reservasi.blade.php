@@ -61,7 +61,7 @@
                 <div class="col-sm-8">
                   <div class="btn btn-default btn-file">
                     <i class="fas fa-paperclip"></i> Upload Foto KTP
-                    <input type="file" name="identity_img" class="image-ktp" required>
+                    <input type="file" name="identity_img" class="image-ktp">
                     <img id="preview-image-ktp" style="max-height: 80px;">
                   </div><br>
                   <span class="help-block" style="font-size: 12px;">Max. 5MB</span>
@@ -70,7 +70,7 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Nama Lengkap</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" name="visitor_name" placeholder="nama lengkap pengunjung">
+                  <input type="text" class="form-control" name="visitor_name" placeholder="nama lengkap pengunjung" required>
                 </div>
               </div>
               <div class="form-group row">

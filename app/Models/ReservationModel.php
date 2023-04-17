@@ -10,6 +10,7 @@ class ReservationModel extends Model {
     public $timestamps    = false;
 
     protected $fillable   = [
+        'id_reservation',
         'billing_code',
         'visitor_id',
         'assignment_letter',
@@ -17,6 +18,8 @@ class ReservationModel extends Model {
         'status_reservation',
         'payment_status',
         'payment_img',
+        'payment_img_url',
+        'payment_date',
         'payment_total',
         'reservation_date'
     ];
