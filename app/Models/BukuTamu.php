@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VisitModel extends Model
+class BukuTamu extends Model
 {
     use HasFactory;
 
-    protected $table 	   = "tbl_visits";
-    protected $primary_key = "id_visit";
+    protected $table 	   = "t_buku_tamu";
+    protected $primary_key = "id_tamu";
     public $timestamps 	   = false;
 
 
@@ -20,10 +20,11 @@ class VisitModel extends Model
      * @var array
      */
     protected $fillable = [
-        'visit_date',
-        'visit_name',
-        'visitor_phone_number',
-        'visit_vehicle_num',
-        'visit_description'
+        'nama_tamu',
+        'instansi',
+        'nama_instansi',
+        'no_hp',
+        'no_kendaraan',
+        'keterangan'
     ];
 }

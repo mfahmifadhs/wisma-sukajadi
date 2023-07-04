@@ -9,6 +9,7 @@ use Hash;
 use Auth;
 use Session;
 use DB;
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
@@ -21,7 +22,19 @@ class AuthController extends Controller
     public function redirect()
     {
         // redirect to SSO DTO
-        return 'sso redirect';
+        // $ssoBaseUrl = "https://auth-dev-eoffice.kemkes.go.id";
+        // $clientId = env("SSO_CLIENT_ID", "993fe200-4df3-4f99-986a-424bed9edaa9");
+        // $redirectUri = env("SSO_CLIENT_ID", "https://wisma-sukajadi.kemkes.go.id/");
+
+
+
+        $ssoBaseUrl  = "https://auth-dev-eoffice.kemkes.go.id";
+        $clientId    = app('config')->get('services.sso.client_id');
+        $redirectUri = "https://wisma-sukajadi.kemkes.go.id";
+
+        $redirectUrl = $ssoBaseUrl . "/oauth/authorize" . "?client_id=" . $clientId . "&redirect_uri=" . urlencode($redirectUri) . "&response_type=code";
+
+        return Redirect::away($redirectUrl);
     }
 
     public function callback()
@@ -29,6 +42,8 @@ class AuthController extends Controller
         // callback
         // $auth = get user from SSO DTO
         // $user = User::where('nip', $auth->nip)->first();
+        // $user = Socialite::driver('dto')->user();
+        // $akun = User::where('nip', $user->nip)->first();
         return 'sso callback';
     }
 
@@ -62,7 +77,7 @@ class AuthController extends Controller
         ]);
         $data = $request->all();
         $check = $this->create($data);
-        return redirect("dashboard")->with('Success', 'Berhasil Login !');
+        return redirect()->route('dashboard')->with('Selamat Datang di Wisma Sukajadi Bandung');
     }
 
 
@@ -79,18 +94,14 @@ class AuthController extends Controller
     }
 
 
-    public function dashboard()
-    {
-        if (Auth::check() && Auth::user()->role_id == 1 && Auth::user()->status == 'aktif') {
-            return redirect('admin-master/dashboard');
-        } elseif (Auth::check() && Auth::user()->role_id == 4 && Auth::user()->status == 'aktif') {
-            return redirect('admin-sukajadi/dashboard');
-        } elseif (Auth::check() && Auth::user()->role_id == 3 && Auth::user()->status == 'aktif') {
-            return redirect('admin-pnbp/dashboard');
-        } else {
-            return redirect("login")->with('failed', 'Anda tidak memiliki akses!');
-        }
-    }
+    // public function dashboard()
+    // {
+    //     if (Auth::check()) {
+    //         return redirect()->route('dashboard')->with('success', 'Selamat Datang di Wisma Sukajadi Bandung');
+    //     } else {
+    //         return redirect("login")->with('failed', 'Anda tidak memiliki akses!');
+    //     }
+    // }
 
 
     public function keluar()
