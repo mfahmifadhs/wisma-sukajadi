@@ -525,7 +525,6 @@
     });
 
     $(function() {
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content')
         // Preview KTP
         $('.image-ktp').change(function() {
             let reader = new FileReader()
@@ -574,12 +573,15 @@
                 alert("Belum memilih kamar");
             } else {
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     url: "/kamar/select",
                     data: {
                         "data": dataKamar
                     },
                     dataType: 'JSON',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function(res) {
                         let kamar = "";
                         let tarif = "";

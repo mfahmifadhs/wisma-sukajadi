@@ -164,6 +164,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('reservasi/tambah/{id}', [ReservasiController::class, 'create'])->name('reservasi.tambah');
         Route::get('reservasi/edit/{id}', [ReservasiController::class, 'edit'])->name('reservasi.edit');
         Route::get('kamar/select', [KamarController::class, 'selectKamar']);
+        Route::post('kamar/select', [KamarController::class, 'selectKamar']);
         Route::post('reservasi/tambah', [ReservasiController::class, 'store'])->name('reservasi.store');
         Route::post('reservasi/update/{id}', [ReservasiController::class, 'update'])->name('reservasi.update');
 
