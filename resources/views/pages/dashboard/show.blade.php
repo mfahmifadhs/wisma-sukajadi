@@ -1,0 +1,303 @@
+@extends('layout.app')
+
+@section('content')
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="text-capitalize">WISMA SUKAJADI</h1>
+                <h5>Wisma Kemenkes Sukajadi Bandung</h5>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @if (Auth::user()->role_id == 4)
+            <div class="col-md-12 form-group">
+                <a href="{{ route('reservasi.tambah', ['id' => '*']) }}" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Buat Reservasi
+                </a>
+            </div>
+            @endif
+            <div class="col-md-6 form-group">
+                <div class="card card-primary card-outline" style="height: 50vh;">
+                    <div class="card-header">
+                        <h3 class="card-title">Total Pendapatan (Grafik)</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-default btn-tool" data-card-widget="collapse" collapsed>
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="chart">
+                                    <canvas id="incomeChart" style="height: 250px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <div class="card card-primary card-outline" style="height: 50vh;">
+                    <div class="card-header">
+                        <h3 class="card-title">Total Pendapatan (Tabel)</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-default btn-tool" data-card-widget="collapse" collapsed>
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="chart">
+                                    <table class="table m-0 text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Bulan</th>
+                                                <th>Jumlah</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        @php
+                                        $data = json_decode($pendapatan, true);
+                                        @endphp
+                                        <tbody>
+                                            @foreach ($data['original'] as $i => $row)
+                                            <tr>
+                                                <td>{{ $i+1 }}</td>
+                                                <td>{{ \Carbon\Carbon::createFromFormat('m', $row['month'])->isoFormat('MMMM') }}</td>
+                                                <td>Rp {{ number_format($row['pendapatan'], 0, ',', '.') }}</td>
+                                                <td>
+                                                    <form action="{{ route('reservasi.show') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="bulan" value="{{ \Carbon\Carbon::createFromFormat('m', $row['month'])->isoFormat('M') }}">
+                                                        <button type="submit" class="btn btn-primary btn-xs rounded font-weight-bold">
+                                                            Detail
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h5 class="card-title">Daftar Reservasi</h5>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <table id="table-show" class="table m-0 text-center">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Order ID</th>
+                                    <th>Nama Pengunjung</th>
+                                    <th>No. HP</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <?php $no = 1; ?>
+                            <tbody>
+                                @foreach ($reservasi->where('status_reservasi','!=',14) as $row)
+                                <tr>
+                                    <td>{{ $no++ }}</td>
+                                    <td>
+                                        <a href="{{ route('reservasi.detail', $row->id_reservasi) }}">
+                                            {{ $row->id_reservasi }}
+                                        </a>
+                                    </td>
+                                    <td class="text-left">{{ $row->pengunjung->nama_pengunjung }}</td>
+                                    <td>{{ '0'.$row->pengunjung->no_hp }}</td>
+                                    <td><span class="badge badge-success">{{ $row->status->nama_status }}</span></td>
+                                    <td>
+                                        <a class="btn btn-primary btn-xs font-weight-bold {{ Auth::user()->role_id != 4 ? 'disabled' : ''  }}" type="button" href="{{ route('reservasi.tambah', $row->id_reservasi) }}">
+                                            <i class="fas fa-external-link-square-alt"></i> Proses
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-2 col-6">
+                                <div class="description-block border-right">
+                                    <h4 class="font-weight-bold">{{ $reservasi->where('status_reservasi', 10)->count() }}</h4>
+                                    <span class="description-text">PEMILIHAN KAMAR</span>
+                                    <h6 class="mt-2">
+                                        <form action="{{ route('reservasi.show') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="status" value="10">
+                                            <button type="submit" class="btn btn-default btn-xs">
+                                                Selengkapnya <i class="fas fa-arrow-alt-circle-right"></i>
+                                            </button>
+                                        </form>
+                                    </h6>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <h4 class="font-weight-bold">{{ $reservasi->where('status_reservasi', 11)->count() }}</h4>
+                                    <span class="description-text">MENUNGGU PEMBAYARAN</span>
+                                    <form action="{{ route('reservasi.show') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="status" value="11">
+                                        <button type="submit" class="btn btn-default btn-xs">
+                                            Selengkapnya <i class="fas fa-arrow-alt-circle-right"></i>
+                                        </button>
+                                    </form>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-2 col-6">
+                                <div class="description-block border-right">
+                                    <h4 class="font-weight-bold">{{ $reservasi->where('status_reservasi', 12)->count() }}</h4>
+                                    <span class="description-text">CHECK IN</span>
+                                    <form action="{{ route('reservasi.show') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="status" value="12">
+                                        <button type="submit" class="btn btn-default btn-xs">
+                                            Selengkapnya <i class="fas fa-arrow-alt-circle-right"></i>
+                                        </button>
+                                    </form>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-2 col-6">
+                                <div class="description-block">
+                                    <h4 class="font-weight-bold">{{ $reservasi->where('status_reservasi', 14)->count() }}</h4>
+                                    <span class="description-text">CHECK OUT</span>
+                                    <form action="{{ route('reservasi.show') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="status" value="14">
+                                        <button type="submit" class="btn btn-default btn-xs">
+                                            Selengkapnya <i class="fas fa-arrow-alt-circle-right"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block">
+                                    <h4 class="font-weight-bold">{{ $reservasi->count() }}</h4>
+                                    <span class="description-text">SELURUH RESERVASI</span>
+                                    <form action="{{ route('reservasi.show') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-default btn-xs">
+                                            Selengkapnya <i class="fas fa-arrow-alt-circle-right"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section('js')
+<!-- //------------------------------
+//- BAR CHART TOTAL PENDAPATAN -
+//------------------------------ -->
+<script>
+    $("#table-show").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false
+    }).buttons().container().appendTo('#table-show_wrapper .col-md-6:eq(0)');
+
+    var income = "{{ route('pendapatan') }}"
+    var Month = new Array();
+    var TotalIncome = new Array();
+    // Chart Pendapatan
+    $(document).ready(function() {
+        $.get(income, function(response) {
+            response.forEach(function(data) {
+                Month.push(moment(data.month, "M").format("MMMM"));
+                TotalIncome.push(data.pendapatan);
+            });
+
+            var barChartCanvas = $('#incomeChart').get(0).getContext('2d')
+            var barChartData = {
+                labels: Month,
+                datasets: [{
+                    label: 'Total Pendapatan (Rp)',
+                    backgroundColor: 'rgba(3, 201, 169, 0.2)',
+                    borderColor: 'rgb(22, 160, 133)',
+                    borderWidth: 1,
+                    pointRadius: false,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data: TotalIncome
+                }]
+            }
+            var temp0 = barChartData.datasets[0]
+            barChartData.datasets[0] = temp0
+
+            var barChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+
+            new Chart(barChartCanvas, {
+                type: 'bar',
+                data: barChartData,
+                options: barChartOptions
+            })
+        });
+    });
+</script>
+@endsection
+
+@endsection

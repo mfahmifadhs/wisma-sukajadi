@@ -7,11 +7,11 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('dist-admin/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist_admin/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('dist-admin/css/login.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist_admin/css/login.min.css') }}">
     <!-- Style -->
-    <link rel="stylesheet" href="{{ asset('dist-admin/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist_admin/css/login.css') }}">
 
     <title>WISMA SUKAJADI BANDUNG</title>
   </head>
@@ -41,9 +41,9 @@
                   <p style="color:white;margin: auto;">{{ $message }}</p>
                 </div>
                 @endif
-              </div> 
+              </div>
               <form action="{{ route('masuk') }}" method="POST">
-                @csrf             
+                @csrf
                 <div class="form-group first">
                   <label for="username">Username</label>
                   <div class="input-group mb-3">
@@ -59,11 +59,11 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-lock"></i></span>
                     </div>
-                    <input type="password" class="form-control" name="password" id="myInput" placeholder="Masukan Password" minlength="6" required>  
+                    <input type="password" class="form-control" name="password" id="myInput" placeholder="Masukan Password" minlength="6" required>
                   </div>
-                  
+
                 </div>
-                
+
                 <div class="d-flex mb-5 align-items-center">
                   <label class="control control--checkbox mb-0"><span class="caption">Lihat Password</span>
                     <input type="checkbox" onclick="myFunction()">
@@ -79,8 +79,8 @@
         </div>
       </div>
     </div>
-    
-    
+
+
 
     <script src="{{ asset('dist-admin/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('dist-admin/js/login.min.js') }}"></script>

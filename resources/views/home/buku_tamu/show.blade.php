@@ -1,4 +1,4 @@
-@extends('app')
+@extends('home.app')
 @section('content')
 
 
@@ -7,7 +7,7 @@
         <h3 class="text-center">BUKU TAMU</h3>
         <!--/ Title row end -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-11">
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success">
                     <p class="fw-light" style="margin: auto;">{{ $message }}</p>
@@ -20,9 +20,7 @@
                 @endif
             </div>
             <div class="col-md-12">
-                <!-- contact form works with formspree.io  -->
-                <!-- contact form activation doc: https://docs.themefisher.com/constra/contact-form/ -->
-                <form id="form" action="{{ url('beranda/kunjungan/tambah-kunjungan') }}" method="POST">
+                <form id="form" action="{{ route('home.buku_tamu') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <h4 class="col-md-3 mt-2">Nama Lengkap</h4>

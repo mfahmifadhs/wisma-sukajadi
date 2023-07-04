@@ -46,7 +46,7 @@ class MasterController extends Controller
     public function showRoom(Request $request, $aksi, $id)
     {
         if ($id == 'keseluruhan') {
-            
+
             $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
                         ->groupBy('room_status')->get();
             $rooms = RoomModel::with('rentalrate')->paginate(6);
@@ -54,7 +54,7 @@ class MasterController extends Controller
             return view('v_admin_master.daftar_kamar', compact('rooms','total'));
 
         }elseif ($id == 'tersedia') {
-            
+
             $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
                         ->groupBy('room_status')->get();
             $rooms = RoomModel::with('rentalrate')->where('room_status','tersedia')->paginate(6);
@@ -62,7 +62,7 @@ class MasterController extends Controller
             return view('v_admin_master.daftar_kamar', compact('rooms','total'));
 
         }elseif ($id == 'tidak tersedia') {
-            
+
             $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
                         ->groupBy('room_status')->get();
             $rooms = RoomModel::with('rentalrate')->where('room_status','tidak tersedia')->paginate(6);
@@ -70,7 +70,7 @@ class MasterController extends Controller
             return view('v_admin_master.daftar_kamar', compact('rooms','total'));
 
         }elseif ($id == 'maintenance') {
-            
+
             $total = DB::table('tbl_rooms')->select('room_status', DB::raw('count(id_room) as total_room'))
                         ->groupBy('room_status')->get();
             $rooms = RoomModel::with('rentalrate')->where('room_status','maintenance')->paginate(6);
@@ -114,7 +114,7 @@ class MasterController extends Controller
     public function showReceipt(Request $request, $aksi, $id)
     {
         if ($aksi == 'cek') {
-            
+
             $reservasi       = DB::table('tbl_reservations')
                                 ->join('tbl_visitors', 'tbl_visitors.id_visitor','tbl_reservations.visitor_id')
                                 ->where('id_reservation', $id)
@@ -123,7 +123,7 @@ class MasterController extends Controller
                                 ->join('tbl_reservations','tbl_reservations.id_reservation','tbl_reservations_details.reservation_id')
                                 ->join('tbl_rental_rates','tbl_rental_rates.id_rental_rate','tbl_reservations_details.rental_rate_id')
                                 ->join('tbl_rooms','tbl_rooms.id_room','tbl_rental_rates.room_id')
-                                ->where('id_reservation', $id)->get();         
+                                ->where('id_reservation', $id)->get();
             return view('v_admin_master.cek_kwitansi', compact('reservasi','reservasidetail'));
 
         }elseif($aksi == 'cetak') {
@@ -136,10 +136,10 @@ class MasterController extends Controller
                                 ->join('tbl_reservations','tbl_reservations.id_reservation','tbl_reservations_details.reservation_id')
                                 ->join('tbl_rental_rates','tbl_rental_rates.id_rental_rate','tbl_reservations_details.rental_rate_id')
                                 ->join('tbl_rooms','tbl_rooms.id_room','tbl_rental_rates.room_id')
-                                ->where('id_reservation', $id)->get();    
+                                ->where('id_reservation', $id)->get();
 
             $customPaper = array(0,0,567.00,283.80);
-            $pdf = PDF::loadView('v_admin_master.cetak_kwitansi', compact('reservasi','reservasidetail'))->setPaper($customPaper, 'landscape');     
+            $pdf = PDF::loadView('v_admin_master.cetak_kwitansi', compact('reservasi','reservasidetail'))->setPaper($customPaper, 'landscape');
 
             return view('v_admin_master.cetak_kwitansi', compact('reservasi','reservasidetail'));
 
@@ -167,7 +167,7 @@ class MasterController extends Controller
                         ->first();
             return view('v_admin_master.detail_pengguna', compact('role','user'));
         }elseif($aksi == 'ubah') {
-            if ($request->username != null) {   
+            if ($request->username != null) {
                 $valid_username  = Validator::make($request->all(), [
                     'username'  => 'unique:users',
                 ]);
@@ -354,7 +354,7 @@ class MasterController extends Controller
             $history->room_reserved     = $room_reserved->room_reserved;
             $history->room_notavailable = $room_maintenance;
             $history->room_available    = $room_avail;
-            $history->save();       
+            $history->save();
 
             // Update Pendapatan
             $income = DB::table('tbl_reservations')
@@ -371,7 +371,7 @@ class MasterController extends Controller
                             'pnbp_total_room'   => $income->total_room,
                             'pnbp_total_income' => $income->total_income
                         ]);
-                    
+
             }
 
             return redirect('admin-pnbp/reservasi/daftar/keseluruhan')->with('success','Berhasil menambah pembayaran');
@@ -385,7 +385,7 @@ class MasterController extends Controller
     public function showReport(Request $request, $id)
     {
         if ($id == 'kamar') {
-            
+
             if ($request->all() == []) {
                 $rooms = DB::table('tbl_room_historys')
                         ->join('tbl_reservations','tbl_reservations.id_reservation','tbl_room_historys.reservation_id')
@@ -406,7 +406,7 @@ class MasterController extends Controller
 
             return view('v_admin_master.laporan_kamar', compact('rooms'));
         }elseif ($id == 'pnbp') {
-            
+
             if ($request->all() == []) {
                 $pnbp = DB::table('tbl_pnbp')->orderby('pnbp_date','DESC')->get();
             }else{
@@ -416,7 +416,7 @@ class MasterController extends Controller
             return view('v_admin_master.laporan_pnbp', compact('pnbp'));
 
         }elseif ($id == 'reservasi') {
-            
+
             $reservasi  = DB::table('tbl_reservations_details')
                             ->join('tbl_reservations', 'tbl_reservations.id_reservation','tbl_reservations_details.reservation_id')
                             ->join('tbl_rental_rates','tbl_rental_rates.id_rental_rate','tbl_reservations_details.rental_rate_id')
@@ -430,7 +430,7 @@ class MasterController extends Controller
             $visit = DB::table('tbl_visits')->get();
             return view('v_admin_master.laporan_pengunjung',compact('visit'));
         }
-        
+
     }
 
     public function showDetail(Request $request, $aksi, $id)
@@ -445,7 +445,7 @@ class MasterController extends Controller
     }
 
     // ================
-    // Bar Chart 
+    // Bar Chart
     // ================
 
     public function getChartVisitor()
@@ -453,7 +453,7 @@ class MasterController extends Controller
         $result     = DB::table('tbl_visits')
                         ->select(DB::raw("(DATE_FORMAT(visit_date, '%M %Y')) as month"), DB::raw("count(id_visit) as total_visitor "))
                         ->groupBy('month')
-                        ->get(); 
+                        ->get();
 
         return response()->json($result);
     }

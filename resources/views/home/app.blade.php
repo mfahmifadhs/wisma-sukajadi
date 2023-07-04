@@ -116,8 +116,8 @@
                                         <li class="nav-item dropdown">
                                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Kunjungan & Lainya <i class="fa fa-angle-down"></i></a>
                                             <ul class="dropdown-menu" role="menu">
-                                                <li class="{{ Request::is('beranda/kunjungan/buku-tamu') ? 'active' : '' }}">
-                                                    <a href="{{ url('beranda/kunjungan/buku-tamu') }}">Buku Tamu</a>
+                                                <li class="{{ Request::is('buku-tamu') ? 'active' : '' }}">
+                                                    <a href="{{ route('home.buku_tamu') }}">Buku Tamu</a>
                                                 </li>
                                             </ul>
                                         </li>
