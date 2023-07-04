@@ -116,8 +116,8 @@
                                         <li class="nav-item dropdown">
                                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Kunjungan & Lainya <i class="fa fa-angle-down"></i></a>
                                             <ul class="dropdown-menu" role="menu">
-                                                <li class="{{ Request::is('buku-tamu') ? 'active' : '' }}">
-                                                    <a href="{{ route('home.buku_tamu') }}">Buku Tamu</a>
+                                                <li class="{{ Request::is('beranda/kunjungan/buku-tamu') ? 'active' : '' }}">
+                                                    <a href="{{ url('beranda/kunjungan/buku-tamu') }}">Buku Tamu</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -132,19 +132,9 @@
                                             <a class="nav-link" href="{{ url('beranda/kontak') }}">Kontak</a>
                                         </li>
                                         @if(Auth::user() != null)
-                                        @if(Auth::user()->role_id == 4)
-                                        <li class="nav-item {{ Request::is('admin-sukajadi/dashboard') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('admin-sukajadi/dashboard') }}">Dashboard</a>
+                                        <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                                         </li>
-                                        @elseif(Auth::user()->role_id == 1)
-                                        <li class="nav-item {{ Request::is('admin-master/dashboard') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('admin-master/dashboard') }}">Dashboard</a>
-                                        </li>
-                                        @elseif(Auth::user()->role_id == 3)
-                                        <li class="nav-item {{ Request::is('admin-pnbp/dashboard') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('admin-pnbp/dashboard') }}">Dashboard</a>
-                                        </li>
-                                        @endif
                                         @endif
                                     </ul>
                                 </div>

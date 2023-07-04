@@ -5,10 +5,8 @@
 
     <!-- Basic Page Needs
 ================================================== -->
-  <meta charset="utf-8">
-  <title>WISMA SUKAJADI | KEMENKES RI</title>
-  <!-- Icon Title -->
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mfahmifadhs/wisma-sukajadi/master/public/images/admin/logo-kemenkes-icon.png">
+    <meta charset="utf-8">
+    <title>WISMA SUKAJADI | KEMENKES RI</title>
 
     <!-- Mobile Specific Metas
 ================================================== -->
@@ -41,36 +39,108 @@
 </head>
 
 <body>
-  <div class="body-inner">
+    <div class="body-inner">
 
-<!-- Header start -->
-<header id="header" class="header-one">
-  <div class="bg-white">
-    <div class="container">
-      <div class="logo-area">
-          <div class="row align-items-center">
-            <div class="logo col-lg-3 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
-                <a class="d-block" href="{{ url('/') }}">
-                  <img loading="lazy" src="https://raw.githubusercontent.com/mfahmifadhs/wisma-sukajadi/master/public/images/main/KemenkesLogo.png" style="width:65%;height:70%;"  alt="Wisma Sukajadi Bandung">
-                </a>
-            </div><!-- logo end -->
+        <!-- Header start -->
+        <header id="header" class="header-one">
+            <div class="bg-white">
+                <div class="container">
+                    <div class="logo-area">
+                        <div class="row align-items-center">
+                            <div class="logo col-lg-3 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
+                                <a class="d-block" href="index.html">
+                                    <img loading="lazy" src="{{ asset('images/main/kemenkeslogo.png') }}" alt="Wisma Sukajadi Bandung">
+                                </a>
+                            </div><!-- logo end -->
 
-            <div class="col-lg-9 header-right">
-                <ul class="top-info-box">
-                  <li>
-                    <div class="info-box">
-                      <div class="info-box-content">
-                          <p class="info-box-title">Telepon</p>
-                          <p class="info-box-subtitle"><a href="tel:(+9) 847-291-4353">(022) 2031152</a></p>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="info-box">
-                      <div class="info-box-content">
-                          <p class="info-box-title">Alamat</p>
-                          <p class="info-box-subtitle"><a href="mailto:office@Constra.com">Jl. Sukajadi No.155, Cipedes, Kec. Sukajadi, Kota Bandung.</a></p>
-                      </div>
+                            <div class="col-lg-9 header-right">
+                                <ul class="top-info-box">
+                                    <li>
+                                        <div class="info-box">
+                                            <div class="info-box-content">
+                                                <p class="info-box-title">Telepon</p>
+                                                <p class="info-box-subtitle"><a href="tel:(+9) 847-291-4353">(022) 2031152</a></p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="info-box">
+                                            <div class="info-box-content">
+                                                <p class="info-box-title">Alamat</p>
+                                                <p class="info-box-subtitle"><a href="mailto:office@Constra.com">Jl. Sukajadi No.155, Cipedes, Kec. Sukajadi, Kota Bandung.</a></p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="header-get-a-quote">
+                                        @if(Auth::user() == null)
+                                        <a class="btn btn-primary" href="{{ url('beranda/masuk') }}">Masuk</a>
+                                        @else
+                                        <a class="btn btn-primary" href="dropdown-toggle" data-toggle="dropdown">Admin</a>
+                                        @endif
+                                    </li>
+                                </ul><!-- Ul end -->
+                            </div><!-- header right end -->
+                        </div><!-- logo area end -->
+
+                    </div><!-- Row end -->
+                </div><!-- Container end -->
+            </div>
+
+            <div class="site-navigation">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <nav class="navbar navbar-expand-lg navbar-dark p-0">
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+
+                                <div id="navbar-collapse" class="collapse navbar-collapse">
+                                    <ul class="nav navbar-nav mr-auto">
+                                        <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ url('/') }} ">Beranda</a>
+                                        </li>
+                                        <li class="nav-item {{ Request::is('beranda/tentang') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ url('beranda/tentang') }}">Tentang</a>
+                                        </li>
+
+                                        <li class="nav-item dropdown">
+                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Kamar & Fasilitas <i class="fa fa-angle-down"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li class="{{ Request::is('beranda/kamar/daftar') ? 'active' : '' }}">
+                                                    <a href="{{ url('beranda/kamar/daftar') }}">Kamar</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item dropdown">
+                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Kunjungan & Lainya <i class="fa fa-angle-down"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li class="{{ Request::is('beranda/kunjungan/buku-tamu') ? 'active' : '' }}">
+                                                    <a href="{{ url('beranda/kunjungan/buku-tamu') }}">Buku Tamu</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item {{ Request::is('beranda/testimoni') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ url('beranda/testimoni') }}">Testimoni</a>
+                                        </li>
+                                        <li class="nav-item {{ Request::is('beranda/faq') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ url('beranda/faq') }}">FAQ</a>
+                                        </li>
+                                        <li class="nav-item {{ Request::is('beranda/kontak') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ url('beranda/kontak') }}">Kontak</a>
+                                        </li>
+                                        @if(Auth::user() != null)
+                                        <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                                        </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                        <!--/ Col end -->
                     </div>
                     <!--/ Row end -->
 
@@ -85,88 +155,7 @@
                         <span class="search-close">&times;</span>
                     </div><!-- Site search end -->
                 </div>
-              </nav>
-          </div>
-          <!--/ Col end -->
-        </div>
-        <!--/ Row end -->
-
-        <div class="nav-search">
-          <span id="search"><i class="fa fa-search"></i></span>
-        </div><!-- Search end -->
-
-        <div class="search-block" style="display: none;">
-          <label for="search-field" class="w-100 mb-0">
-            <input type="text" class="form-control" id="search-field" placeholder="Type what you want and enter">
-          </label>
-          <span class="search-close">&times;</span>
-        </div><!-- Site search end -->
-    </div>
-    <!--/ Container end -->
-
-  </div>
-  <!--/ Navigation end -->
-</header>
-<!--/ Header end -->
-
-
-@yield('content')
-
-
-  <footer id="footer" class="footer bg-overlay">
-    <div class="footer-main">
-      <div class="container">
-        <div class="row justify-content-between">
-          <div class="col-lg-4 col-md-6 footer-widget footer-about">
-            <h3 class="widget-title">Tentang Kami</h3>
-            <img loading="lazy" width="200px" class="footer-logo" src="https://raw.githubusercontent.com/mfahmifadhs/wisma-sukajadi/master/public/images/main/KemenkesLogoWhite.png">
-            <p>
-                Wisma Sukajadi Bandung <br>
-                Kementerian Kesehatan Republik Indonesia.
-            </p>
-            <div class="footer-social">
-              <ul>
-                <li><a href="#" aria-label="Facebook"><i
-                      class="fab fa-facebook-f"></i></a></li>
-                <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                </li>
-                <li><a href="#" aria-label="Instagram"><i
-                      class="fab fa-instagram"></i></a></li>
-                <li><a href="#" aria-label="Github"><i class="fab fa-github"></i></a></li>
-              </ul>
-            </div><!-- Footer social end -->
-          </div><!-- Col end -->
-
-          <div class="col-lg-4 col-md-6 footer-widget mt-5 mt-md-0">
-            <h3 class="widget-title">Prosedur</h3>
-            <div class="working-hours">
-              Reservasi dapat dilakukan di jam kerja, diluar jam kerja pengunjung tetap dapat menginap namun
-              pembayaran dilakukan di jam kerja.
-              <br><br> Waktu Check In: <span class="text-right">14:00</span>
-              <br> Waktu Check Out: <span class="text-right">11:00</span>
-            </div>
-          </div><!-- Col end -->
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0 footer-widget">
-            <h3 class="widget-title">Layanan</h3>
-            <ul class="list-arrow">
-              <li>Aula</li>
-              <li>Gym / Fitnes</li>
-              <li>Ruang Rapat</li>
-            </ul>
-          </div><!-- Col end -->
-        </div><!-- Row end -->
-      </div><!-- Container end -->
-    </div><!-- Footer main end -->
-
-    <div class="copyright">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6">
-            <div class="copyright-info text-center text-md-left">
-              <span>Copyright &copy; 2021 <a href="#">Wisma Sukajadi Bandung</a>.</span>
-            </div>
-          </div>
+                <!--/ Container end -->
 
             </div>
             <!--/ Navigation end -->
