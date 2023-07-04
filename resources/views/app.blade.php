@@ -5,15 +5,10 @@
 
     <!-- Basic Page Needs
 ================================================== -->
-<<<<<<< HEAD
   <meta charset="utf-8">
   <title>WISMA SUKAJADI | KEMENKES RI</title>
   <!-- Icon Title -->
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mfahmifadhs/wisma-sukajadi/master/public/images/admin/logo-kemenkes-icon.png">
-=======
-    <meta charset="utf-8">
-    <title>WISMA SUKAJADI | KEMENKES RI</title>
->>>>>>> 23ab6013e9eca8db5bc4e753bf2e8f9579c7e306
 
     <!-- Mobile Specific Metas
 ================================================== -->
@@ -46,7 +41,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
   <div class="body-inner">
 
 <!-- Header start -->
@@ -77,120 +71,6 @@
                           <p class="info-box-title">Alamat</p>
                           <p class="info-box-subtitle"><a href="mailto:office@Constra.com">Jl. Sukajadi No.155, Cipedes, Kec. Sukajadi, Kota Bandung.</a></p>
                       </div>
-=======
-    <div class="body-inner">
-
-        <!-- Header start -->
-        <header id="header" class="header-one">
-            <div class="bg-white">
-                <div class="container">
-                    <div class="logo-area">
-                        <div class="row align-items-center">
-                            <div class="logo col-lg-3 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
-                                <a class="d-block" href="index.html">
-                                    <img loading="lazy" src="{{ asset('images/main/kemenkeslogo.png') }}" alt="Wisma Sukajadi Bandung">
-                                </a>
-                            </div><!-- logo end -->
-
-                            <div class="col-lg-9 header-right">
-                                <ul class="top-info-box">
-                                    <li>
-                                        <div class="info-box">
-                                            <div class="info-box-content">
-                                                <p class="info-box-title">Telepon</p>
-                                                <p class="info-box-subtitle"><a href="tel:(+9) 847-291-4353">(022) 2031152</a></p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="info-box">
-                                            <div class="info-box-content">
-                                                <p class="info-box-title">Alamat</p>
-                                                <p class="info-box-subtitle"><a href="mailto:office@Constra.com">Jl. Sukajadi No.155, Cipedes, Kec. Sukajadi, Kota Bandung.</a></p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="header-get-a-quote">
-                                        @if(Auth::user() == null)
-                                        <a class="btn btn-primary" href="{{ url('beranda/masuk') }}">Masuk</a>
-                                        @else
-                                        <a class="btn btn-primary" href="dropdown-toggle" data-toggle="dropdown">Admin</a>
-                                        @endif
-                                    </li>
-                                </ul><!-- Ul end -->
-                            </div><!-- header right end -->
-                        </div><!-- logo area end -->
-
-                    </div><!-- Row end -->
-                </div><!-- Container end -->
-            </div>
-
-            <div class="site-navigation">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <nav class="navbar navbar-expand-lg navbar-dark p-0">
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-
-                                <div id="navbar-collapse" class="collapse navbar-collapse">
-                                    <ul class="nav navbar-nav mr-auto">
-                                        <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('/') }} ">Beranda</a>
-                                        </li>
-                                        <li class="nav-item {{ Request::is('beranda/tentang') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('beranda/tentang') }}">Tentang</a>
-                                        </li>
-
-                                        <li class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Kamar & Fasilitas <i class="fa fa-angle-down"></i></a>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li class="{{ Request::is('beranda/kamar/daftar') ? 'active' : '' }}">
-                                                    <a href="{{ url('beranda/kamar/daftar') }}">Kamar</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-
-                                        <li class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Kunjungan & Lainya <i class="fa fa-angle-down"></i></a>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li class="{{ Request::is('beranda/kunjungan/buku-tamu') ? 'active' : '' }}">
-                                                    <a href="{{ url('beranda/kunjungan/buku-tamu') }}">Buku Tamu</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-
-                                        <li class="nav-item {{ Request::is('beranda/testimoni') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('beranda/testimoni') }}">Testimoni</a>
-                                        </li>
-                                        <li class="nav-item {{ Request::is('beranda/faq') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('beranda/faq') }}">FAQ</a>
-                                        </li>
-                                        <li class="nav-item {{ Request::is('beranda/kontak') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('beranda/kontak') }}">Kontak</a>
-                                        </li>
-                                        @if(Auth::user() != null)
-                                        @if(Auth::user()->role_id == 4)
-                                        <li class="nav-item {{ Request::is('admin-sukajadi/dashboard') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('admin-sukajadi/dashboard') }}">Dashboard</a>
-                                        </li>
-                                        @elseif(Auth::user()->role_id == 1)
-                                        <li class="nav-item {{ Request::is('admin-master/dashboard') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('admin-master/dashboard') }}">Dashboard</a>
-                                        </li>
-                                        @elseif(Auth::user()->role_id == 3)
-                                        <li class="nav-item {{ Request::is('admin-pnbp/dashboard') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('admin-pnbp/dashboard') }}">Dashboard</a>
-                                        </li>
-                                        @endif
-                                        @endif
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                        <!--/ Col end -->
->>>>>>> 23ab6013e9eca8db5bc4e753bf2e8f9579c7e306
                     </div>
                     <!--/ Row end -->
 
