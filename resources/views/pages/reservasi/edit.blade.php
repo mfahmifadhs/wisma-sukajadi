@@ -404,12 +404,15 @@
         });
         $("#tambah-baris").click(function() {
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "/kamar/select",
                 data: {
                     "data": dataKamar
                 },
                 dataType: 'JSON',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 success: function(res) {
                     let kamar = "";
                     let tarif = "";
