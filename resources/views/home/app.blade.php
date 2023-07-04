@@ -172,7 +172,7 @@
                     <div class="row justify-content-between">
                         <div class="col-lg-4 col-md-6 footer-widget footer-about">
                             <h3 class="widget-title">Tentang Kami</h3>
-                            <img loading="lazy" width="200px" class="footer-logo" src="{{ asset('images/main/kemenkeslogowhite.png')}}">
+                            <img loading="lazy" width="200px" class="footer-logo" src="{{ asset('images/main/logo-kemenkes-white.png')}}">
                             <p>
                                 Wisma Sukajadi Bandung <br>
                                 Kementerian Kesehatan Republik Indonesia.
