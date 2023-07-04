@@ -205,7 +205,6 @@
                         <span class="search-close">&times;</span>
                     </div><!-- Site search end -->
                 </div>
-<<<<<<< HEAD
               </nav>
           </div>
           <!--/ Col end -->
@@ -288,9 +287,6 @@
               <span>Copyright &copy; 2021 <a href="#">Wisma Sukajadi Bandung</a>.</span>
             </div>
           </div>
-=======
-                <!--/ Container end -->
->>>>>>> 23ab6013e9eca8db5bc4e753bf2e8f9579c7e306
 
             </div>
             <!--/ Navigation end -->
