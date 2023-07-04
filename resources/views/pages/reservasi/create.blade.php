@@ -332,7 +332,7 @@
                                         <div class="col-md-12 mt-5"></div>
                                         <div class="col-md-12">
                                             @php
-                                            $phone = "6285772652563";
+                                            $phone = "6287822803794";
                                             $date = \Carbon\carbon::parse($reservasi->created_at)->isoFormat('DD/MM/Y');
                                             $name = ucwords($reservasi->pengunjung->nama_pengunjung);
                                             $room = $reservasi->detail;
