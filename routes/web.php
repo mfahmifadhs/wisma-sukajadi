@@ -192,6 +192,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Akses super admin
     Route::group(['middleware' => ['access:private']], function () {
+        // Hapus usulan
+        Route::get('reservasi/hapus/{id}', [ReservasiController::class, 'destroy'])->name('reservasi.delete');
         // User atau pengguna
         Route::get('pengguna', [UserController::class, 'show'])->name('user.show');
         Route::get('pengguna/detail/{id}', [UserController::class, 'detail'])->name('user.detail');

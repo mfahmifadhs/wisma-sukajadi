@@ -134,21 +134,28 @@
                                     <i class="fas fa-bars"></i>
                                 </a>
                                 <div class="dropdown-menu">
-                                    @if ($row->status_reservasi < 14) <a class="dropdown-item btn btn-sm {{ Auth::user()->role_id != 4 ? 'disabled' : ''  }}" type="button" href="{{ route('reservasi.tambah', $row->id_reservasi) }}">
-                                        <i class="fas fa-external-link-square-alt"></i> Proses
+                                    @if ($row->status_reservasi < 14)
+                                        <a class="dropdown-item btn btn-sm {{ Auth::user()->role_id != 4 ? 'disabled' : ''  }}" type="button" href="{{ route('reservasi.tambah', $row->id_reservasi) }}">
+                                            <i class="fas fa-external-link-square-alt"></i> Proses
                                         </a>
-                                        @if ($row->status_reservasi < 14) <a href="{{ route('reservasi.edit', $row->id_reservasi) }}" class="dropdown-item btn btn-sm" type="button">
+                                        @if ($row->status_reservasi < 14)
+                                        <a href="{{ route('reservasi.edit', $row->id_reservasi) }}" class="dropdown-item btn btn-sm" type="button">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
                                         @endif
-                                        @elseif ($row->status_reservasi == 14)
+                                    @elseif ($row->status_reservasi == 14)
                                         <a type="button" class="dropdown-item btn btn-sm" data-toggle="modal" onclick="showKwitansi('{{ $row->id_reservasi }}')">
                                             <i class="fas fa-file"></i> Kwitansi
                                         </a>
-                                        @endif
-                                        <a href="{{ route('reservasi.detail', $row->id_reservasi) }}" type="button" class="dropdown-item btn btn-sm">
-                                            <i class="fas fa-info-circle"></i> Detail
-                                        </a>
+                                    @endif
+                                    <a href="{{ route('reservasi.detail', $row->id_reservasi) }}" type="button" class="dropdown-item btn btn-sm">
+                                        <i class="fas fa-info-circle"></i> Detail
+                                    </a>
+                                    @if (Auth::user()->role_id == 1)
+                                    <a href="{{ route('reservasi.delete', $row->id_reservasi) }}" type="button" class="dropdown-item btn btn-sm" onclick="return confirm('Apakah ingin menghapus reservasi ?')">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

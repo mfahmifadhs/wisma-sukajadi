@@ -88,7 +88,7 @@ class ReservasiController extends Controller
     public function store(Request $request)
     {
         if (!$request->status) {
-            $pengunjung   = str_pad(Pengunjung::count() + 1, 4, 0, STR_PAD_LEFT);
+            $pengunjung   = str_pad(Pengunjung::withTrashed()->count() + 1, 4, 0, STR_PAD_LEFT);
             $idPengunjung = (int) Carbon::now()->isoFormat('YYMMDD').$pengunjung;
 
             $tPengunjung  = new Pengunjung();
@@ -112,7 +112,7 @@ class ReservasiController extends Controller
                 Pengunjung::where('id_pengunjung', $idPengunjung)->update(['foto_ktp' => $foto_ktp]);
             }
 
-            $reservasi   = str_pad(Reservasi::count() + 1, 4, 0, STR_PAD_LEFT);
+            $reservasi   = str_pad(Reservasi::withTrashed()->count() + 1, 4, 0, STR_PAD_LEFT);
             $idReservasi = (int) Carbon::now()->isoFormat('YYMMDD').$reservasi;
 
             $tReservasi = new Reservasi();
@@ -326,7 +326,12 @@ class ReservasiController extends Controller
 
     public function destroy($id)
     {
-        //
+        $reservasi = Reservasi::where('id_reservasi', $id)->first();
+        Reservasi::where('id_reservasi',$id)->delete();
+        Pengunjung::where('id_pengunjung', $reservasi->pengunjung_id)->delete();
+        ReservasiDetail::where('reservasi_id', $id)->delete();
+
+        return redirect()->route('reservasi.show')->with('success', 'Berhasil Menghapus');
     }
 
     public function print($id)
