@@ -181,11 +181,11 @@
                                         </div>
                                         <label class="col-sm-2 col-form-label">Check In</label>
                                         <div class="col-sm-4">
-                                            <input type="date" class="form-control input-border-bottom" name="check_in[]" value="{{ $row->tanggal_check_in }}" min="<?= date('Y-m-d'); ?>">
+                                            <input type="date" class="form-control input-border-bottom" name="check_in[]" value="{{ $row->tanggal_check_in }}">
                                         </div>
                                         <label class="col-sm-2 col-form-label">Check Out</label>
                                         <div class="col-sm-4">
-                                            <input type="date" class="form-control input-border-bottom" name="check_out[]" value="{{ $row->tanggal_check_out }}" min="<?= date('Y-m-d'); ?>">
+                                            <input type="date" class="form-control input-border-bottom" name="check_out[]" value="{{ $row->tanggal_check_out }}">
                                         </div>
                                         <label class="col-sm-2 col-form-label mt-2">Kamar</label>
                                         <div class="col-sm-4 mt-2">
