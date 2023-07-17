@@ -58,6 +58,7 @@ class DashboardController extends Controller
     {
         $result = Reservasi::select(DB::raw("(DATE_FORMAT(created_at, '%m')) as month"), DB::raw('sum(total_pembayaran) as pendapatan'))
                     ->groupBy('month')
+                    ->where('status_reservasi', 14)
                     ->get();
 
         return response()->json($result);

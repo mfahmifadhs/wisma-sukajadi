@@ -340,8 +340,8 @@
                                             $msg = "Reservasi Pengunjung,
                                             %0ATanggal : $date
                                             %0AAtas Nama : $name, %0A*Total Pembayaran : Rp $price* %0ADengan Riancian : ";
-                                            foreach($room as $dataRoom) {
-                                            $msg .= "%0A▪️".$dataRoom->room_name." durasi ".$dataRoom->duration." malam, ";
+                                            foreach($reservasi->detail as $row) {
+                                            $msg .= "%0A▪️".$row->tarif->kamar->nama_kamar." durasi ".\Carbon\Carbon::parse($row->tanggal_check_in)->diffInDays(\Carbon\Carbon::parse($row->tanggal_check_out))." malam, ";
                                             }
                                             $msg = rtrim($msg, ", "); // Menghapus koma terakhir dari string
 

@@ -27,7 +27,8 @@ class LaporanController extends Controller
 
         if ($id == 'pendapatan') {
             $data = Reservasi::select(DB::raw("(DATE_FORMAT(created_at, '%d-%m-%Y')) as date"), DB::raw('sum(total_pembayaran) as pendapatan'))
-                    ->groupBy('date');
+                    ->groupBy('date')
+                    ->where('status_reservasi', 14);
         }
 
         if ($id == 'reservasi') {
@@ -39,7 +40,8 @@ class LaporanController extends Controller
             $reservasi = Reservasi::select('id_reservasi','kode_biling', DB::raw("(DATE_FORMAT(created_at, '%d-%m-%Y')) as date"))->get();
             $data = Reservasi::select(DB::raw("(DATE_FORMAT(created_at, '%d-%m-%Y')) as date"), DB::raw('count(kode_biling) as kode_biling'))
                     ->groupBy('date')
-                    ->where('kode_biling', '!=', null);
+                    ->where('kode_biling', '!=', null)
+                    ->where('status_reservasi', 14);
         }
 
 
