@@ -87,7 +87,7 @@
                         <tr>
                             <th class="text-center">No</th>
                             <th class="text-center">Order ID</th>
-                            <th>Pengunjung</th>
+                            <th style="width:30%;">Pengunjung</th>
                             <th>Keterangan</th>
                             <th>Foto KTP</th>
                             <th>Bukti Bayar</th>
