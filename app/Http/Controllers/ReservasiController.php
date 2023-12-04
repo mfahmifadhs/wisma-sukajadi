@@ -172,6 +172,7 @@ class ReservasiController extends Controller
             }
 
             Reservasi::where('id_reservasi', $idReservasi)->update([
+		'tanggal_pembayaran' => $request->tgl_bayar,
                 'kode_biling'      => $request->kode_biling,
                 'status_reservasi' => 12
             ]);
