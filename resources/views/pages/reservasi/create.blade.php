@@ -201,11 +201,11 @@
                                             <input type="hidden" id="kamar-available" value="{{ json_encode($kamar) }}">
                                             <label class="col-sm-2 col-form-label">Check In</label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control input-border-bottom" name="check_in[]" value="{{ \Carbon\Carbon::now()->isoFormat('Y-MM-DD') }}" min="<?= date('Y-m-d'); ?>">
+                                                <input type="date" class="form-control input-border-bottom" name="check_in[]" value="{{ \Carbon\Carbon::now()->isoFormat('Y-MM-DD') }}">
                                             </div>
                                             <label class="col-sm-2 col-form-label">Check Out</label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control input-border-bottom" name="check_out[]" value="{{ \Carbon\Carbon::tomorrow()->isoFormat('Y-MM-DD') }}" min="<?= date('Y-m-d'); ?>">
+                                                <input type="date" class="form-control input-border-bottom" name="check_out[]" value="{{ \Carbon\Carbon::tomorrow()->isoFormat('Y-MM-DD') }}">
                                             </div>
                                             <label class="col-sm-2 col-form-label mt-2">Kamar</label>
                                             <div class="col-sm-4 mt-2">
