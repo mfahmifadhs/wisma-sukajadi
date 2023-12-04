@@ -20,7 +20,7 @@ class ReservasiController extends Controller
     public function index(Request $request)
     {
         $listStatus = Status::whereIn('id_status',[10,11,12,13,14])->orderBy('nama_status','ASC');
-        $reservasi  = Reservasi::orderBy('t_reservasi.created_at', 'DESC');
+        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC');
         $bulan      = [];
         $bulanPick  = [];
         $statusPick = [];
@@ -41,7 +41,7 @@ class ReservasiController extends Controller
                     return in_array($item['id'], $selectedBulan);
                 });
 
-                $search = $reservasi->where(DB::raw("DATE_FORMAT(t_reservasi.created_at, '%c')"), $request->bulan);
+                $search = $reservasi->where(DB::raw("DATE_FORMAT(t_reservasi.tanggal_reservasi, '%c')"), $request->bulan);
             } else { $bulan    = $listBulan; }
 
 
@@ -52,7 +52,7 @@ class ReservasiController extends Controller
             } else { $status = $listStatus->get(); }
 
             if ($request->date) {
-                $search     = $reservasi->where(DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y')"), $request->date);
+                $search     = $reservasi->where(DB::raw("DATE_FORMAT(tanggal_reservasi, '%d-%m-%Y')"), $request->date);
             }
 
             $reservasi = $search->get();
