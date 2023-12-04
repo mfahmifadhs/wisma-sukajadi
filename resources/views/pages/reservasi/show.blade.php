@@ -102,7 +102,7 @@
                             <td class="pt-3 text-center">{{ $no++ }} </td>
                             <td class="pt-3 text-center">{{ $row->id_reservasi }} </td>
                             <td class="pt-3">
-                                {{ \Carbon\Carbon::parse($row->created_at)->isoFormat('DD MMMM Y') }} <br>
+                                {{ \Carbon\Carbon::parse($row->tanggal_reservasi)->isoFormat('DD MMMM Y') }} <br>
                                 {{ $row->pengunjung->nama_pengunjung.' (0'.$row->pengunjung->no_hp.')' }} <br>
                                 {{ $row->pengunjung->instansi }}
                                 ({{ $row->pengunjung->instansi == 'kemenkes' ? $row->pengunjung->unitKerja->nama_unit_kerja : $row->pengunjung->keterangan }})

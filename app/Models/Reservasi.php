@@ -20,6 +20,7 @@ class Reservasi extends Model
         'pengunjung_id',
         'surat_tugas',
         'kode_biling',
+        'tanggal_reservasi',
         'status_reservasi',
         'status_pembayaran',
         'bukti_pembayaran',

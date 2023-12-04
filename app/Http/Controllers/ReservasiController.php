@@ -92,16 +92,16 @@ class ReservasiController extends Controller
             $idPengunjung = (int) Carbon::now()->isoFormat('YYMMDD').$pengunjung;
 
             $tPengunjung  = new Pengunjung();
-            $tPengunjung->id_pengunjung   = $idPengunjung;
-            $tPengunjung->unit_kerja_id   = $request->unit_kerja_id;
-            $tPengunjung->nik             = $request->nik;
-            $tPengunjung->nama_pengunjung = $request->nama_pengunjung;
-            $tPengunjung->tanggal_lahir   = $request->tanggal_lahir;
-            $tPengunjung->no_hp           = $request->no_hp;
-            $tPengunjung->alamat          = $request->alamat;
-            $tPengunjung->instansi        = $request->instansi;
-            $tPengunjung->keterangan      = $request->instansi == 'kemenkes' ? $request->jabatan : $request->keterangan;
-            $tPengunjung->created_at      = Carbon::now();
+            $tPengunjung->id_pengunjung     = $idPengunjung;
+            $tPengunjung->unit_kerja_id     = $request->unit_kerja_id;
+            $tPengunjung->nik               = $request->nik;
+            $tPengunjung->nama_pengunjung   = $request->nama_pengunjung;
+            $tPengunjung->tanggal_lahir     = $request->tanggal_lahir;
+            $tPengunjung->no_hp             = $request->no_hp;
+            $tPengunjung->alamat            = $request->alamat;
+            $tPengunjung->instansi          = $request->instansi;
+            $tPengunjung->keterangan        = $request->instansi == 'kemenkes' ? $request->jabatan : $request->keterangan;
+            $tPengunjung->created_at        = Carbon::now();
             $tPengunjung->save();
 
             if ($request->foto_ktp) {
@@ -119,6 +119,7 @@ class ReservasiController extends Controller
             $tReservasi->id_reservasi     = $idReservasi;
             $tReservasi->pengunjung_id    = $idPengunjung;
             $tReservasi->status_reservasi = 10;
+            $tReservasi->tanggal_reservasi= $request->tgl_reservasi;
             $tReservasi->created_at       = Carbon::now();
             $tReservasi->save();
 

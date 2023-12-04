@@ -115,6 +115,12 @@
                                     <span class="help-block" style="font-size: 12px;">Max. 5MB</span>
                                 </div>
                             </div>
+			    <div class="form-group row">
+				<label class="col-sm-2 col-form-label">Tanggal Reservasi</label>
+				<div class="col-sm-10">
+				    <input type="date" class="form-control" name="tgl_reservasi" required>
+				</div>
+			    </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">NIK</label>
                                 <div class="col-sm-10">
