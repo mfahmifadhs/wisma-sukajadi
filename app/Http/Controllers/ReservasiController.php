@@ -20,7 +20,7 @@ class ReservasiController extends Controller
     public function index(Request $request)
     {
         $listStatus = Status::whereIn('id_status',[10,11,12,13,14])->orderBy('nama_status','ASC');
-        $reservasi  = Reservasi::orderBy('t_reservasi.created_at', 'DESC');
+        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC');
         $bulan      = [];
         $bulanPick  = [];
         $statusPick = [];
@@ -41,7 +41,7 @@ class ReservasiController extends Controller
                     return in_array($item['id'], $selectedBulan);
                 });
 
-                $search = $reservasi->where(DB::raw("DATE_FORMAT(t_reservasi.created_at, '%c')"), $request->bulan);
+                $search = $reservasi->where(DB::raw("DATE_FORMAT(t_reservasi.tanggal_reservasi, '%c')"), $request->bulan);
             } else { $bulan    = $listBulan; }
 
 
@@ -52,7 +52,7 @@ class ReservasiController extends Controller
             } else { $status = $listStatus->get(); }
 
             if ($request->date) {
-                $search     = $reservasi->where(DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y')"), $request->date);
+                $search     = $reservasi->where(DB::raw("DATE_FORMAT(tanggal_reservasi, '%d-%m-%Y')"), $request->date);
             }
 
             $reservasi = $search->get();
@@ -92,16 +92,16 @@ class ReservasiController extends Controller
             $idPengunjung = (int) Carbon::now()->isoFormat('YYMMDD').$pengunjung;
 
             $tPengunjung  = new Pengunjung();
-            $tPengunjung->id_pengunjung   = $idPengunjung;
-            $tPengunjung->unit_kerja_id   = $request->unit_kerja_id;
-            $tPengunjung->nik             = $request->nik;
-            $tPengunjung->nama_pengunjung = $request->nama_pengunjung;
-            $tPengunjung->tanggal_lahir   = $request->tanggal_lahir;
-            $tPengunjung->no_hp           = $request->no_hp;
-            $tPengunjung->alamat          = $request->alamat;
-            $tPengunjung->instansi        = $request->instansi;
-            $tPengunjung->keterangan      = $request->instansi == 'kemenkes' ? $request->jabatan : $request->keterangan;
-            $tPengunjung->created_at      = Carbon::now();
+            $tPengunjung->id_pengunjung     = $idPengunjung;
+            $tPengunjung->unit_kerja_id     = $request->unit_kerja_id;
+            $tPengunjung->nik               = $request->nik;
+            $tPengunjung->nama_pengunjung   = $request->nama_pengunjung;
+            $tPengunjung->tanggal_lahir     = $request->tanggal_lahir;
+            $tPengunjung->no_hp             = $request->no_hp;
+            $tPengunjung->alamat            = $request->alamat;
+            $tPengunjung->instansi          = $request->instansi;
+            $tPengunjung->keterangan        = $request->instansi == 'kemenkes' ? $request->jabatan : $request->keterangan;
+            $tPengunjung->created_at        = Carbon::now();
             $tPengunjung->save();
 
             if ($request->foto_ktp) {
@@ -119,6 +119,7 @@ class ReservasiController extends Controller
             $tReservasi->id_reservasi     = $idReservasi;
             $tReservasi->pengunjung_id    = $idPengunjung;
             $tReservasi->status_reservasi = 10;
+            $tReservasi->tanggal_reservasi= $request->tgl_reservasi;
             $tReservasi->created_at       = Carbon::now();
             $tReservasi->save();
 
@@ -162,6 +163,14 @@ class ReservasiController extends Controller
             $idReservasi = $request->id_reservasi;
             if ($request->bukti_bayar) {
                 $file  = $request->file('bukti_bayar');
+		$maxFileSize = 5 * 1024 * 1024; // 2 MB dalam bytes
+
+                if ($file->getSize() > $maxFileSize) {
+                   return response()->json([
+                        'error' => 'File size exceeds the maximum allowed size (5 MB).'
+                   ], 400);
+		}
+	
                 $filename = $file->getClientOriginalName();
                 $foto = $file->storeAs('public/files/bukti_pembayaran', $filename);
                 $bukti_bayar = Crypt::encrypt($filename);
@@ -171,6 +180,7 @@ class ReservasiController extends Controller
             }
 
             Reservasi::where('id_reservasi', $idReservasi)->update([
+		'tanggal_pembayaran' => $request->tgl_bayar,
                 'kode_biling'      => $request->kode_biling,
                 'status_reservasi' => 12
             ]);
@@ -306,7 +316,15 @@ class ReservasiController extends Controller
 
         if ($request->status > 11) {
             if ($request->bukti_bayar) {
-                $file  = $request->file('bukti_bayar');
+               $file  = $request->file('bukti_bayar');
+		$maxFileSize = 5 * 1024 * 1024; // 2 MB dalam bytes
+
+		if ($file->getSize() > $maxFileSize) {
+    		   return response()->json([
+        		'error' => 'File size exceeds the maximum allowed size (5 MB).'
+    		   ], 400);
+		}
+
                 $filename = $file->getClientOriginalName();
                 $foto = $file->storeAs('public/files/bukti_pembayaran', $filename);
                 $bukti_bayar = Crypt::encrypt($filename);

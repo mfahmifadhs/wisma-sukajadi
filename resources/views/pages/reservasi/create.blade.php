@@ -115,6 +115,12 @@
                                     <span class="help-block" style="font-size: 12px;">Max. 5MB</span>
                                 </div>
                             </div>
+			    <div class="form-group row">
+				<label class="col-sm-2 col-form-label">Tanggal Reservasi</label>
+				<div class="col-sm-10">
+				    <input type="date" class="form-control" name="tgl_reservasi" required>
+				</div>
+			    </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">NIK</label>
                                 <div class="col-sm-10">
@@ -201,11 +207,11 @@
                                             <input type="hidden" id="kamar-available" value="{{ json_encode($kamar) }}">
                                             <label class="col-sm-2 col-form-label">Check In</label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control input-border-bottom" name="check_in[]" value="{{ \Carbon\Carbon::now()->isoFormat('Y-MM-DD') }}" min="<?= date('Y-m-d'); ?>">
+                                                <input type="date" class="form-control input-border-bottom" name="check_in[]">
                                             </div>
                                             <label class="col-sm-2 col-form-label">Check Out</label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control input-border-bottom" name="check_out[]" value="{{ \Carbon\Carbon::tomorrow()->isoFormat('Y-MM-DD') }}" min="<?= date('Y-m-d'); ?>">
+                                                <input type="date" class="form-control input-border-bottom" name="check_out[]">
                                             </div>
                                             <label class="col-sm-2 col-form-label mt-2">Kamar</label>
                                             <div class="col-sm-4 mt-2">
@@ -316,6 +322,10 @@
                                 <div class="col-md-4">
                                     <div class="row">
                                         <label class="col-form-label col-md-12">Informasi Pembayaran</label>
+					<div class="col-md-12">Tanggal Pembayaran</div>
+                                        <div class="col-md-8 mt-2 mb-3">
+                                            <input type="date" class="form-control input-border-bottom" name="tgl_bayar" value="{{ \Carbon\carbon::now()->isoFormat('Y-MM-DD') }}" required>
+                                        </div>
                                         <div class="col-md-12">Kode Biling</div>
                                         <div class="col-md-8 mt-2">
                                             <input type="number" class="form-control input-border-bottom" name="kode_biling" placeholder="Kode Biling dari PNBP" required>
@@ -599,11 +609,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Check In</label>
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control input-border-bottom" name="check_in[]" value="{{ \Carbon\Carbon::now()->isoFormat('Y-MM-DD') }}" min="<?= date('Y-m-d'); ?>">
+                                        <input type="date" class="form-control input-border-bottom" name="check_in[]">
                                     </div>
                                     <label class="col-sm-2 col-form-label">Check Out</label>
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control input-border-bottom" name="check_out[]" value="{{ \Carbon\Carbon::tomorrow()->isoFormat('Y-MM-DD') }}" min="<?= date('Y-m-d'); ?>">
+                                        <input type="date" class="form-control input-border-bottom" name="check_out[]">
                                     </div>
                                     <label class="col-sm-2 col-form-label mt-2">Kamar</label>
                                     <div class="col-sm-4 mt-2">

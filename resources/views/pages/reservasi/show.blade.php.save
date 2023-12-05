@@ -62,7 +62,7 @@
                             <select name="status" class="form-control form-control-sm small">
                                 <option value="">Seluruh Status</option>
                                 @foreach ($status as $row)
-                                <option value="{{ $row->id_status }}" <?php echo !$statusPick ? '' : ($row->id_status == $statusPick->id_status ? 'selected' : '') ?>>
+                                <option value="{{ $row->id_status }}" <?php echo !$statusPick ? '' : $row->id_status == $statusPick->id_status ? 'selected' : '' ?>>
                                     {{ $row->nama_status }}
                                 </option>
                                 @endforeach
@@ -102,7 +102,7 @@
                             <td class="pt-3 text-center">{{ $no++ }} </td>
                             <td class="pt-3 text-center">{{ $row->id_reservasi }} </td>
                             <td class="pt-3">
-                                {{ \Carbon\Carbon::parse($row->tanggal_reservasi)->isoFormat('DD MMMM Y') }} <br>
+                                {{ \Carbon\Carbon::parse($row->created_at)->isoFormat('DD MMMM Y') }} <br>
                                 {{ $row->pengunjung->nama_pengunjung.' (0'.$row->pengunjung->no_hp.')' }} <br>
                                 {{ $row->pengunjung->instansi }}
                                 ({{ $row->pengunjung->instansi == 'kemenkes' ? $row->pengunjung->unitKerja->nama_unit_kerja : $row->pengunjung->keterangan }})
@@ -230,7 +230,7 @@
                             <tr>
                                 <td>{{ $i + 1 }}</td>
                                 <td>{{ $subRow->tarif->kamar->nama_kamar }}</td>
-                                <td>{{ \Carbon\Carbon::parse($subRow->tanggal_check_in)->isoFormat('DD MMMM Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($subRow->tpengunjuanggal_check_in)->isoFormat('DD MMMM Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($subRow->tanggal_check_out)->isoFormat('DD MMMM Y') }}</td>
                                 <td>
                                     {{ \Carbon\Carbon::parse($subRow->tanggal_check_in)->diffInDays(\Carbon\Carbon::parse($subRow->tanggal_check_out)) }} Malam
