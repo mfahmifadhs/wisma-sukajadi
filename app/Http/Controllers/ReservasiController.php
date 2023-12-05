@@ -163,6 +163,14 @@ class ReservasiController extends Controller
             $idReservasi = $request->id_reservasi;
             if ($request->bukti_bayar) {
                 $file  = $request->file('bukti_bayar');
+		$maxFileSize = 5 * 1024 * 1024; // 2 MB dalam bytes
+
+                if ($file->getSize() > $maxFileSize) {
+                   return response()->json([
+                        'error' => 'File size exceeds the maximum allowed size (5 MB).'
+                   ], 400);
+		}
+	
                 $filename = $file->getClientOriginalName();
                 $foto = $file->storeAs('public/files/bukti_pembayaran', $filename);
                 $bukti_bayar = Crypt::encrypt($filename);
@@ -308,7 +316,15 @@ class ReservasiController extends Controller
 
         if ($request->status > 11) {
             if ($request->bukti_bayar) {
-                $file  = $request->file('bukti_bayar');
+               $file  = $request->file('bukti_bayar');
+		$maxFileSize = 5 * 1024 * 1024; // 2 MB dalam bytes
+
+		if ($file->getSize() > $maxFileSize) {
+    		   return response()->json([
+        		'error' => 'File size exceeds the maximum allowed size (5 MB).'
+    		   ], 400);
+		}
+
                 $filename = $file->getClientOriginalName();
                 $foto = $file->storeAs('public/files/bukti_pembayaran', $filename);
                 $bukti_bayar = Crypt::encrypt($filename);
