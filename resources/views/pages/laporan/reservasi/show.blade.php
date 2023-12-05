@@ -51,7 +51,7 @@
                             <select name="bulan" class="form-control form-control-sm">
                                 <option value="">Seluruh Bulan</option>
                                 @foreach ($bulan as $i => $row)
-                                <option value="{{ $row['id'] }}" <?php echo !$bulanPick ? '' : $row['id'] == $bulanPick->first()['id'] ? 'selected' : '' ?>>
+                                <option value="{{ $row['id'] }}" {{ !$bulanPick ? '' : ($row['id'] == $bulanPick->first()['id'] ? 'selected' : '') }}>
                                     {{ $row['nama_bulan'] }}
                                 </option>
                                 @endforeach
@@ -85,7 +85,7 @@
                     @php $no = 1; @endphp
                     <tbody class="text-capitalize">
                     @foreach($result->groupBy(function($item) {
-                        return \Carbon\Carbon::parse($item->created_at)->format('d-m-Y');
+                        return \Carbon\Carbon::parse($item->tanggal_reservasi)->format('d-m-Y');
                     }) as $date => $row)
                         <tr>
                             <td class="pt-3">{{ $no++ }} </td>
