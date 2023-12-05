@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,10 @@ use App\Http\Controllers\PnbpController;
 
 Route::get('/', function () {
     return view('index');
+});
+
+Route::get('/info', function () {
+    return view('pages.info');
 });
 
 // Authentication
