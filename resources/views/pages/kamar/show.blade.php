@@ -148,7 +148,6 @@
         filter = input.value.toUpperCase();
         cardContainer = document.getElementById("cardContainer");
         cards = cardContainer.getElementsByClassName("col-md-4");
-        console.log('data', input)
 
         for (i = 0; i < cards.length; i++) {
             roomName = cards[i].querySelector(".room-name");
