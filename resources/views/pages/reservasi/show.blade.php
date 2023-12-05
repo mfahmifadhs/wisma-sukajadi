@@ -62,7 +62,7 @@
                             <select name="status" class="form-control form-control-sm small">
                                 <option value="">Seluruh Status</option>
                                 @foreach ($status as $row)
-                                <option value="{{ $row->id_status }}" <?php echo !$statusPick ? '' : $row->id_status == $statusPick->id_status ? 'selected' : '' ?>>
+                                <option value="{{ $row->id_status }}" <?php echo !$statusPick ? '' : ($row->id_status == $statusPick->id_status ? 'selected' : '') ?>>
                                     {{ $row->nama_status }}
                                 </option>
                                 @endforeach
