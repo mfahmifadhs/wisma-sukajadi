@@ -19,7 +19,7 @@ class ReservasiController extends Controller
 {
     public function index(Request $request)
     {
-        $listStatus = Status::whereIn('id_status',[10,11,12,13,14])->orderBy('nama_status','ASC');
+        $listStatus = Status::whereIn('id_status', [10, 11, 12, 13, 14])->orderBy('nama_status', 'ASC');
         $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC');
         $bulan      = [];
         $bulanPick  = [];
@@ -33,7 +33,7 @@ class ReservasiController extends Controller
         }
 
         // filter
-        if($request->bulan || $request->status || $request->date) {
+        if ($request->bulan || $request->status || $request->date) {
             if ($request->bulan) {
                 $selectedBulan = explode(',', $request->bulan);
                 $bulan = collect($listBulan)->where('id', '!=', $request->bulan)->all();
@@ -42,14 +42,18 @@ class ReservasiController extends Controller
                 });
 
                 $search = $reservasi->where(DB::raw("DATE_FORMAT(t_reservasi.tanggal_reservasi, '%c')"), $request->bulan);
-            } else { $bulan    = $listBulan; }
+            } else {
+                $bulan    = $listBulan;
+            }
 
 
             if ($request->status) {
                 $search     = $reservasi->where('status_reservasi', $request->status);
                 $status     = $listStatus->get();
                 $statusPick = Status::where('id_status', $request->status)->first();
-            } else { $status = $listStatus->get(); }
+            } else {
+                $status = $listStatus->get();
+            }
 
             if ($request->date) {
                 $search     = $reservasi->where(DB::raw("DATE_FORMAT(tanggal_reservasi, '%d-%m-%Y')"), $request->date);
@@ -57,14 +61,13 @@ class ReservasiController extends Controller
 
             $reservasi = $search->get();
             $tab       = 2;
-
         } else {
             $status    = $listStatus->get();
             $bulan     = $listBulan;
             $reservasi = $reservasi->get();
         }
 
-        return view('pages.reservasi.show', compact('reservasi','bulanPick','bulan','statusPick','status'));
+        return view('pages.reservasi.show', compact('reservasi', 'bulanPick', 'bulan', 'statusPick', 'status'));
     }
 
     public function create($id)
@@ -82,14 +85,14 @@ class ReservasiController extends Controller
             $status = '';
         }
 
-        return view('pages.reservasi.create', compact('unitKerja', 'id','reservasi','kamar','tarif','status'));
+        return view('pages.reservasi.create', compact('unitKerja', 'id', 'reservasi', 'kamar', 'tarif', 'status'));
     }
 
     public function store(Request $request)
     {
         if (!$request->status) {
             $pengunjung   = str_pad(Pengunjung::withTrashed()->count() + 1, 4, 0, STR_PAD_LEFT);
-            $idPengunjung = (int) Carbon::now()->isoFormat('YYMMDD').$pengunjung;
+            $idPengunjung = (int) Carbon::now()->isoFormat('YYMMDD') . $pengunjung;
 
             $tPengunjung  = new Pengunjung();
             $tPengunjung->id_pengunjung     = $idPengunjung;
@@ -113,13 +116,13 @@ class ReservasiController extends Controller
             }
 
             $reservasi   = str_pad(Reservasi::withTrashed()->count() + 1, 4, 0, STR_PAD_LEFT);
-            $idReservasi = (int) Carbon::now()->isoFormat('YYMMDD').$reservasi;
+            $idReservasi = (int) Carbon::now()->isoFormat('YYMMDD') . $reservasi;
 
             $tReservasi = new Reservasi();
             $tReservasi->id_reservasi     = $idReservasi;
             $tReservasi->pengunjung_id    = $idPengunjung;
             $tReservasi->status_reservasi = 10;
-            $tReservasi->tanggal_reservasi= $request->tgl_reservasi;
+            $tReservasi->tanggal_reservasi = $request->tgl_reservasi;
             $tReservasi->created_at       = Carbon::now();
             $tReservasi->save();
 
@@ -132,8 +135,7 @@ class ReservasiController extends Controller
             }
         }
 
-        if ($request->status == 10)
-        {
+        if ($request->status == 10) {
             $totalPembayaran = 0;
             $idReservasi = $request->id_reservasi;
             $kamar = $request->kamar_id;
@@ -158,19 +160,16 @@ class ReservasiController extends Controller
             ]);
         }
 
-        if ($request->status == 11)
-        {
+        if ($request->status == 11) {
             $idReservasi = $request->id_reservasi;
             if ($request->bukti_bayar) {
                 $file  = $request->file('bukti_bayar');
-		$maxFileSize = 5 * 1024 * 1024; // 2 MB dalam bytes
+                $maxFileSize = 5 * 1024 * 1024; // 2 MB dalam bytes
 
                 if ($file->getSize() > $maxFileSize) {
-                   return response()->json([
-                        'error' => 'File size exceeds the maximum allowed size (5 MB).'
-                   ], 400);
-		}
-	
+                    return back()->with('Ukuran file lebih dari 5 MB');
+                }
+
                 $filename = $file->getClientOriginalName();
                 $foto = $file->storeAs('public/files/bukti_pembayaran', $filename);
                 $bukti_bayar = Crypt::encrypt($filename);
@@ -180,18 +179,17 @@ class ReservasiController extends Controller
             }
 
             Reservasi::where('id_reservasi', $idReservasi)->update([
-		'tanggal_pembayaran' => $request->tgl_bayar,
+                'tanggal_pembayaran' => $request->tgl_bayar,
                 'kode_biling'      => $request->kode_biling,
                 'status_reservasi' => 12
             ]);
 
             foreach ($request->kamar_id as $i => $kamar_id) {
-                Kamar::where('id_kamar', $kamar_id)->update([ 'status_kamar' => 6 ]);
+                Kamar::where('id_kamar', $kamar_id)->update(['status_kamar' => 6]);
             }
         }
 
-        if ($request-> status == 12 || $request->status == 13)
-        {
+        if ($request->status == 12 || $request->status == 13) {
             $idReservasi = $request->id_reservasi;
             Reservasi::where('id_reservasi', $idReservasi)->update([
                 'status_reservasi' => $request->status + 1
@@ -209,7 +207,6 @@ class ReservasiController extends Controller
                     Kamar::where('id_kamar', $tarif->kamar_id)->update(['status_kamar' => 7]);
                 }
             }
-
         }
 
         return redirect()->route('reservasi.show')->with('success', 'Berhasil memproses reservasi');
@@ -219,10 +216,10 @@ class ReservasiController extends Controller
     {
         $kamar  = [];
         $tarif  = [];
-        $status = Status::whereIn('id_status', [10,11,12,13,14])->get();
+        $status = Status::whereIn('id_status', [10, 11, 12, 13, 14])->get();
         $reservasi = Reservasi::where('id_reservasi', $id)->first();
 
-        return view('pages.reservasi.detail', compact('id','reservasi','kamar','tarif','status'));
+        return view('pages.reservasi.detail', compact('id', 'reservasi', 'kamar', 'tarif', 'status'));
     }
 
     public function edit($id)
@@ -240,7 +237,7 @@ class ReservasiController extends Controller
             $status = '';
         }
 
-        return view('pages.reservasi.edit', compact('unitKerja', 'id','reservasi','kamar','tarif','status'));
+        return view('pages.reservasi.edit', compact('unitKerja', 'id', 'reservasi', 'kamar', 'tarif', 'status'));
     }
 
     public function update(Request $request, $id)
@@ -291,7 +288,7 @@ class ReservasiController extends Controller
                     $tDetail->created_at        = Carbon::now();
                     $tDetail->save();
 
-                    Kamar::where('id_kamar', $tarif->kamar_id)->update([ 'status_kamar' => 6 ]);
+                    Kamar::where('id_kamar', $tarif->kamar_id)->update(['status_kamar' => 6]);
                 } else {
                     ReservasiDetail::where('id_detail', $detail_id)->update([
                         'tarif_sewa_id'     => $tarif->id_tarif_sewa,
@@ -302,7 +299,7 @@ class ReservasiController extends Controller
                     ]);
 
                     if ($request->status_batal[$i] == 'true') {
-                        Kamar::where('id_kamar', $tarif->kamar_id)->update([ 'status_kamar' => 5 ]);
+                        Kamar::where('id_kamar', $tarif->kamar_id)->update(['status_kamar' => 5]);
                     }
                 }
 
@@ -316,14 +313,12 @@ class ReservasiController extends Controller
 
         if ($request->status > 11) {
             if ($request->bukti_bayar) {
-               $file  = $request->file('bukti_bayar');
-		$maxFileSize = 5 * 1024 * 1024; // 2 MB dalam bytes
+                $file  = $request->file('bukti_bayar');
+                $maxFileSize = 5 * 1024 * 1024; // 2 MB dalam bytes
 
-		if ($file->getSize() > $maxFileSize) {
-    		   return response()->json([
-        		'error' => 'File size exceeds the maximum allowed size (5 MB).'
-    		   ], 400);
-		}
+                if ($file->getSize() > $maxFileSize) {
+                    return back()->with('Ukuran file lebih dari 5 MB');
+                }
 
                 $filename = $file->getClientOriginalName();
                 $foto = $file->storeAs('public/files/bukti_pembayaran', $filename);
@@ -345,7 +340,7 @@ class ReservasiController extends Controller
     public function destroy($id)
     {
         $reservasi = Reservasi::where('id_reservasi', $id)->first();
-        Reservasi::where('id_reservasi',$id)->delete();
+        Reservasi::where('id_reservasi', $id)->delete();
         Pengunjung::where('id_pengunjung', $reservasi->pengunjung_id)->delete();
         ReservasiDetail::where('reservasi_id', $id)->delete();
 
@@ -355,6 +350,6 @@ class ReservasiController extends Controller
     public function print($id)
     {
         $reservasi = Reservasi::where('id_reservasi', $id)->first();
-        return view('pages.reservasi.print', compact('id','reservasi'));
+        return view('pages.reservasi.print', compact('id', 'reservasi'));
     }
 }
