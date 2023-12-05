@@ -26,19 +26,19 @@ class LaporanController extends Controller
         }
 
         if ($id == 'pendapatan') {
-            $data = Reservasi::select(DB::raw("(DATE_FORMAT(created_at, '%d-%m-%Y')) as date"), DB::raw('sum(total_pembayaran) as pendapatan'))
+            $data = Reservasi::select(DB::raw("(DATE_FORMAT(tanggal_reservasi, '%d-%m-%Y')) as date"), DB::raw('sum(total_pembayaran) as pendapatan'))
                     ->groupBy('date')
                     ->where('status_reservasi', 14);
         }
 
         if ($id == 'reservasi') {
             $kamar = Kamar::get();
-            $data  = ReservasiDetail::orderBy('created_at', 'DESC');
+            $data  = ReservasiDetail::join('t_reservasi','id_reservasi','reservasi_id')->orderBy('tanggal_reservasi', 'DESC');
         }
 
         if ($id == 'pnbp') {
-            $reservasi = Reservasi::select('id_reservasi','kode_biling', DB::raw("(DATE_FORMAT(created_at, '%d-%m-%Y')) as date"))->get();
-            $data = Reservasi::select(DB::raw("(DATE_FORMAT(created_at, '%d-%m-%Y')) as date"), DB::raw('count(kode_biling) as kode_biling'))
+            $reservasi = Reservasi::select('id_reservasi','kode_biling', DB::raw("(DATE_FORMAT(tanggal_reservasi, '%d-%m-%Y')) as date"))->get();
+            $data = Reservasi::select(DB::raw("(DATE_FORMAT(tanggal_reservasi, '%d-%m-%Y')) as date"), DB::raw('count(kode_biling) as kode_biling'))
                     ->groupBy('date')
                     ->where('kode_biling', '!=', null)
                     ->where('status_reservasi', 14);
@@ -53,7 +53,7 @@ class LaporanController extends Controller
                     return in_array($item['id'], $selectedBulan);
                 });
 
-                $search = $data->where(DB::raw("DATE_FORMAT(created_at, '%c')"), $request->bulan);
+                $search = $data->where(DB::raw("DATE_FORMAT(tanggal_reservasi, '%c')"), $request->bulan);
             } else { $bulan    = $listBulan; }
 
             $result = $search->get();
