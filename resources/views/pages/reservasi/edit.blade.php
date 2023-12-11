@@ -77,7 +77,7 @@
                                 </div>
                                 <label class="col-sm-2 col-form-label mt-3">Jabatan</label>
                                 <div class="col-sm-10 mt-3">
-                                    <select name="jabatan" class="form-control" required>
+                                    <select name="jabatan" class="form-control">
                                         <option value="">-- PILIH JABATAN --</option>
                                         <option value="Staff" <?php echo $reservasi->pengunjung->keterangan ==  'Staff' ? 'selected' : ''; ?>>Staff</option>
                                         <option value="Eselon I" <?php echo $reservasi->pengunjung->keterangan ==  'Eselon I' ? 'selected' : ''; ?>>Eselon I</option>
