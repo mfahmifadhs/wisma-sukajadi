@@ -41,6 +41,7 @@
                     </div>
                     <form action="{{ route('reservasi.update', $reservasi->id_reservasi) }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="instansi" value="{{ $reservasi->pengunjung->instansi }}">
                         <div class="card-header">
                             <label class="col-form-label">Alur Reservasi</label>
                             <p class="card-text">
