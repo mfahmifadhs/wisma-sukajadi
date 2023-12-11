@@ -69,9 +69,10 @@
                                 <label class="col-md-2 col-form-label">Unit Kerja*</label>
                                 <div class="col-md-10">
                                     <select name="unit_kerja_id" class="form-control text-uppercase">
-                                        <option value="{{ $reservasi->pengunjung->unit_kerja_id }}">
-                                            {{ $reservasi->pengunjung->unitKerja->nama_unit_kerja }}
-                                        </option>
+
+                                        @foreach ($unitKerja->where('id_unit_kerja', '!=', $reservasi->pengunjung->unit_kerja_id) as $row)
+                                        <option value="{{ $row->id_unit_kerja }}">{{ strtoupper($row->nama_unit_kerja) }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <label class="col-sm-2 col-form-label mt-3">Jabatan</label>
