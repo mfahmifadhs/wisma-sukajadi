@@ -55,6 +55,51 @@
                         <!-- Informasi Pengunjung -->
                         <div class="card-body">
                             <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Ubah Asal Instansi</label>
+                                <div class="col-sm-10 mt-2">
+                                    <span class="mr-4">
+                                        <input type="radio" name="instansi" value="kemenkes"> Kemenkes
+                                    </span>
+                                    <span class="mr-3">
+                                        <input type="radio" name="instansi" value="umum"> Lainnya
+                                    </span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                @if ($reservasi->pengunjung->instansi == 'kemenkes')
+                                <label class="col-md-2 col-form-label">Unit Kerja*</label>
+                                <div class="col-md-10">
+                                    <select name="unit_kerja_id" class="form-control text-uppercase disabled">
+                                        <option value="{{ $reservasi->pengunjung->unit_kerja_id }}">
+                                            {{ $reservasi->pengunjung->unitKerja->nama_unit_kerja }}
+                                        </option>
+                                        @foreach ($unitKerja->where('id_unit_kerja', '!=', $reservasi->pengunjung->unit_kerja_id) as $row)
+                                        <option value="{{ $row->id_unit_kerja }}">{{ strtoupper($row->nama_unit_kerja) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <label class="col-sm-2 col-form-label mt-3">Jabatan</label>
+                                <div class="col-sm-10 mt-3">
+                                    <select name="jabatan" class="form-control disabled" required>
+                                        <option value="Staff" <?php echo $reservasi->pengunjung->keterangan ==  'Staff' ? 'selected' : ''; ?>>Staff</option>
+                                        <option value="Eselon I" <?php echo $reservasi->pengunjung->keterangan ==  'Eselon I' ? 'selected' : ''; ?>>Eselon I</option>
+                                        <option value="Eselon II" <?php echo $reservasi->pengunjung->keterangan ==  'Eselon II' ? 'selected' : ''; ?>>Eselon II</option>
+                                        <option value="Eselon III" <?php echo $reservasi->pengunjung->keterangan ==  'Eselon III' ? 'selected' : ''; ?>>Eselon III</option>
+                                        <option value="Eselon IV" <?php echo $reservasi->pengunjung->keterangan ==  'Eselon IV' ? 'selected' : ''; ?>>Eselon IV</option>
+                                        <option value="Eselon V" <?php echo $reservasi->pengunjung->keterangan ==  'Eselon V' ? 'selected' : ''; ?>>Eselon V</option>
+                                        <option value="Lainnya" <?php echo $reservasi->pengunjung->keterangan ==  'Lainnya' ? 'selected' : ''; ?>>Lainnya</option>
+                                    </select>
+                                </div>
+                                @else
+                                <label class="col-sm-2 col-form-label">Nama Instansi</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control bg-white" name="keterangan" placeholder="Umum/Asal Sekolah/Asal Instansi"
+                                    value="{{ $reservasi->pengunjung->instansi == 'umum' ? 'Lainnya - '.$reservasi->pengunjung->keterangan : '' }}" disabled>
+                                </div>
+                                @endif
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Foto KTP</label>
                                 <div class="col-sm-8">
                                     <div class="btn btn-default btn-file">
