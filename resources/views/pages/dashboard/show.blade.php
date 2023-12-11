@@ -34,7 +34,7 @@
             <div class="col-md-6 form-group">
                 <div class="card card-primary card-outline" style="height: 50vh;">
                     <div class="card-header">
-                        <h3 class="card-title">Total Pendapatan (Grafik)</h3>
+                        <h3 class="card-title">Total Pendapatan 2023(Grafik)</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-default btn-tool" data-card-widget="collapse" collapsed>
                                 <i class="fas fa-minus"></i>
@@ -56,7 +56,7 @@
             <div class="col-md-6 form-group">
                 <div class="card card-primary card-outline" style="height: 50vh;">
                     <div class="card-header">
-                        <h3 class="card-title">Total Pendapatan (Tabel)</h3>
+                        <h3 class="card-title">Total Pendapatan 2023(Tabel)</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-default btn-tool" data-card-widget="collapse" collapsed>
                                 <i class="fas fa-minus"></i>

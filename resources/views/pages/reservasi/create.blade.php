@@ -62,7 +62,7 @@
                                         <input type="radio" name="instansi" value="kemenkes" required> Kemenkes
                                     </span>
                                     <span class="mr-3">
-                                        <input type="radio" name="instansi" value="umum" required> Luar Kemenkes
+                                        <input type="radio" name="instansi" value="umum" required> Lainnya
                                     </span>
                                 </div>
                             </div>
