@@ -57,10 +57,10 @@ class DashboardController extends Controller
 
     public function showPendapatan()
     {
-        $result = Reservasi::select(DB::raw("(DATE_FORMAT(tanggal_reservasi, '%c')) as month"), DB::raw('sum(total_pembayaran) as pendapatan'))
+        $result = Reservasi::select(DB::raw("(DATE_FORMAT(tanggal_reservasi, '%m')) as month"), DB::raw('sum(total_pembayaran) as pendapatan'))
                     ->groupBy('month')
                     ->where('status_reservasi', 14)
-                    ->where(DB::raw("DATE_FORMAT(tanggal_reservasi, '%Y')"), Carbon::now()->format('Y'))
+		            ->where(DB::raw("DATE_FORMAT(tanggal_reservasi, '%Y')"), Carbon::now()->format('Y'))
                     ->get();
 
         return response()->json($result);

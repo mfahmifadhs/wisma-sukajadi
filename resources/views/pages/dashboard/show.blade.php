@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="col-md-6 form-group">
-                <div class="card card-primary card-outline" style="height: 50vh;">
+                <div class="card card-primary card-outline scrollable-table-container" style="height: 60vh;">
                     <div class="card-header">
                         <h3 class="card-title">Total Pendapatan 2024 (Tabel)</h3>
                         <div class="card-tools">
@@ -72,7 +72,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Bulan</th>
+                                                <th class="text-left">Bulan</th>
                                                 <th>Jumlah</th>
                                                 <th></th>
                                             </tr>
@@ -82,9 +82,10 @@
                                         @endphp
                                         <tbody>
                                             @foreach ($data['original'] as $i => $row)
+                                            @php $month = '2024-' . $row['month'] . '-01'; @endphp
                                             <tr>
                                                 <td>{{ $i+1 }}</td>
-                                                <td>{{ \Carbon\Carbon::createFromFormat('n', $row['month'])->isoFormat('MMMM') }}</td>
+                                                <td class="text-left">{{ \Carbon\Carbon::parse($month)->isoFormat('MMMM') }}</td>
                                                 <td>Rp {{ number_format($row['pendapatan'], 0, ',', '.') }}</td>
                                                 <td>
                                                     <form action="{{ route('reservasi.show') }}" method="POST">

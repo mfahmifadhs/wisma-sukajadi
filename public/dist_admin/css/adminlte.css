@@ -52685,3 +52685,8 @@
     border-radius: 6.25rem;
     opacity: .5
 }
+
+.scrollable-table-container {
+    overflow-y: auto;
+    max-height: 50vh; /* Adjust this value as needed */
+}
