@@ -126,9 +126,9 @@
                                         <li class="nav-item {{ Request::is('beranda/testimoni') ? 'active' : '' }}">
                                             <a class="nav-link" href="{{ url('beranda/testimoni') }}">Testimoni</a>
                                         </li>
-                                        <li class="nav-item {{ Request::is('beranda/faq') ? 'active' : '' }}">
+                                        <!-- <li class="nav-item {{ Request::is('beranda/faq') ? 'active' : '' }}">
                                             <a class="nav-link" href="{{ url('beranda/faq') }}">FAQ</a>
-                                        </li>
+                                        </li> -->
                                         <li class="nav-item {{ Request::is('beranda/kontak') ? 'active' : '' }}">
                                             <a class="nav-link" href="{{ url('beranda/kontak') }}">Kontak</a>
                                         </li>

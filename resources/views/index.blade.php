@@ -51,7 +51,7 @@
             <h4 class="text-center text-white">
                 <i class="fas fa-triangle-exclamation text-warning"></i>
                 <i class="text-danger">PERINGATAN</i> <br>Hati-hati Penipuan Mengatasnamakan Pengelola Wisma Kemenkes Sukajadi. <br>
-                Reservasi hanya dapat dilakukan dengan menghubungi (022) 2031152.
+                Reservasi hanya dapat dilakukan dengan menghubungi <b><u>(022) 2031152</u></b>.
             </h4>
         </div>
     </div>

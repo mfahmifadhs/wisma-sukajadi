@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\BukuTamu;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BukutamuController extends Controller
 {
@@ -30,7 +32,11 @@ class BukutamuController extends Controller
         $tambah->created_at    = Carbon::now();
         $tambah->save();
 
-        return redirect()->route('buku_tamu.show')->with('success', 'Berhasil mengisi buku tamu');
+        if (Auth::user()) {
+            return redirect()->route('buku_tamu.show')->with('success', 'Berhasil mengisi buku tamu');
+        } else {
+            return view('m_buku_tamu')->with('success', 'Berhasil mengisi buku tamu');
+        }
     }
 
     public function edit($id)

@@ -22,19 +22,19 @@
             <div class="col-md-12">
                 <!-- contact form works with formspree.io  -->
                 <!-- contact form activation doc: https://docs.themefisher.com/constra/contact-form/ -->
-                <form id="form" action="{{ url('beranda/kunjungan/tambah-kunjungan') }}" method="POST">
+                <form id="form" action="{{ route('buku_tamu.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <h4 class="col-md-3 mt-2">Nama Lengkap</h4>
                         <div class="col-md-8">
-                            <input type="text" class="form-control border-success rounded text-uppercase" name="nama_tamu" id="name" placeholder="Masukkan Nama Lengkap" required>
+                            <input type="text" class="form-control border-success rounded text-uppercase" name="nama_tamu" id="name" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <h4 class="col-md-3 mt-2">Nomor HP</h4>
                         <div class="col-md-8">
-                            <input type="number" class="form-control border-success rounded text-uppercase" name="no_hp" id="name" placeholder="Nomor HP Aktif" required>
+                            <input type="number" class="form-control border-success rounded text-uppercase" name="no_hp" id="name" required>
                         </div>
                     </div>
 
@@ -55,21 +55,21 @@
                     <div class="form-group row">
                         <h4 class="col-md-3 mt-2">Nama Instansi</h4>
                         <div class="col-md-8">
-                            <input type="text" class="form-control border-success rounded text-uppercase" name="nama_instansi" id="name" placeholder="Nama Instansi/Nama Unit Kerja" required>
+                            <input type="text" class="form-control border-success rounded text-uppercase" name="nama_instansi" id="name" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <h4 class="col-md-3 mt-2">Nomor Kendaraan</h4>
                         <div class="col-md-8">
-                            <input type="text" class="form-control border-success rounded text-uppercase" name="no_kendaraan" placeholder="Nomor Kendaraan" required>
+                            <input type="text" class="form-control border-success rounded text-uppercase" name="no_kendaraan" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <h4 class="col-md-3 mt-2">Keterangan</h4>
+                        <h4 class="col-md-3 mt-2">Tujuan kedatangan</h4>
                         <div class="col-md-8">
-                            <textarea name="keterangan" rows="3" class="form-control border-success rounded text-uppercase" placeholder="Maksud/Tujuan Kedatangan"></textarea>
+                            <textarea name="keterangan" rows="3" class="form-control border-success rounded text-uppercase" ></textarea>
                         </div>
                     </div>
                     <div class="form-group row text-right">

@@ -147,10 +147,11 @@ Route::get('masuk', function() { return view('auth.masuk'); });
 Route::get('tentang', function() { return view('m_tentang'); });
 Route::get('kamar/{id}', [MainController::class, 'menuRoom']);
 Route::get('tarif-sewa/{id}', [MainController::class, 'menuRoom']);
-Route::get('buku-tamu', [HomeController::class, 'showBukuTamu'])->name('home.buku_tamu');
+// Route::get('buku-tamu', [HomeController::class, 'showBukuTamu'])->name('home.buku_tamu');
 
 
-Route::post('buku-tamu', [HomeController::class, 'storeBukuTamu'])->name('home.buku_tamu');
+// Route::post('buku-tamu', [HomeController::class, 'storeBukuTamu'])->name('home.buku_tamu');
+Route::post('buku-tamu/tambah', [BukutamuController::class, 'store'])->name('buku_tamu.store');
 
 Route::get('detail_kamar', function() { return view('m_detail_kamar'); });
 Route::get('testimoni', function() { return view('m_testimoni'); });
