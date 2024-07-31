@@ -13,6 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Construction Html5 Template">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <link rel="icon" href="{{ asset('images/icon-kemenkes.png') }}" type="image/x-icon">
 
     <!-- Favicon
 ================================================== -->
@@ -171,12 +172,7 @@
                 <div class="container">
                     <div class="row justify-content-between">
                         <div class="col-lg-4 col-md-6 footer-widget footer-about">
-                            <h3 class="widget-title">Tentang Kami</h3>
-                            <img loading="lazy" width="200px" class="footer-logo" src="{{ asset('images/main/logo-kemenkes-white.png')}}">
-                            <p>
-                                Wisma Sukajadi Bandung <br>
-                                Kementerian Kesehatan Republik Indonesia.
-                            </p>
+                            <img loading="lazy" width="200px" class="footer-logo" src="{{ asset('images/main/logo-kemenkes.png')}}">
                             <div class="footer-social">
                                 <ul>
                                     <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
