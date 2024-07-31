@@ -84,12 +84,12 @@
                                             @foreach ($data['original'] as $i => $row)
                                             <tr>
                                                 <td>{{ $i+1 }}</td>
-                                                <td>{{ \Carbon\Carbon::createFromFormat('m', $row['month'])->isoFormat('MMMM') }}</td>
+                                                <td>{{ \Carbon\Carbon::createFromFormat('n', $row['month'])->isoFormat('MMMM') }}</td>
                                                 <td>Rp {{ number_format($row['pendapatan'], 0, ',', '.') }}</td>
                                                 <td>
                                                     <form action="{{ route('reservasi.show') }}" method="POST">
                                                         @csrf
-                                                        <input type="hidden" name="bulan" value="{{ \Carbon\Carbon::createFromFormat('m', $row['month'])->isoFormat('M') }}">
+                                                        <input type="hidden" name="bulan" value="{{ \Carbon\Carbon::createFromFormat('n', $row['month'])->isoFormat('M') }}">
                                                         <button type="submit" class="btn btn-primary btn-xs rounded font-weight-bold">
                                                             Detail
                                                         </button>
