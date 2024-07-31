@@ -49,8 +49,9 @@
     <div class="container">
         <div class="action-style-box">
             <h4 class="text-center text-white">
-                <i class="text-danger">PERINGATAN:</i> Hati-hati Penipuan Mengatasnamakan Pengelola Wisma Kemenkes Sukajadi.
-                Reservasi hanya dapat dilakukan melalui Pengelola Wisma.
+                <i class="fas fa-triangle-exclamation text-warning"></i>
+                <i class="text-danger">PERINGATAN</i> <br>Hati-hati Penipuan Mengatasnamakan Pengelola Wisma Kemenkes Sukajadi. <br>
+                Reservasi hanya dapat dilakukan dengan menghubungi (022) 2031152.
             </h4>
         </div>
     </div>
