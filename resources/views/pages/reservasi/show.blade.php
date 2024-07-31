@@ -105,7 +105,7 @@
                                 {{ \Carbon\Carbon::parse($row->tanggal_reservasi)->isoFormat('DD MMMM Y') }} <br>
                                 {{ $row->pengunjung->nama_pengunjung.' (0'.$row->pengunjung->no_hp.')' }} <br>
                                 {{ $row->pengunjung->instansi != 'kemenkes' ? 'Lainnya' : 'Kemenkes' }}
-                                ({{ $row->pengunjung->instansi == 'kemenkes' ? $row->pengunjung->unitKerja->nama_unit_kerja : $row->pengunjung->keterangan }})
+                                ({{ $row->pengunjung->instansi == 'kemenkes' ? $row->pengunjung->unitKerja?->nama_unit_kerja : $row->pengunjung->keterangan }})
                             </td>
                             <td>
                                 Jumlah {{ $row->detail->count().' Kamar' }} (
