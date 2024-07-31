@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kamar;
 use Illuminate\Http\Request;
 use App\Models\RoomModel;
 use App\Models\VisitModel;
@@ -17,7 +18,7 @@ class MainController extends Controller
     public function menuRoom($id)
     {
         if ($id == 'daftar') {
-            $rooms = RoomModel::get();
+            $rooms = Kamar::get();
             return view('m_kamar', compact('rooms'));
         }else{
             $rooms = RoomModel::with('rentalrate')->where('id_room', $id)->get();
