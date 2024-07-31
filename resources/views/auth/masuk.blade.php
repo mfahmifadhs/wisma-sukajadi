@@ -25,7 +25,7 @@
           <div class="row align-items-center justify-content-center">
             <div class="col-md-7">
               <center>
-                <p><img src="{{ asset('images/admin/logo-kemenkes.png') }}" style="width:50%;" alt="KEMENKES Logo" class="img-login animation__shake img-responsive"></p>
+                <p><img src="{{ asset('images/main/logo-kemenkes.png') }}" style="width:50%;" alt="KEMENKES Logo" class="img-login animation__shake img-responsive"></p>
                 <h4>Wisma Sukajadi Bandung</h4>
                 <h5><strong>Kementerian Kesehatan Republik Indonesia</strong></h5>
                 <p class="mb-4">Jl. Sukajadi No.155, Kota Bandung.</p>
