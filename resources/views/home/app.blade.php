@@ -187,8 +187,7 @@
                         <div class="col-lg-4 col-md-6 footer-widget mt-5 mt-md-0">
                             <h3 class="widget-title">Prosedur</h3>
                             <div class="working-hours">
-                                Reservasi dapat dilakukan di jam kerja, diluar jam kerja pengunjung tetap dapat menginap namun
-                                pembayaran dilakukan di jam kerja.
+                                Reservasi dapat dilakukan 24 Jam. Silahkan Menghubungi Nomor : <u>(022) 2031152</u>
                                 <br><br> Waktu Check In: <span class="text-right">14:00</span>
                                 <br> Waktu Check Out: <span class="text-right">11:00</span>
                             </div>

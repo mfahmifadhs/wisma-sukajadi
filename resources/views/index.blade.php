@@ -191,7 +191,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-6 mb-5">
+            <div class="col-lg-6 col-md-6 mb-5">
                 <div class="ts-service-box">
                     <div class="d-flex">
                         <div class="ts-service-box-img">
@@ -199,7 +199,7 @@
                         </div>
                         <div class="ts-service-info">
                             <h3 class="service-box-title">Kategori Bisnis</h3>
-                            <p class="text-justify">Kategori untuk tamu yang berasal dari luar lingkungan Kementerian Kesehatan RI baik itu Perseorangan, Golongan atau Perusahaan.</p>
+                            <p class="text-justify">Kategori untuk tamu yang berasal dari luar lingkungan Kementerian Kesehatan RI, baik perorangan atau organisasi</p>
                             <a class="btn btn-primary" href="{{ url('beranda/tarif-sewa/daftar') }}" aria-label="service-details">
                                 <i class="fa fa-caret-right"></i> Tarif Sewa
                             </a>
@@ -208,7 +208,7 @@
                 </div><!-- Service1 end -->
             </div><!-- Col 1 end -->
 
-            <div class="col-lg-4 col-md-6 mb-5">
+            <div class="col-lg-6 col-md-6 mb-5">
                 <div class="ts-service-box">
                     <div class="d-flex">
                         <div class="ts-service-box-img">
@@ -216,7 +216,7 @@
                         </div>
                         <div class="ts-service-info">
                             <h3 class="service-box-title">Kategori Non Bisnis</h3>
-                            <p class="text-justify">Kategori untuk tamu yang berasal dari Instansi Swasta, Instansi Pemerintah, Pegawai, ASN dan lainya tanpa surat tugas.</p>
+                            <p class="text-justify">Kategori untuk tamu yang berasal dari lingkungan Kementerian Kesehatan RI (ASN Kemenkes)</p>
                             <!-- <p>Kategori I : Lembaga Sosial/Pendidikan/Mahasiswa (instansi swasta).</p>
                   <p>Kategori II : Lembaga Sosial/Pendidikan/Mahasiswa (instansi pemerintah).</p>
                   <p>Kategori III : ASN Kementerian Kesehatan tanpa surat tugas/Pensiunan Kementerian Kesehatan.</p> -->
@@ -228,7 +228,7 @@
                 </div><!-- Service2 end -->
             </div><!-- Col 2 end -->
 
-            <div class="col-lg-4 col-md-6 mb-5">
+            <!-- <div class="col-lg-4 col-md-6 mb-5">
                 <div class="ts-service-box">
                     <div class="d-flex">
                         <div class="ts-service-box-img">
@@ -237,16 +237,13 @@
                         <div class="ts-service-info">
                             <h3 class="service-box-title">Kategori Sosial</h3>
                             <p class="text-justify">Kategori tamu untuk pegawai Kemenkes RI (Pejabat Administrasi, Es III, Es IV, Gol IV, Gol III) dengan surat tugas</p>
-                            <!-- <p>Kategori I : Pegawai Kementerian Kesehatan (Pejabat Administrasi ke atas, Eselon III ke atas, Golongan IV dan/atau setara).</p>
-                  <p>Kategori II : Pegawai Kementerian Kesehatan dengan surat Tugas (Pejabat Pengawas ke bawah, Golongan III ke bawah, Eselon IV dan/atau setara).</p>
-                  <p>Kategori III : Penggunaan Wisma dalam keadaan pandemi dan/atau menunjang tugas dan fungsi di bidang Kesehatan dengan mendapat izin dari Kepala Biro Umum.</p> -->
                             <a class="btn btn-primary" href="{{ url('beranda/tarif-sewa/daftar') }}" aria-label="service-details">
                                 <i class="fa fa-caret-right"></i> Tarif Sewa
                             </a>
                         </div>
                     </div>
-                </div><!-- Service3 end -->
-            </div><!-- Col 3 end -->
+                </div>
+            </div> -->
 
         </div><!-- Main row end -->
     </div><!-- Conatiner end -->
