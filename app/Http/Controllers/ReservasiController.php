@@ -59,12 +59,12 @@ class ReservasiController extends Controller
                 $search     = $reservasi->where(DB::raw("DATE_FORMAT(tanggal_reservasi, '%d-%m-%Y')"), $request->date);
             }
 
-            $reservasi = $search->paginate(10);
+            $reservasi = $search->get();
             $tab       = 2;
         } else {
             $status    = $listStatus->get();
             $bulan     = $listBulan;
-            $reservasi = $reservasi->paginate(10);
+            $reservasi = $reservasi->get();
         }
 
         return view('pages.reservasi.show', compact('reservasi', 'bulanPick', 'bulan', 'statusPick', 'status'));

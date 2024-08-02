@@ -179,9 +179,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @if ($row->pengunjung->foto_ktp)
-                <img src="{{ asset('storage/files/foto_ktp/'. Crypt::decrypt($row->pengunjung->foto_ktp)) }}" alt="Foto KTP" class="img-fluid">
-                @else Belum ada @endif
+
             </div>
         </div>
     </div>
@@ -196,9 +194,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @if ($row->bukti_pembayaran)
-                <img src="{{ asset('storage/files/bukti_pembayaran/'. Crypt::decrypt($row->bukti_pembayaran)) }}" alt="Bukti Bayar" class="img-fluid">
-                @else Belum ada @endif
+
             </div>
         </div>
     </div>
@@ -229,7 +225,7 @@
                             @foreach($row->detail as $i => $subRow)
                             <tr>
                                 <td>{{ $i + 1 }}</td>
-                                <td>{{ $subRow->tarif->kamar->nama_kamar }}</td>
+                                <td>{{ $subRow->tarif?->kamar->nama_kamar }}</td>
                                 <td>{{ \Carbon\Carbon::parse($subRow->tanggal_check_in)->isoFormat('DD MMMM Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($subRow->tanggal_check_out)->isoFormat('DD MMMM Y') }}</td>
                                 <td>
@@ -317,8 +313,8 @@
                                     @foreach($row->detail as $subRow)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $subRow->tarif->kamar->nama_kamar }}</td>
-                                        <td>Rp {{ number_format($subRow->tarif->harga_sewa, 0, ',', '.') }}</td>
+                                        <td>{{ $subRow->tarif?->kamar->nama_kamar }}</td>
+                                        <td>Rp {{ number_format($subRow->tarif?->harga_sewa, 0, ',', '.') }}</td>
                                         <td>
                                             {{ \Carbon\Carbon::parse($subRow->tanggal_check_in)->isoFormat('DD/MM/YY') }}
                                             - {{ \Carbon\Carbon::parse($subRow->tanggal_check_out)->isoFormat('DD/MM/YY') }}
