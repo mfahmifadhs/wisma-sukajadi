@@ -185,7 +185,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('laporan/{id}', [LaporanController::class, 'index'])->name('laporan.show');
         Route::post('laporan/{id}', [LaporanController::class, 'index'])->name('laporan.show');
         // Reservasi
-        Route::get('reservasi', [ReservasiController::class, 'index'])->name('reservasi.show');
+        Route::get('reservasi', [ReservasiController::class, 'show'])->name('reservasi.show');
         Route::get('reservasi/{id}', [ReservasiController::class, 'detail'])->name('reservasi.detail');
         Route::get('reservasi/kwitansi/cetak/{id}', [ReservasiController::class, 'print'])->name('reservasi.kwitansi');
         Route::post('reservasi', [ReservasiController::class, 'index'])->name('reservasi.show');

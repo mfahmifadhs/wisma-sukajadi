@@ -70,6 +70,12 @@ class ReservasiController extends Controller
         return view('pages.reservasi.show', compact('reservasi', 'bulanPick', 'bulan', 'statusPick', 'status'));
     }
 
+    public function show()
+    {
+        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC')->whereYear('tanggal_reservasi', 2024)->get();
+        return view('pages.reservasi.data', compact('reservasi'));
+    }
+
     public function create($id)
     {
         $kamar = [];
