@@ -135,6 +135,7 @@ Route::group(['middleware' => ['role:admin-sukajadi'], 'prefix' => 'admin-sukaja
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KamarController;
+use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PegawaiController;
@@ -158,11 +159,15 @@ Route::get('testimoni', function() { return view('m_testimoni'); });
 Route::get('faq', function() { return view('m_faq'); });
 Route::get('kontak', function() { return view('m_kontak'); });
 
+
+Route::post('kiritksaran', [KritikSaranController::class, 'store'])->name('kritiksaran.post');
+
 // DASHBOARD
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('pendapatan', [DashboardController::class, 'showPendapatan'])->name('pendapatan');
+    Route::get('kiritksaran', [KritikSaranController::class, 'show'])->name('kritiksaran.show');
 
     // akses oleh admin
     Route::group(['middleware' => ['access:admin']], function () {

@@ -123,9 +123,9 @@
                                             </ul>
                                         </li>
 
-                                        <li class="nav-item {{ Request::is('beranda/testimoni') ? 'active' : '' }}">
+                                        <!-- <li class="nav-item {{ Request::is('beranda/testimoni') ? 'active' : '' }}">
                                             <a class="nav-link" href="{{ url('beranda/testimoni') }}">Testimoni</a>
-                                        </li>
+                                        </li> -->
                                         <!-- <li class="nav-item {{ Request::is('beranda/faq') ? 'active' : '' }}">
                                             <a class="nav-link" href="{{ url('beranda/faq') }}">FAQ</a>
                                         </li> -->
@@ -256,6 +256,18 @@
         <!-- Template custom -->
         <script src="{{ asset('dist-main/js/script.js') }}"></script>
         @yield('js')
+        <script>
+            $(document).ready(function() {
+                $('.number').on('input', function() {
+                    // Menghapus karakter selain angka (termasuk tanda titik koma sebelumnya)
+                    var value = $(this).val().replace(/[^0-9]/g, '');
+                    // Format dengan menambahkan titik koma setiap tiga digit
+                    var formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, '');
+
+                    $(this).val(formattedValue);
+                });
+            });
+        </script>
 
     </div><!-- Body inner end -->
 </body>

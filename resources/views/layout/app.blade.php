@@ -150,6 +150,12 @@
                         </li>
                         <li class="nav-header font-weight-bold">Pegawai Kemenkes</li>
                         <li class="nav-item">
+                            <a href="{{ route('kritiksaran.show') }}" class="nav-link">
+                                <i class="nav-icon fas fa-envelope-open-text"></i>
+                                <p>Kritik & Saran</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
