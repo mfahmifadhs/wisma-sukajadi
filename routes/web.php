@@ -53,7 +53,7 @@ Route::group(['prefix' => 'beranda', 'as' => 'beranda.'],
         Route::get('detail_kamar', function() { return view('m_detail_kamar'); });
         Route::get('testimoni', function() { return view('m_testimoni'); });
         Route::get('faq', function() { return view('m_faq'); });
-        Route::get('kontak', function() { return view('m_kontak'); });
+        Route::get('kritik-saran', function() { return view('m_kontak'); });
     });
 
 

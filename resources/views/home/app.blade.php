@@ -129,8 +129,8 @@
                                         <!-- <li class="nav-item {{ Request::is('beranda/faq') ? 'active' : '' }}">
                                             <a class="nav-link" href="{{ url('beranda/faq') }}">FAQ</a>
                                         </li> -->
-                                        <li class="nav-item {{ Request::is('beranda/kontak') ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ url('beranda/kontak') }}">Kontak</a>
+                                        <li class="nav-item {{ Request::is('beranda/kritik-saran') ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ url('beranda/kritik-saran') }}">Kritik & Saran</a>
                                         </li>
                                         @if(Auth::user() != null)
                                         <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
