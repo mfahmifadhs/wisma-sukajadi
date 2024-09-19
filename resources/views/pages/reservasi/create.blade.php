@@ -612,11 +612,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Check In</label>
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control input-border-bottom" name="check_in[]" min="{{ date('Y-m-d') }}" value="{{ $reservasi?->tanggal_masuk }}">
+                                        <input type="date" class="form-control input-border-bottom" name="check_in[]" min="{{ date('Y-m-d') }}" value="{{ isset($reservasi) ? $reservasi->tanggal_masuk : '' }}">
                                     </div>
                                     <label class="col-sm-2 col-form-label">Check Out</label>
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control input-border-bottom" name="check_out[]" min="{{ date('Y-m-d', strtotime('+1 day')) }}" value="{{ $reservasi?->tanggal_keluar }}">
+                                        <input type="date" class="form-control input-border-bottom" name="check_out[]" min="{{ date('Y-m-d', strtotime('+1 day')) }}" value="{{ isset($reservasi) ? $reservasi->tanggal_keluar : '' }}">
                                     </div>
                                     <label class="col-sm-2 col-form-label mt-2">Kamar</label>
                                     <div class="col-sm-4 mt-2">
