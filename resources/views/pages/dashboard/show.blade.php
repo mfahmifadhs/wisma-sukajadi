@@ -10,9 +10,30 @@
                 <h1 class="text-capitalize">WISMA SUKAJADI</h1>
                 <h5>Wisma Kemenkes Sukajadi Bandung</h5>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 my-auto">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">Dashboard</li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                            Reservasi <i class="far fa-bell"></i>
+                            <span class="badge badge-warning navbar-badge">{{ $book->count() }}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+                            <span class="dropdown-item dropdown-header">{{ $book->count() }} reservasi</span>
+                            <div style="max-height: 250px; overflow-y: auto;">
+                                @foreach($book as $row)
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ route('reservasi.tambah', $row->id_reservasi) }}" class="dropdown-item small">
+                                    {{ $loop->iteration }}. {{ $row->pengunjung->nama_pengunjung }}
+                                    <span class="float-right text-muted text-xs">
+                                        {{ Carbon\Carbon::parse($row->created_at)->format('Y-m-d H:i') }}
+                                    </span>
+                                </a>
+                                @endforeach
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item dropdown-footer">Lihat seluruh reservasi</a>
+                        </div>
+                    </li>
                 </ol>
             </div>
         </div>

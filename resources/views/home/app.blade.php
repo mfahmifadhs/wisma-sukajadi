@@ -37,6 +37,7 @@
     <!-- Sweetalert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
 </head>
 
 <body>
@@ -252,7 +253,6 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
         <!-- Google Map Plugin-->
         <script src="{{ asset('dist-main/plugins/google-map/map.js') }}" defer></script>
-
         <!-- Template custom -->
         <script src="{{ asset('dist-main/js/script.js') }}"></script>
         @yield('js')

@@ -1745,7 +1745,7 @@ ul.navbar-nav > li.header-get-a-quote:hover > a:after {
   color: #fff;
 }
 
-/* Service box 
+/* Service box
 
 .ts-service-box .ts-service-icon i {
   font-size: 24px;
@@ -3534,4 +3534,26 @@ label {
   font-weight: 700;
 }
 
-/*# sourceMappingURL=maps/style.css.map */
+.uker {
+    border: solid #00A859;
+}
+
+.select2-container--default .select2-selection--single {
+    height: 5vh !important;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #00A859;
+    box-sizing: border-box; /* Menjamin padding tidak mengubah ukuran total */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+    top: 50%;
+    transform: translateY(30%); /* Memposisikan panah secara vertikal di tengah */
+    right: 10px; /* Jarak panah dari sisi kanan */
+}
+
+.select2-selection__rendered {
+    line-height: normal !important;
+}

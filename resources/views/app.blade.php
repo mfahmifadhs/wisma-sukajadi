@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="{{ asset('dist-main/plugins/colorbox/colorbox.css') }}">
     <!-- Template styles-->
     <link rel="stylesheet" href="{{ asset('dist-main/css/style.css') }}">
+    <!-- Select 2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Sweetalert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -253,6 +255,8 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
         <!-- Google Map Plugin-->
         <script src="{{ asset('dist-main/plugins/google-map/map.js') }}" defer></script>
+        <!-- Select2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
         <!-- Template custom -->
         <script src="{{ asset('dist-main/js/script.js') }}"></script>

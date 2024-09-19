@@ -45,13 +45,46 @@
     </div>
 </div>
 
-<section class="call-to-action-box no-padding">
+<section class="call-to-action-box no-padding rounded">
     <div class="container">
         <div class="action-style-box">
             <h4 class="text-center text-white">
-                <i class="fas fa-triangle-exclamation text-warning"></i>
-                <i class="text-danger">PERINGATAN</i> <br>Hati-hati Penipuan Mengatasnamakan Pengelola Wisma Kemenkes Sukajadi. <br>
-                Reservasi hanya dapat dilakukan dengan menghubungi <b><u>(022) 2031152</u></b>.
+                <form action="{{ route('reservasi.book') }}" method="GET">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+                            <h2 class="text-white font-weight-bold">Reservasi</h2>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="text-lowercase text-capitalize text-white">Jumlah Kamar</h6>
+                            <input type="number" class="form-control form-control-sm rounded text-center text-dark" name="kamar" min="1" value="1" required>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="text-lowercase text-capitalize text-white">Tanggal Masuk</h6>
+                            <input type="date" class="form-control form-control-sm rounded text-center text-dark" name="masuk" id="checkInDate" min="{{ date('Y-m-d') }}" required>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="text-lowercase text-capitalize text-white">Tanggal Keluar</h6>
+                            <input type="date" class="form-control form-control-sm rounded text-center text-dark" name="keluar" id="checkOutDate" min="{{ date('Y-m-d', strtotime('+1 day')) }}" required>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="text-lowercase text-capitalize text-white">&nbsp;</h6>
+                            <div class="input-group">
+                                <div class="w-100">
+                                    <button class="btn btn-warning font-weight-bold" style="height: 110%;">BOOK</button>
+                                    <a href="" class="btn btn-secondary font-weight-bold pt-2" style="height: 110%;">CEK RESERVASI</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9 mx-auto mt-2">
+                            <small class="text-lowercase text-capitalize">
+                                <i class="fas fa-triangle-exclamation text-warning"></i>
+                                <i class="text-danger">PERINGATAN</i> <br>Hati-hati Penipuan Mengatasnamakan Pengelola Wisma Kemenkes Sukajadi Melalui Website. <br>
+                                Info lainnya dapat menghubungi <b><u>(022) 2031152</u></b>.
+                            </small>
+                        </div>
+                    </div>
+                </form>
             </h4>
         </div>
     </div>
@@ -411,5 +444,27 @@
     </div><!-- Conatiner end -->
 </section><!-- Main container end -->
 
+@section('js')
+<script>
+    document.getElementById('checkInDate').addEventListener('change', function() {
+        var checkInDate = new Date(this.value);
+        var checkOutDate = new Date(document.getElementById('checkOutDate').value);
 
+        if (checkOutDate <= checkInDate) {
+            document.getElementById('checkOutDate').value = '';
+            document.getElementById('checkOutDate').setAttribute('min', this.value);
+        }
+    });
+
+    document.getElementById('checkOutDate').addEventListener('change', function() {
+        var checkInDate = new Date(document.getElementById('checkInDate').value);
+        var checkOutDate = new Date(this.value);
+
+        if (checkOutDate <= checkInDate) {
+            alert("Tanggal Keluar harus lebih besar dari Tanggal Masuk");
+            this.value = '';
+        }
+    });
+</script>
+@endsection
 @endsection

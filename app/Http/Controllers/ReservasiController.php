@@ -358,4 +358,52 @@ class ReservasiController extends Controller
         $reservasi = Reservasi::where('id_reservasi', $id)->first();
         return view('pages.reservasi.print', compact('id', 'reservasi'));
     }
+
+    public function book(Request $request)
+    {
+        $proses = $request->get('proses');
+        $kamar  = $request->get('kamar');
+        $masuk  = $request->get('masuk');
+        $keluar = $request->get('keluar');
+        $uker   = UnitKerja::get();
+
+        if (!$proses) {
+            return view('reservasi', compact('kamar','masuk','keluar','uker'));
+        } else {
+            $pengunjung = str_pad(Pengunjung::withTrashed()->count() + 1, 4, 0, STR_PAD_LEFT);
+            $idTamu     = (int) Carbon::now()->isoFormat('YYMMDD') . $pengunjung;
+
+            $tamu = new Pengunjung();
+            $tamu->id_pengunjung = $idTamu;
+            $tamu->nama_pengunjung = $request->nama;
+            $tamu->no_hp           = $request->nohp;
+            $tamu->instansi        = $request->instansi;
+            $tamu->unit_kerja_id   = $request->instansi == 'kemenkes' ? $request->uker : null;
+            $tamu->keterangan      = $request->nama_instansi;
+            $tamu->created_at      = Carbon::now();
+            $tamu->save();
+
+            $reservasi   = str_pad(Reservasi::withTrashed()->count() + 1, 4, 0, STR_PAD_LEFT);
+            $idReservasi = (int) Carbon::now()->isoFormat('YYMMDD') . $reservasi;
+
+            $reservasi = new Reservasi();
+            $reservasi->id_reservasi      = $idReservasi;
+            $reservasi->pengunjung_id     = $idTamu;
+            $reservasi->tanggal_reservasi = Carbon::now();
+            $reservasi->status_reservasi  = 10;
+            $reservasi->total_kamar       = $kamar;
+            $reservasi->tanggal_masuk     = $masuk;
+            $reservasi->tanggal_keluar    = $keluar;
+            $reservasi->created_at        = Carbon::now();
+            $reservasi->save();
+
+            return redirect()->route('reservasi.etiket', $idReservasi)->with('success', 'Berhasil Melakukan Reservasi');
+        }
+    }
+
+    public function etiket($id)
+    {
+        $data = Reservasi::where('id_reservasi', $id)->where('status_reservasi', 10)->first();
+        return view('etiket', compact('data'));
+    }
 }

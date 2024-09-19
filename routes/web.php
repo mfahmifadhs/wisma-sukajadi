@@ -8,6 +8,15 @@ use App\Http\Controllers\MasterController;
 use App\Http\Controllers\SukajadiController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PnbpController;
+use App\Http\Controllers\ReservasiController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KamarController;
+use App\Http\Controllers\KritikSaranController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\UnitkerjaController;
+use App\Http\Controllers\UnitutamaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +48,8 @@ Route::post('masuk', [AuthController::class, 'Masuk'])->name('masuk');
 Route::post('masuk/pegawai', [AuthController::class, 'Masuk'])->name('masuk');
 Route::post('daftar', [AuthController::class, 'Daftar'])->name('daftar');
 Route::get('keluar', [AuthController::class, 'Keluar'])->name('keluar');
+Route::get('reservasi/pesan', [ReservasiController::class, 'book'])->name('reservasi.book');
+Route::get('reservasi/tiket/{id}', [ReservasiController::class, 'etiket'])->name('reservasi.etiket');
 
 Route::group(['prefix' => 'beranda', 'as' => 'beranda.'],
     function () {
@@ -129,19 +140,6 @@ Route::group(['middleware' => ['role:admin-sukajadi'], 'prefix' => 'admin-sukaja
 
 });
 
-
-
-
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\KamarController;
-use App\Http\Controllers\KritikSaranController;
-use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PegawaiController;
-use App\Http\Controllers\ReservasiController;
-use App\Http\Controllers\UnitkerjaController;
-use App\Http\Controllers\UnitutamaController;
 // HOME
 
 Route::get('masuk', function() { return view('auth.masuk'); });

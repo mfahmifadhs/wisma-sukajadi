@@ -25,7 +25,10 @@ class Reservasi extends Model
         'status_pembayaran',
         'bukti_pembayaran',
         'tanggal_pembayaran',
-        'total_pembayaran'
+        'total_pembayaran',
+        'total_kamar',
+        'tanggal_masuk',
+        'tanggal_keluar'
     ];
 
     public function detail() {

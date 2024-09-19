@@ -162,37 +162,40 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="row">
+                                    <div class="row text-sm">
                                         <label class="col-form-label col-md-12">Informasi Pengunjung</label>
-                                        <div class="col-md-3">ID</div>
-                                        <div class="col-md-1 text-right">:</div>
-                                        <div class="col-md-7">{{ $reservasi->pengunjung->id_pengunjung }}</div>
-                                        <div class="col-md-3">NIK</div>
-                                        <div class="col-md-1 text-right">:</div>
-                                        <div class="col-md-7">{{ $reservasi->pengunjung->nik }}</div>
-                                        <div class="col-md-3">Nama</div>
-                                        <div class="col-md-1 text-right">:</div>
-                                        <div class="col-md-7">{{ $reservasi->pengunjung->nama_pengunjung }}</div>
-                                        <div class="col-md-3">Tgl. Lahir</div>
-                                        <div class="col-md-1 text-right">:</div>
-                                        <div class="col-md-7">{{ $reservasi->pengunjung->tanggal_lahir }}</div>
-                                        <div class="col-md-3">No. HP</div>
-                                        <div class="col-md-1 text-right">:</div>
-                                        <div class="col-md-7">{{ $reservasi->pengunjung->no_hp }}</div>
-                                        <div class="col-md-3">Instansi</div>
-                                        <div class="col-md-1 text-right">:</div>
-                                        <div class="col-md-7 text-capitalize">{{ $reservasi->pengunjung->instansi }}</div>
-                                        <div class="col-md-3">{{ $reservasi->pengunjung->instansi == 'kemenkes' ? 'Jabatan' : 'Asal' }}</div>
-                                        <div class="col-md-1 text-right">:</div>
-                                        <div class="col-md-7">{{ $reservasi->pengunjung->keterangan }}</div>
-                                        @if ($reservasi->pengunjung->instansi == 'kemenkes')
-                                        <div class="col-sm-3">Unit Kerja</div>
-                                        <div class="col-md-1 text-right">:</div>
-                                        <div class="col-md-6">{{ $reservasi->pengunjung->unitKerja->nama_unit_kerja }}</div>
+                                        <div class="col-md-4">ID</div>
+                                        <div class="col-md-8">:
+                                            {{ Carbon\Carbon::parse($reservasi->created_at)->format('ymd') }}{{ $reservasi->pengunjung->id_pengunjung }}
+                                        </div>
+                                        @if ($reservasi->total_kamar)
+                                        <div class="col-sm-4">Tanggal Pesan</div>
+                                        <div class="col-md-8">: {{ Carbon\Carbon::parse($reservasi->created_at)->format('d-m-Y H:i') }}</div>
+                                        <div class="col-sm-4">Total Kamar</div>
+                                        <div class="col-md-8">: {{ $reservasi->total_kamar }} kamar</div>
+                                        <div class="col-sm-4">Tanggal Masuk</div>
+                                        <div class="col-md-8">: {{ Carbon\Carbon::parse($reservasi->tanggal_masuk)->format('d-m-Y') }}</div>
+                                        <div class="col-sm-4">Tanggal Keluar</div>
+                                        <div class="col-md-8">: {{ Carbon\Carbon::parse($reservasi->tanggal_keluar)->format('d-m-Y') }}</div>
                                         @endif
-                                        <div class="col-md-3">Foto KTP</div>
-                                        <div class="col-md-1 text-right">:</div>
-                                        <div class="col-md-7">
+                                        <div class="col-md-4">NIK</div>
+                                        <div class="col-md-8">: {{ $reservasi->pengunjung->nik }}</div>
+                                        <div class="col-md-4">Nama</div>
+                                        <div class="col-md-8">: {{ $reservasi->pengunjung->nama_pengunjung }}</div>
+                                        <div class="col-md-4">Tgl. Lahir</div>
+                                        <div class="col-md-8">: {{ $reservasi->pengunjung->tanggal_lahir }}</div>
+                                        <div class="col-md-4">No. HP</div>
+                                        <div class="col-md-8">: {{ $reservasi->pengunjung->no_hp }}</div>
+                                        <div class="col-md-4">Instansi</div>
+                                        <div class="col-md-8 text-capitalize">: {{ $reservasi->pengunjung->instansi }}</div>
+                                        <div class="col-md-4">{{ $reservasi->pengunjung->instansi == 'kemenkes' ? 'Jabatan' : 'Asal' }}</div>
+                                        <div class="col-md-8">: {{ $reservasi->pengunjung->keterangan }}</div>
+                                        @if ($reservasi->pengunjung->instansi == 'kemenkes')
+                                        <div class="col-sm-4">Unit Kerja</div>
+                                        <div class="col-md-8">: {{ $reservasi->pengunjung->unitKerja->nama_unit_kerja }}</div>
+                                        @endif
+                                        <div class="col-md-4">Foto KTP</div>
+                                        <div class="col-md-8">:
                                             @if ($reservasi->pengunjung->foto_ktp)
                                             <img src="{{ asset('storage/files/foto_ktp/'. Crypt::decrypt($reservasi->pengunjung->foto_ktp)) }}" alt="Foto KTP" class="img-fluid">
                                             @else Belum ada @endif
@@ -207,11 +210,11 @@
                                             <input type="hidden" id="kamar-available" value="{{ json_encode($kamar) }}">
                                             <label class="col-sm-2 col-form-label">Check In</label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control input-border-bottom" name="check_in[]">
+                                                <input type="date" class="form-control input-border-bottom" name="check_in[]" min="{{ date('Y-m-d') }}" value="{{ $reservasi?->tanggal_masuk }}">
                                             </div>
                                             <label class="col-sm-2 col-form-label">Check Out</label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control input-border-bottom" name="check_out[]">
+                                                <input type="date" class="form-control input-border-bottom" name="check_out[]" min="{{ date('Y-m-d', strtotime('+1 day')) }}" value="{{ $reservasi?->tanggal_keluar }}">
                                             </div>
                                             <label class="col-sm-2 col-form-label mt-2">Kamar</label>
                                             <div class="col-sm-4 mt-2">
@@ -609,11 +612,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Check In</label>
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control input-border-bottom" name="check_in[]">
+                                        <input type="date" class="form-control input-border-bottom" name="check_in[]" min="{{ date('Y-m-d') }}" value="{{ $reservasi?->tanggal_masuk }}">
                                     </div>
                                     <label class="col-sm-2 col-form-label">Check Out</label>
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control input-border-bottom" name="check_out[]">
+                                        <input type="date" class="form-control input-border-bottom" name="check_out[]" min="{{ date('Y-m-d', strtotime('+1 day')) }}" value="{{ $reservasi?->tanggal_keluar }}">
                                     </div>
                                     <label class="col-sm-2 col-form-label mt-2">Kamar</label>
                                     <div class="col-sm-4 mt-2">
