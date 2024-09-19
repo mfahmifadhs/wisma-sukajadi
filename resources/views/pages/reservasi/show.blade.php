@@ -105,7 +105,7 @@
                                 {{ \Carbon\Carbon::parse($row->tanggal_reservasi)->isoFormat('DD MMMM Y') }} <br>
                                 {{ $row->pengunjung->nama_pengunjung.' (0'.$row->pengunjung->no_hp.')' }} <br>
                                 {{ $row->pengunjung->instansi != 'kemenkes' ? 'Lainnya' : 'Kemenkes' }}
-                                ({{ $row->pengunjung->instansi == 'kemenkes' ? $row->pengunjung->unitKerja?->nama_unit_kerja : $row->pengunjung->keterangan }})
+                                {{ $row->pengunjung->instansi == 'kemenkes' ? (isset($row->pengunjung->unitKerja) ? $row->pengunjung->unitKerja->nama_unit_kerja : '') : $row->pengunjung->keterangan }}
                             </td>
                             <td>
                                 Jumlah {{ $row->detail->count().' Kamar' }} (
@@ -136,26 +136,26 @@
                                 <div class="dropdown-menu">
                                     @if ($row->status_reservasi < 14)
                                         <a class="dropdown-item btn btn-sm {{ Auth::user()->role_id != 4 ? 'disabled' : ''  }}" type="button" href="{{ route('reservasi.tambah', $row->id_reservasi) }}">
-                                            <i class="fas fa-external-link-square-alt"></i> Proses
+                                        <i class="fas fa-external-link-square-alt"></i> Proses
                                         </a>
                                         @if ($row->status_reservasi < 14)
-                                        <a href="{{ route('reservasi.edit', $row->id_reservasi) }}" class="dropdown-item btn btn-sm" type="button">
+                                            <a href="{{ route('reservasi.edit', $row->id_reservasi) }}" class="dropdown-item btn btn-sm" type="button">
                                             <i class="fas fa-edit"></i> Edit
-                                        </a>
-                                        @endif
-                                    @elseif ($row->status_reservasi == 14)
-                                        <a type="button" class="dropdown-item btn btn-sm" data-toggle="modal" onclick="showKwitansi('{{ $row->id_reservasi }}')">
-                                            <i class="fas fa-file"></i> Kwitansi
-                                        </a>
-                                    @endif
-                                    <a href="{{ route('reservasi.detail', $row->id_reservasi) }}" type="button" class="dropdown-item btn btn-sm">
-                                        <i class="fas fa-info-circle"></i> Detail
-                                    </a>
-                                    @if (Auth::user()->role_id == 1)
-                                    <a href="{{ route('reservasi.delete', $row->id_reservasi) }}" type="button" class="dropdown-item btn btn-sm" onclick="return confirm('Apakah ingin menghapus reservasi ?')">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </a>
-                                    @endif
+                                            </a>
+                                            @endif
+                                            @elseif ($row->status_reservasi == 14)
+                                            <a type="button" class="dropdown-item btn btn-sm" data-toggle="modal" onclick="showKwitansi('{{ $row->id_reservasi }}')">
+                                                <i class="fas fa-file"></i> Kwitansi
+                                            </a>
+                                            @endif
+                                            <a href="{{ route('reservasi.detail', $row->id_reservasi) }}" type="button" class="dropdown-item btn btn-sm">
+                                                <i class="fas fa-info-circle"></i> Detail
+                                            </a>
+                                            @if (Auth::user()->role_id == 1)
+                                            <a href="{{ route('reservasi.delete', $row->id_reservasi) }}" type="button" class="dropdown-item btn btn-sm" onclick="return confirm('Apakah ingin menghapus reservasi ?')">
+                                                <i class="fas fa-trash"></i> Hapus
+                                            </a>
+                                            @endif
                                 </div>
                             </td>
                         </tr>
@@ -225,7 +225,7 @@
                             @foreach($row->detail as $i => $subRow)
                             <tr>
                                 <td>{{ $i + 1 }}</td>
-                                <td>{{ $subRow->tarif?->kamar->nama_kamar }}</td>
+                                <td>{{ isset($subRow->tarif->kamar) ? $subRow->tarif->kamar->nama_kamar : '' }}</td>
                                 <td>{{ \Carbon\Carbon::parse($subRow->tanggal_check_in)->isoFormat('DD MMMM Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($subRow->tanggal_check_out)->isoFormat('DD MMMM Y') }}</td>
                                 <td>
@@ -313,8 +313,8 @@
                                     @foreach($row->detail as $subRow)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $subRow->tarif?->kamar->nama_kamar }}</td>
-                                        <td>Rp {{ number_format($subRow->tarif?->harga_sewa, 0, ',', '.') }}</td>
+                                        <td>{{ isset($subRow->tarif->kamar) ? $subRow->tarif->kamar->nama_kamar : '' }}</td>
+                                        <td>Rp {{ isset($subRow->tarif) ? number_format($subRow->tarif->harga_sewa, 0, ',', '.') : '0' }}</td>
                                         <td>
                                             {{ \Carbon\Carbon::parse($subRow->tanggal_check_in)->isoFormat('DD/MM/YY') }}
                                             - {{ \Carbon\Carbon::parse($subRow->tanggal_check_out)->isoFormat('DD/MM/YY') }}
