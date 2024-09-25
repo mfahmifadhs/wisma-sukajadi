@@ -72,7 +72,8 @@ class ReservasiController extends Controller
 
     public function show()
     {
-        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC')->whereYear('tanggal_reservasi', 2024)->get();
+        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC')->orderBy('status_reservasi','ASC')
+        ->whereYear('tanggal_reservasi', 2024)->get();
         return view('pages.reservasi.data', compact('reservasi'));
     }
 
