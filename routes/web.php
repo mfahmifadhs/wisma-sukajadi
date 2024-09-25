@@ -166,6 +166,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('pendapatan', [DashboardController::class, 'showPendapatan'])->name('pendapatan');
     Route::get('kiritksaran', [KritikSaranController::class, 'show'])->name('kritiksaran.show');
+    // Hapus usulan
+    Route::get('reservasi/hapus/{id}', [ReservasiController::class, 'destroy'])->name('reservasi.delete');
 
     // akses oleh admin
     Route::group(['middleware' => ['access:admin']], function () {
@@ -201,8 +203,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Akses super admin
     Route::group(['middleware' => ['access:private']], function () {
-        // Hapus usulan
-        Route::get('reservasi/hapus/{id}', [ReservasiController::class, 'destroy'])->name('reservasi.delete');
         // User atau pengguna
         Route::get('pengguna', [UserController::class, 'show'])->name('user.show');
         Route::get('pengguna/detail/{id}', [UserController::class, 'detail'])->name('user.detail');

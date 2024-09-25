@@ -105,7 +105,7 @@
                                     <a href="{{ route('reservasi.detail', $row->id_reservasi) }}" type="button" class="dropdown-item btn btn-sm">
                                         <i class="fas fa-info-circle"></i> Detail
                                     </a>
-                                    @if (Auth::user()->role_id == 1)
+                                    @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 4)
                                     <a href="{{ route('reservasi.delete', $row->id_reservasi) }}" type="button" class="dropdown-item btn btn-sm" onclick="return confirm('Apakah ingin menghapus reservasi ?')">
                                         <i class="fas fa-trash"></i> Hapus
                                     </a>
