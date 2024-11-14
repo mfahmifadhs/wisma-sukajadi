@@ -21,30 +21,50 @@ class AuthController extends Controller
 
     public function redirect()
     {
-        // redirect to SSO DTO
-        // $ssoBaseUrl = "https://auth-dev-eoffice.kemkes.go.id";
-        // $clientId = env("SSO_CLIENT_ID", "993fe200-4df3-4f99-986a-424bed9edaa9");
-        // $redirectUri = env("SSO_CLIENT_ID", "https://wisma-sukajadi.kemkes.go.id/");
-
-
-
-        $ssoBaseUrl  = "https://auth-dev-eoffice.kemkes.go.id";
+        $ssoBaseUrl  = "https://auth-eoffice.kemkes.go.id/";
         $clientId    = app('config')->get('services.sso.client_id');
-        $redirectUri = "https://wisma-sukajadi.kemkes.go.id";
+        $redirectUri = "https://wisma-sukajadi.kemkes.go.id/auth/sso/callback";
 
         $redirectUrl = $ssoBaseUrl . "/oauth/authorize" . "?client_id=" . $clientId . "&redirect_uri=" . urlencode($redirectUri) . "&response_type=code";
 
         return Redirect::away($redirectUrl);
     }
 
-    public function callback()
+    public function callback(Request $request)
     {
-        // callback
-        // $auth = get user from SSO DTO
-        // $user = User::where('nip', $auth->nip)->first();
-        // $user = Socialite::driver('dto')->user();
-        // $akun = User::where('nip', $user->nip)->first();
-        return 'sso callback';
+        $code = $request->query('code');
+
+        $response = Http::asForm()->post(config('services.sso.base_url') . '/oauth/token', [
+            'grant_type' => 'authorization_code',
+            'client_id' => config('services.sso.client_id'),
+            'client_secret' => config('services.sso.client_secret'),
+            'redirect_uri' => config('services.sso.redirect'),
+            'code' => $code,
+        ]);
+
+        $tokenData = $response->json();
+
+        if (!isset($tokenData['access_token'])) {
+            return redirect('/')->withErrors('Login failed. No response from eOffice.');
+        }
+
+        $userResponse = Http::withToken($tokenData['access_token'])->post(config('services.sso.base_url') . '/oauth/usertoken');
+        $userData = $userResponse->json();
+
+        if (empty($userData['nip'])) {
+            return redirect('/')->withErrors('Login failed. NIP not found.');
+        }
+
+        $user = User::join('t_pegawai', 'id_pegawai', 'pegawai_id')
+            ->where('nip', $userData['nip'])
+            ->first();
+
+        if (!$user) {
+            return redirect()->route('login')->with('failed', 'Pengguna tidak terdaftar');
+        }
+
+        Auth::login($user);
+        return redirect()->intended('dashboard');
     }
 
     public function masuk(Request $request)
@@ -110,5 +130,4 @@ class AuthController extends Controller
         Auth::logout();
         return Redirect('halaman-masuk');
     }
-
 }
