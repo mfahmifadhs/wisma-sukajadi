@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function index()
     {
         $pendapatan = json_encode($this->showPendapatan());
-        $reservasi  = Reservasi::where(DB::raw("DATE_FORMAT(tanggal_reservasi, '%Y')"), Carbon::now()->format('Y'))->orderBy('id_reservasi', 'ASC')->get();
+        $reservasi  = Reservasi::where(DB::raw("DATE_FORMAT(tanggal_reservasi, '%Y')"), Carbon::now()->format('Y'))->orderBy('tanggal_masuk', 'ASC')->get();
         $book       = Reservasi::where('status_reservasi', 10)->orderBy('id_reservasi', 'ASC')->get();
         return view('pages.dashboard.show', compact('reservasi','pendapatan','book'));
 
