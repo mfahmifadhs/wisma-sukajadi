@@ -2,6 +2,21 @@
 
 @section('content')
 
+@if ($message = Session::get('failed'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: '{{ $message }}',
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    });
+</script>
+@endif
+
 <div class="banner-carousel banner-carousel-1 mb-0">
     <div class="banner-carousel-item" style="background-image:url(images/main/slider-main/sukajadi-2.jpg)">
         <div class="slider-content">
@@ -49,7 +64,7 @@
     <div class="container">
         <div class="action-style-box">
             <h4 class="text-center text-white">
-                <form action="{{ route('reservasi.book') }}" method="GET">
+                <form action="{{ route('reservasi.book', 'umum') }}" method="GET">
                     @csrf
                     <div class="row">
                         <div class="col-md-12 mb-2">
@@ -72,7 +87,9 @@
                             <div class="input-group">
                                 <div class="w-100">
                                     <button class="btn btn-warning font-weight-bold" style="height: 110%;">BOOK</button>
-                                    <a href="" class="btn btn-secondary font-weight-bold pt-2" style="height: 110%;">CEK RESERVASI</a>
+                                    <a href="" data-toggle="modal" data-target="#modalCekBook" class="btn btn-secondary font-weight-bold pt-2" style="height: 110%;">
+                                        CEK RESERVASI
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -89,6 +106,32 @@
         </div>
     </div>
 </section>
+
+<!-- Modal Cek Reservasi -->
+<div class="modal fade" id="modalCekBook" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="{{ route('reservasi.etiket', 'cari') }}" method="GET">
+                @csrf
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <label class="text-dark"><b>Masukkan Kode Reservasi</b></label>
+                    <input type="text" class="form-control border-dark rounded text-dark text-center number" name="id_reservasi" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Cari
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <section id="ts-features" class="ts-features">
     <div class="container">
@@ -403,44 +446,6 @@
 
 
         <div class="gap-40"></div>
-
-        <!-- <div class="row">
-      <div class="col-md-12">
-        <h3 class="column-title">Kritik dan Saran</h3>
-        <form id="contact-form" action="#" method="post" role="form">
-          <div class="error-container"></div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label>Name</label>
-                <input class="form-control form-control-name" name="name" id="name" placeholder="" type="text" required>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label>Email</label>
-                <input class="form-control form-control-email" name="email" id="email" placeholder="" type="email"
-                  required>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label>Subject</label>
-                <input class="form-control form-control-subject" name="subject" id="subject" placeholder="" required>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea class="form-control form-control-message" name="message" id="message" placeholder="" rows="10"
-              required></textarea>
-          </div>
-          <div class="text-right"><br>
-            <button class="btn btn-primary solid blank" type="submit">Kirim</button>
-          </div>
-        </form>
-      </div>
-    </div> -->
     </div><!-- Conatiner end -->
 </section><!-- Main container end -->
 
@@ -466,5 +471,6 @@
         }
     });
 </script>
+
 @endsection
 @endsection

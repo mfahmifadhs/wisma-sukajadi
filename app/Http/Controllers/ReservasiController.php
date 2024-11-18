@@ -9,6 +9,7 @@ use App\Models\ReservasiDetail;
 use App\Models\Status;
 use App\Models\TarifSewa;
 use App\Models\UnitKerja;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -360,16 +361,21 @@ class ReservasiController extends Controller
         return view('pages.reservasi.print', compact('id', 'reservasi'));
     }
 
-    public function book(Request $request)
+    public function book(Request $request, $id)
     {
-        $proses = $request->get('proses');
-        $kamar  = $request->get('kamar');
-        $masuk  = $request->get('masuk');
-        $keluar = $request->get('keluar');
-        $uker   = UnitKerja::get();
-
+        $pegawai = '';
+        $nik     = $id ?? null;
+        $proses  = $request->get('proses');
+        $kamar   = $request->get('kamar') ?? null;
+        $masuk   = $request->get('masuk') ?? null ;
+        $keluar  = $request->get('keluar') ?? null;
+        $uker    = UnitKerja::get();
         if (!$proses) {
-            return view('reservasi', compact('kamar','masuk','keluar','uker'));
+            if ($id != 'umum') {
+                $id = 'kemenkes';
+            }
+
+            return view('reservasi', compact('id', 'nik', 'pegawai','kamar','masuk','keluar','uker'));
         } else {
             $pengunjung = str_pad(Pengunjung::withTrashed()->count() + 1, 4, 0, STR_PAD_LEFT);
             $idTamu     = (int) Carbon::now()->isoFormat('YYMMDD') . $pengunjung;
@@ -378,6 +384,7 @@ class ReservasiController extends Controller
             $tamu->id_pengunjung = $idTamu;
             $tamu->nama_pengunjung = $request->nama;
             $tamu->no_hp           = $request->nohp;
+            $tamu->nik             = $request->instansi == 'kemenkes' ? $request->nik : null;
             $tamu->instansi        = $request->instansi;
             $tamu->unit_kerja_id   = $request->instansi == 'kemenkes' ? $request->uker : null;
             $tamu->keterangan      = $request->nama_instansi;
@@ -402,9 +409,18 @@ class ReservasiController extends Controller
         }
     }
 
-    public function etiket($id)
+    public function etiket(Request $request, $id)
     {
-        $data = Reservasi::where('id_reservasi', $id)->where('status_reservasi', 10)->first();
+        if ($id == 'cari') {
+            $data = Reservasi::where('id_reservasi', $request->id_reservasi)->where('status_reservasi', 10)->first();
+        } else {
+            $data = Reservasi::where('id_reservasi', $id)->where('status_reservasi', 10)->first();
+        }
+
+        if (!$data) {
+            return back()->with('failed', 'Reservasi Tidak Ditemukan');
+        }
+
         return view('etiket', compact('data'));
     }
 }

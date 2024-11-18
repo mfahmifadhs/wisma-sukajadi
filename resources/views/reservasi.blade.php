@@ -19,48 +19,41 @@
                 </div>
                 @endif
             </div>
-            <div class="col-md-9 mx-auto">
-                <form id="form" action="{{ route('reservasi.book') }}" method="GET">
-                    @csrf
-                    <input type="hidden" name="proses" value="true">
-                    <div class="form-group row">
-                        <h4 class="col-md-4 mt-2">Jumlah Kamar</h4>
-                        <div class="col-md-7">
-                            <input type="number" class="form-control border-secondary rounded text-dark" name="kamar" min="1" value="{{ $kamar }}" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <h4 class="col-md-4 mt-2">Tanggal Menginap</h4>
-                        <div class="col-md-7">
-                            <div class="input-group">
-                                <input type="date" class="form-control border-secondary rounded text-dark" name="masuk" min="{{ date('Y-m-d') }}" value="{{ $masuk }}" required>
-                                <span class="mx-2 my-auto">-</span>
-                                <input type="date" class="form-control border-secondary rounded text-dark" name="keluar" min="{{ date('Y-m-d', strtotime('+1 day')) }}" value="{{ $keluar }}" required>
+            <div class="col-md-3 mx-auto">
+                <a type="button" data-toggle="modal" data-target="#detail">
+                    <img src="{{ asset('images/tarif-sewa.png') }}" class="img-fluid border border-dark" alt="">
+                </a>
+                <div class="modal fade" id="detail" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Tarif Sewa</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="{{ asset('images/tarif-sewa.png') }}" class="img-fluid border border-dark" alt="">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-8 mx-auto">
+                <form id="form" action="{{ route('reservasi.book', 'proses') }}" method="GET">
+                    @csrf
+                    <input type="hidden" name="proses" value="true">
 
-                    <div class="form-group row">
-                        <h4 class="col-md-4 mt-2">Nama Lengkap</h4>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control border-secondary rounded text-uppercase" name="nama" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <h4 class="col-md-4 mt-2">Nomor HP</h4>
-                        <div class="col-md-7">
-                            <input type="number" class="form-control border-secondary rounded text-dark" name="nohp" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row mt-2">
-                        <h4 class="col-md-4 mt-1">Asal Instansi</h4>
-                        <div class="col-md-7 mt-1">
+                    <div class="d-flex">
+                        <div class="w-50 mr-1">
+                            <label class="text-sm font-weight-bold text-dark">Asal Instansi</label>
                             <div class="input-group">
                                 <div class="custom-control custom-radio text-black">
-                                    <input class="custom-control-input" type="radio" id="radio1" name="instansi" value="kemenkes">
+                                    <input class="custom-control-input" type="radio" id="radio1" name="instansi" value="kemenkes" <?php echo $id == 'kemenkes' ? 'checked' : ''; ?>>
                                     <label for="radio1" class="custom-control-label">KEMENKES</label>
                                 </div>
                                 <span class="mx-3"></span>
@@ -72,27 +65,62 @@
                         </div>
                     </div>
 
-                    <div class="form-group row kemenkes" style="display: none;">
-                        <h4 class="col-md-4 mt-1">Unit Kerja*</h4>
-                        <div class="col-md-7">
-                            <select name="uker" class="text-dark rounded border-success uker" style="width: 100%; height: 100%;">
-                                <option value="">-- PILIH UNIT KERJA --</option>
-                                @foreach ($uker as $row)
-                                <option value="{{ $row->id_unit_kerja }}">{{ strtoupper($row->nama_unit_kerja) }}</option>
-                                @endforeach
-                            </select>
+                    <div class="d-flex mt-3">
+                        <div class="w-50 mr-1">
+                            <label class="text-sm font-weight-bold text-dark">Nama Lengkap*</label>
+                            <input type="text" class="form-control border-secondary rounded text-dark" name="nama" required>
+                        </div>
+                        <div class="w-50 ml-1">
+                            <label class="text-sm font-weight-bold text-dark">No. Handphone*</label>
+                            <input type="text" class="form-control border-secondary rounded text-dark" name="nohp" required>
                         </div>
                     </div>
 
-                    <div class="form-group row umum" style="display: none;">
-                        <h4 class="col-md-4 mt-2">Nama Instansi</h4>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control border-success rounded text-uppercase text-dark" name="nama_instansi" id="name" required>
+                    <div class="kemenkes" style="<?php echo $id != 'kemenkes' ? 'display: none;' : 'display: block;' ?>">
+                        <div class="d-flex mt-3">
+                            <div class="w-50 mr-1">
+                                <label class="text-sm font-weight-bold text-dark">NIP*</label>
+                                <input type="text" class="form-control border border-dark rounded text-dark" name="nik" value="{{ $nik }}">
+                            </div>
+                            <div class="w-50 ml-1">
+                                <label class="text-sm font-weight-bold text-dark">Unit Kerja*</label>
+                                <select name="uker" class="text-dark rounded border-secondary uker" style="width: 100%; height: 100%;">
+                                    <option value="">-- PILIH UNIT KERJA --</option>
+                                    @foreach ($uker as $row)
+                                    <option value="{{ $row->id_unit_kerja }}">{{ strtoupper($row->nama_unit_kerja) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row text-right">
-                        <div class="col-md-4">&nbsp;</div>
-                        <div class="col-md-7">
+
+                    <div class="umum" style="display: none;">
+                        <div class="d-flex mt-3">
+                            <div class="w-100 mr-1">
+                                <label class="text-sm font-weight-bold text-dark">Nama Instansi</label>
+                                <input type="text" class="form-control border-secondary rounded text-dark" name="nama_instansi" id="name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex mt-3">
+                        <div class="w-25 mr-3">
+                            <label class="text-sm font-weight-bold text-dark">Jumlah Kamar*</label>
+                            <input type="number" class="form-control border-secondary rounded text-dark text-center" name="kamar" min="1" value="{{ $kamar }}" required>
+                        </div>
+                        <div class="w-50 mr-2">
+                            <label class="text-sm font-weight-bold text-dark">Check In*</label>
+                            <input id="checkInDate" type="date" class="form-control border-secondary rounded text-dark" name="masuk" min="{{ date('Y-m-d') }}" value="{{ $masuk }}" required>
+                        </div>
+                        <div class="w-50 ml-2">
+                            <label class="text-sm font-weight-bold text-dark">Check Out*</label>
+                            <input id="checkOutDate" type="date" class="form-control border-secondary rounded text-dark" name="keluar" min="{{ date('Y-m-d', strtotime('+1 day')) }}" value="{{ $keluar }}" required>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 form-group row text-right">
+                        <div class="col-md-9">&nbsp;</div>
+                        <div class="col-md-3">
                             <button class="btn btn-primary btn-block" onclick="return confirmSubmit()">SUBMIT</button>
                         </div>
                     </div>
@@ -134,7 +162,7 @@
                 var keluar = document.getElementsByName('keluar')[0];
                 var nama = document.getElementsByName('nama')[0];
                 var nohp = document.getElementsByName('nohp')[0];
-                var instansi = document.getElementsByName('instansi')[0];
+                var instansi = document.querySelector('input[name="instansi"]:checked');
                 var namaInstansi = instansi.value == 'kemenkes' ? document.getElementsByName('uker')[0] : document.getElementsByName('nama_instansi')[0];
 
                 if (!nama.value || !nohp.value || !instansi.value || !namaInstansi.value) {

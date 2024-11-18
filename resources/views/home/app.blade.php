@@ -269,6 +269,37 @@
             });
         </script>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const checkInDate = document.getElementById('checkInDate');
+                const checkOutDate = document.getElementById('checkOutDate');
+                const today = new Date();
+
+                // Set min date to today
+                const minDate = today.toISOString().split('T')[0];
+                checkInDate.min = minDate;
+                checkOutDate.min = minDate;
+
+                // Set max date to H+7
+                const maxDate = new Date(today);
+                maxDate.setDate(today.getDate() + 14);
+                checkInDate.max = maxDate.toISOString().split('T')[0];
+                checkOutDate.max = maxDate.toISOString().split('T')[0];
+            });
+        </script>
+
+
+
+        <script>
+            $('#modalCekBook').on('show.bs.modal', function() {
+                $('body').append('<div class="modal-backdrop-custom"></div>');
+            });
+
+            $('#modalCekBook').on('hidden.bs.modal', function() {
+                $('.modal-backdrop-custom').remove();
+            });
+        </script>
+
     </div><!-- Body inner end -->
 </body>
 

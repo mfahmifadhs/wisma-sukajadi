@@ -15,23 +15,29 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                             Reservasi <i class="far fa-bell"></i>
-                            <span class="badge badge-warning navbar-badge">{{ $book->count() }}</span>
+                            <span class="badge badge-danger navbar-badge">{{ $book->count() }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-                            <span class="dropdown-item dropdown-header">{{ $book->count() }} reservasi</span>
+                            <span class="dropdown-item dropdown-header text-dark">{{ $book->count() }} reservasi</span>
                             <div style="max-height: 250px; overflow-y: auto;">
                                 @foreach($book as $row)
-                                <div class="dropdown-divider"></div>
                                 <a href="{{ route('reservasi.tambah', $row->id_reservasi) }}" class="dropdown-item small">
-                                    {{ $loop->iteration }}. {{ $row->pengunjung->nama_pengunjung }}
-                                    <span class="float-right text-muted text-xs">
-                                        {{ Carbon\Carbon::parse($row->created_at)->format('Y-m-d H:i') }}
-                                    </span>
+                                    <div class="row">
+                                        <div class="col-md-1">{{ $loop->iteration }}. </div>
+                                        <div class="col-md-11 text-xs">
+                                            <small>{{ Carbon\Carbon::parse($row->created_at)->format('Y-m-d H:i') }}</small> <br>
+                                            {{ $row->pengunjung->nama_pengunjung }} <br>
+                                            {{ $row->pengunjung->unitKerja ? $row->pengunjung->unitKerja->nama_unit_kerja : $row->pengunjung->keterangan }} <br>
+                                            {{ Carbon\Carbon::parse($row->tanggal_masuk)->isoFormat('d/M/Y') }} -
+                                            {{ Carbon\Carbon::parse($row->tanggal_keluar)->isoFormat('d/M/Y') }}
+                                        </div>
+                                    </div>
                                 </a>
+                                <div class="dropdown-divider"></div>
                                 @endforeach
                             </div>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">Lihat seluruh reservasi</a>
+                            <a href="{{ url('reservasi') }}" class="dropdown-item dropdown-footer">Lihat seluruh reservasi</a>
                         </div>
                     </li>
                 </ol>
@@ -144,7 +150,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Order ID</th>
-                                    <th>Nama Pengunjung</th>
+                                    <th>Nama</th>
+                                    <th>Asal</th>
+                                    <th>Check In - Check Out</th>
                                     <th>No. HP</th>
                                     <th>Status</th>
                                     <th></th>
@@ -161,6 +169,13 @@
                                         </a>
                                     </td>
                                     <td class="text-left">{{ $row->pengunjung->nama_pengunjung }}</td>
+                                    <td class="text-left">
+                                        {{ $row->pengunjung->unitKerja ? $row->pengunjung->unitKerja->nama_unit_kerja : $row->pengunjung->keterangan }}
+                                    </td>
+                                    <td>
+                                        {{ Carbon\Carbon::parse($row->tanggal_masuk)->isoFormat('d/M/Y') }} -
+                                        {{ Carbon\Carbon::parse($row->tanggal_keluar)->isoFormat('d/M/Y') }}
+                                    </td>
                                     <td>{{ '0'.$row->pengunjung->no_hp }}</td>
                                     <td><span class="badge badge-success">{{ $row->status->nama_status }}</span></td>
                                     <td>

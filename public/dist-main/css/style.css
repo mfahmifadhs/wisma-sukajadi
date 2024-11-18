@@ -8,7 +8,7 @@ body {
 
 body,
 p {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Tahoma", sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased !important;
   line-height: 26px;
@@ -3538,12 +3538,16 @@ label {
     border: solid #00A859;
 }
 
+.select2 {
+    border-radius: 4px;
+    border: 1px solid #464343;
+}
+
 .select2-container--default .select2-selection--single {
-    height: 5vh !important;
+    height: 5.5vh !important;
     display: flex;
     align-items: center;
     padding: 10px;
-    border: 2px solid #00A859;
     box-sizing: border-box; /* Menjamin padding tidak mengubah ukuran total */
 }
 
@@ -3556,4 +3560,14 @@ label {
 
 .select2-selection__rendered {
     line-height: normal !important;
+}
+
+.modal-backdrop-custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); /* Atur opacity sesuai keinginan */
+    z-index: 1040; /* Pastikan di bawah modal */
 }

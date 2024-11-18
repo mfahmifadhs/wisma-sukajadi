@@ -48,7 +48,7 @@ Route::post('masuk', [AuthController::class, 'Masuk'])->name('masuk');
 Route::post('masuk/pegawai', [AuthController::class, 'Masuk'])->name('masuk');
 Route::post('daftar', [AuthController::class, 'Daftar'])->name('daftar');
 Route::get('keluar', [AuthController::class, 'Keluar'])->name('keluar');
-Route::get('reservasi/pesan', [ReservasiController::class, 'book'])->name('reservasi.book');
+Route::get('reservasi/pesan/{id}', [ReservasiController::class, 'book'])->name('reservasi.book');
 Route::get('reservasi/tiket/{id}', [ReservasiController::class, 'etiket'])->name('reservasi.etiket');
 
 Route::group(['prefix' => 'beranda', 'as' => 'beranda.'],
