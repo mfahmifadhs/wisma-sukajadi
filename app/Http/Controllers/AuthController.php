@@ -59,12 +59,13 @@ class AuthController extends Controller
             ->where('nip', $userData['nip'])
             ->first();
 
-        if (!$user) {
-            return redirect()->route('login')->with('failed', 'Pengguna tidak terdaftar');
-        }
+        // if (!$user) {
+        //     return redirect()->route('login')->with('failed', 'Pengguna tidak terdaftar');
+        // }
 
         Auth::login($user);
-        return redirect()->intended('dashboard');
+        return redirect()->route('reservasi.book', $userData['nip']);
+        // return redirect()->intended('dashboard');
     }
 
     public function masuk(Request $request)
