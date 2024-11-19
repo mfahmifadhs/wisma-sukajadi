@@ -63,7 +63,7 @@ class AuthController extends Controller
         //     return redirect()->route('login')->with('failed', 'Pengguna tidak terdaftar');
         // }
 
-        Auth::login($user);
+        // Auth::login($user);
         return redirect()->route('reservasi.book', $userData['nip']);
         // return redirect()->intended('dashboard');
     }
