@@ -379,7 +379,7 @@ class ReservasiController extends Controller
             return view('reservasi', compact('id', 'nik', 'pegawai', 'kamar', 'masuk', 'keluar', 'uker'));
         } else {
             $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-                'secret' => '6LftloYqAAAAAEy0RkVkUjBfZpZSIy-HiOepGX-l',
+                'secret' => '6LcVm4YqAAAAAO8020bjfHf8aBp_SP8dnCuNKkf_',
                 'response' => $request->input('g-recaptcha-response'),
             ]);
             $responseBody = $response->json();
