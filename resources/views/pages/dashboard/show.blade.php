@@ -28,8 +28,8 @@
                                             <small>{{ Carbon\Carbon::parse($row->created_at)->format('Y-m-d H:i') }}</small> <br>
                                             {{ $row->pengunjung->nama_pengunjung }} <br>
                                             {{ $row->pengunjung->unitKerja ? $row->pengunjung->unitKerja->nama_unit_kerja : $row->pengunjung->keterangan }} <br>
-                                            {{ Carbon\Carbon::parse($row->tanggal_masuk)->isoFormat('d/M/Y') }} -
-                                            {{ Carbon\Carbon::parse($row->tanggal_keluar)->isoFormat('d/M/Y') }}
+                                            {{ Carbon\Carbon::parse($row->tanggal_masuk)->isoFormat('D/M/Y') }} -
+                                            {{ Carbon\Carbon::parse($row->tanggal_keluar)->isoFormat('D/M/Y') }}
                                         </div>
                                     </div>
                                 </a>
