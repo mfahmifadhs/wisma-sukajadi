@@ -119,8 +119,10 @@
                     </div>
 
                     <div class="mt-3 form-group row text-right">
-                        <div class="col-md-9">&nbsp;</div>
-                        <div class="col-md-3">
+                        <div class="col-md-9">
+                            <div class="g-recaptcha" data-sitekey="6LftloYqAAAAAAR4Nwx-FvE-p34wFAc8F1VBz35Y"></div>
+                        </div>
+                        <div class="col-md-3 my-auto">
                             <button class="btn btn-primary btn-block" onclick="return confirmSubmit()">SUBMIT</button>
                         </div>
                     </div>
@@ -132,6 +134,7 @@
 </section><!-- Main container end -->
 
 @section('js')
+
 <script>
     $('.uker').select2()
     $('input[name="instansi"]').change(function() {
@@ -172,7 +175,17 @@
                         icon: 'warning'
                     })
                 } else {
-                    document.getElementById('form').submit();
+                    // Periksa reCAPTCHA
+                    var response = grecaptcha.getResponse();
+                    if (!response) {
+                        Swal.fire({
+                            title: 'Verifikasi Gagal',
+                            text: "Silakan selesaikan CAPTCHA.",
+                            icon: 'error'
+                        });
+                    } else {
+                        document.getElementById('form').submit();
+                    }
                 }
             }
         });

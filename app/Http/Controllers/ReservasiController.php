@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use Illuminate\Support\Facades\Http;
 
 class ReservasiController extends Controller
 {
@@ -73,8 +74,8 @@ class ReservasiController extends Controller
 
     public function show()
     {
-        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC')->orderBy('status_reservasi','ASC')
-        ->whereYear('tanggal_reservasi', 2024)->get();
+        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC')->orderBy('status_reservasi', 'ASC')
+            ->whereYear('tanggal_reservasi', 2024)->get();
         return view('pages.reservasi.data', compact('reservasi'));
     }
 
@@ -367,7 +368,7 @@ class ReservasiController extends Controller
         $nik     = $id ?? null;
         $proses  = $request->get('proses');
         $kamar   = $request->get('kamar') ?? null;
-        $masuk   = $request->get('masuk') ?? null ;
+        $masuk   = $request->get('masuk') ?? null;
         $keluar  = $request->get('keluar') ?? null;
         $uker    = UnitKerja::get();
         if (!$proses) {
@@ -375,19 +376,29 @@ class ReservasiController extends Controller
                 $id = 'kemenkes';
             }
 
-            return view('reservasi', compact('id', 'nik', 'pegawai','kamar','masuk','keluar','uker'));
+            return view('reservasi', compact('id', 'nik', 'pegawai', 'kamar', 'masuk', 'keluar', 'uker'));
         } else {
+            $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => '6LftloYqAAAAAEy0RkVkUjBfZpZSIy-HiOepGX-l',
+                'response' => $request->input('g-recaptcha-response'),
+            ]);
+            $responseBody = $response->json();
+
+            if (!$responseBody['success']) {
+                return back()->with('error', 'Verifikasi CAPTCHA gagal. Silakan coba lagi.');
+            }
+
             $pengunjung = str_pad(Pengunjung::withTrashed()->count() + 1, 4, 0, STR_PAD_LEFT);
             $idTamu     = (int) Carbon::now()->isoFormat('YYMMDD') . $pengunjung;
 
             $tamu = new Pengunjung();
             $tamu->id_pengunjung = $idTamu;
-            $tamu->nama_pengunjung = $request->nama;
+            $tamu->nama_pengunjung = ucwords(strtolower($request->nama));
             $tamu->no_hp           = $request->nohp;
             $tamu->nik             = $request->instansi == 'kemenkes' ? $request->nik : null;
             $tamu->instansi        = $request->instansi;
             $tamu->unit_kerja_id   = $request->instansi == 'kemenkes' ? $request->uker : null;
-            $tamu->keterangan      = $request->nama_instansi;
+            $tamu->keterangan      = ucwords(strtolower($request->nama_instansi));
             $tamu->created_at      = Carbon::now();
             $tamu->save();
 
