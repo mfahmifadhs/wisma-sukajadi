@@ -19,7 +19,9 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        'https://wisma-sukajadi.kemkes.go.id',
+    ],
 
     'allowed_origins_patterns' => [],
 

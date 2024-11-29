@@ -7,6 +7,7 @@
 ================================================== -->
     <meta charset="utf-8">
     <title>WISMA SUKAJADI | KEMENKES RI</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Mobile Specific Metas
 ================================================== -->
