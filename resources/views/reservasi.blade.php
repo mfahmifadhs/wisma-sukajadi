@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-3 mx-auto">
                 <a type="button" data-toggle="modal" data-target="#detail">
-                    <img src="{{ asset('images/main/logo-kemenkes.png') }}" class="img-fluid" alt="">
+                    <img src="{{ asset('images/main/logo-kemenkes.png') }}" class="img-fluid mt-5" alt="">
                 </a>
                 <div class="modal fade" id="detail" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
