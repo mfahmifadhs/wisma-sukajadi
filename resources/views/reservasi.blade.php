@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-3 mx-auto">
                 <a type="button" data-toggle="modal" data-target="#detail">
-                    <img src="{{ asset('images/main/tarif-sewa.png') }}" class="img-fluid border border-dark" alt="">
+                    <img src="{{ asset('images/main/KemenkesLogo2Brown.png') }}" class="img-fluid border border-dark" alt="">
                 </a>
                 <div class="modal fade" id="detail" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -33,7 +33,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <img src="{{ asset('images/main/tarif-sewa.png') }}" class="img-fluid border border-dark" alt="">
+                                <img src="{{ asset('images/main/KemenkesLogo2Brown.png') }}" class="img-fluid border border-dark" alt="">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
