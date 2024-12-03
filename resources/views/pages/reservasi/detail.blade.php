@@ -84,7 +84,7 @@
                                     <div class="col-md-8">{{ $reservasi->pengunjung->keterangan }}</div>
                                     @if ($reservasi->pengunjung->instansi == 'kemenkes')
                                     <div class="col-sm-3">Unit Kerja</div>:
-                                    <div class="col-md-8">{{ $reservasi->pengunjung->unitKerja->nama_unit_kerja }}</div>
+                                    <div class="col-md-8">{{ $reservasi->pengunjung->unitKerja?->nama_unit_kerja }}</div>
                                     @endif
                                     <div class="col-md-3">Foto KTP</div>:
                                     <div class="col-md-4">
