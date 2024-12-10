@@ -18,7 +18,7 @@ class MainController extends Controller
     public function menuRoom($id)
     {
         if ($id == 'daftar') {
-            $rooms = Kamar::get();
+            $rooms = Kamar::whereNotIn('id_kamar', [1,2,3])->get();
             return view('m_kamar', compact('rooms'));
         }else{
             $rooms = RoomModel::with('rentalrate')->where('id_room', $id)->get();
