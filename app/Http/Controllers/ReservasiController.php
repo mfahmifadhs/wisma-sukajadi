@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReservasiExport;
 use App\Models\Kamar;
 use App\Models\Pengunjung;
 use App\Models\Reservasi;
@@ -15,7 +16,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use Auth;
 use Illuminate\Support\Facades\Http;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReservasiController extends Controller
 {
@@ -70,13 +73,6 @@ class ReservasiController extends Controller
         }
 
         return view('pages.reservasi.show', compact('reservasi', 'bulanPick', 'bulan', 'statusPick', 'status'));
-    }
-
-    public function show()
-    {
-        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC')->orderBy('status_reservasi', 'ASC')
-            ->whereYear('tanggal_reservasi', 2024)->get();
-        return view('pages.reservasi.data', compact('reservasi'));
     }
 
     public function create($id)
@@ -433,5 +429,137 @@ class ReservasiController extends Controller
         }
 
         return view('etiket', compact('data'));
+    }
+
+    public function show(Request $request)
+    {
+        $data[]    = $request->all();
+        $tanggal = $request->get('tanggal');
+        $bulan   = $request->get('bulan');
+        $tahun   = $request->get('tahun');
+        $status  = $request->get('status');
+        // dd($request->data);
+
+        $listStatus = Status::where('kategori', 'reservasi')->get();
+        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC')->orderBy('status_reservasi', 'ASC')
+            ->whereYear('tanggal_reservasi', 2024)->get();
+
+        if ($request->downloadFile == 'pdf') {
+            return view('pages.reservasi.reservasi.pdf', compact('tamu'));
+        } elseif ($request->downloadFile == 'excel') {
+            $json = json_decode($request->data, true);
+            $res  = $json[0];
+            return Excel::download(new ReservasiExport($res), 'reservasi.xlsx');
+        }
+        return view('pages.reservasi.data', compact('data', 'tanggal', 'bulan', 'tahun', 'status', 'listStatus', 'reservasi'));
+    }
+
+    public function select(Request $request)
+    {
+        $tanggal = $request->tanggal;
+        $tahun   = $request->tahun;
+        $bulan   = $request->bulan;
+        $status  = $request->status;
+
+        $data   = Reservasi::orderBy('id_reservasi', 'DESC');
+
+        if ($tanggal || $bulan || $tahun || $status) {
+            if ($tanggal) {
+                $result = $data->whereDay('tanggal_reservasi', $tanggal);
+            }
+
+            if ($bulan) {
+                $result = $data->whereMonth('tanggal_reservasi', $bulan);
+            }
+
+            if ($tahun) {
+                $result = $data->whereYear('tanggal_reservasi', $tahun);
+            }
+
+            if ($status) {
+                $result = $data->where('status_reservasi', $status);
+            }
+
+            $result = $result->get();
+        } else {
+            $result = $data->get();
+        }
+
+        if ($result->isEmpty() || $result->count() == 0) {
+            return response()->json([
+                'message' => 'Data tidak ditemukan',
+                'data' => []
+            ]);
+        }
+
+        $no = 1;
+        $response = [];
+        foreach ($result as $row) {
+            $aksi = '';
+            $aksi .= '
+                <a type="button" class="btn btn-primary btn-sm" data-toggle="dropdown">
+                    <i class="fas fa-bars"></i>
+                </a>
+            ';
+
+            $aksi .= '<div class="dropdown-menu">';
+            if ($row->status_reservasi < 14) {
+                $aksi .= '
+                    <a href="' . route('reservasi.tambah', $row->id_reservasi) . '" class="dropdown-item btn btn-sm" type="button">
+                        <i class="fas fa-external-link-square-alt"></i> Proses
+                    </a>
+                ';
+                if ($row->status_reservasi < 14) {
+                    $aksi .= '
+                        <a href="' . route('reservasi.edit', $row->id_reservasi) . '" class="dropdown-item btn btn-sm" type="button">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                    ';
+                }
+            }
+            $aksi .= '
+                <a href="' . route('reservasi.detail', $row->id_reservasi) . '" class="dropdown-item btn btn-sm" type="button">
+                    <i class="fas fa-info-circle"></i> Detail
+                </a>
+            ';
+            if (Auth::user()->role_id == 1 || Auth::user()->role_id == 4) {
+                $aksi .= '
+                    <a href="' . route('reservasi.delete', $row->id_reservasi) . '" class="dropdown-item btn btn-sm" type="button" onclick="return confirm(`Apakah ingin menghapus reservasi ?`)">
+                        <i class="fas fa-trash"></i> Hapus
+                    </a>
+                ';
+            }
+            $aksi .= '</div>';
+
+            if ($row->pengunjung->keterangan) {
+                $ketInstansi = $row->pengunjung->keterangan;
+            } else {
+                $ketInstansi = null;
+            }
+
+            if ($row->status_reservasi == 14) {
+                $status = '<span class="badge badge-success badge-lg">Selesai</span>';
+            } else {
+                $status = '<span class="badge badge-warning badge-lg">' . $row->status->nama_status . '</span>';
+            }
+
+            $response[] = [
+                'no'        => $no,
+                'id'        => $row->id_reservasi,
+                'tanggal'   => Carbon::parse($row->tanggal_reservasi)->isoFormat('DD MMMM Y'),
+                'nama'      => $row->pengunjung->nama_pengunjung,
+                'instansi'  => '(' . $row->pengunjung->instansi . ') ' . $ketInstansi,
+                'nohp'      => '0' . $row->pengunjung->no_hp,
+                'kamar'     => $row->detail->count() ?? 0,
+                'status'    => $status,
+                'aksi'      => $aksi,
+                'detail'    => $row->detail,
+                'total'     => 'Rp ' . number_format($row->detail->sum('total_harga'), 0, ',', '.')
+            ];
+
+            $no++;
+        }
+
+        return response()->json($response);
     }
 }

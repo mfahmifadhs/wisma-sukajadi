@@ -32,7 +32,9 @@ class Reservasi extends Model
     ];
 
     public function detail() {
-        return $this->hasMany(ReservasiDetail::class, 'reservasi_id');
+        return $this->hasMany(ReservasiDetail::class, 'reservasi_id')
+            ->join('t_tarif_sewa','id_tarif_sewa','tarif_sewa_id')
+            ->join('t_kamar','id_kamar','kamar_id');
     }
 
     public function statusReservasi() {

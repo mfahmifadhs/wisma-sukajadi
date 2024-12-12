@@ -167,6 +167,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('pendapatan', [DashboardController::class, 'showPendapatan'])->name('pendapatan');
     Route::get('kiritksaran', [KritikSaranController::class, 'show'])->name('kritiksaran.show');
     // Hapus usulan
+    Route::get('reservasi/select', [ReservasiController::class, 'select'])->name('reservasi.select');
     Route::get('reservasi/hapus/{id}', [ReservasiController::class, 'destroy'])->name('reservasi.delete');
 
     // akses oleh admin
