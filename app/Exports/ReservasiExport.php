@@ -12,14 +12,23 @@ class ReservasiExport implements FromCollection, WithHeadings, WithMapping
 {
     protected $res = [];
     protected $no = 0;
-
+    protected $tanggal;
+    protected $bulan;
+    protected $tahun;
+    protected $status;
 
     function __construct($res)
     {
-        $this->tanggal = $res['tanggal'];
-        $this->bulan   = $res['bulan'];
-        $this->tahun   = $res['tahun'];
-        $this->status  = $res['status'];
+        // Cek apakah $res bukan null dan key ada
+        if ($res && isset($res['tanggal'])) {
+            $this->tanggal = $res['tanggal'];
+        } else {
+            $this->tanggal = null; // Atau nilai default yang diinginkan
+        }
+
+        $this->bulan = $res['bulan'] ?? null; // Gunakan operator null coalescing jika key belum ada
+        $this->tahun = $res['tahun'] ?? null;
+        $this->status = $res['status'] ?? null;
     }
 
     public function collection()
@@ -89,8 +98,15 @@ class ReservasiExport implements FromCollection, WithHeadings, WithMapping
     public function headings(): array
     {
         return [
-            "NO", "KODE", "NAMA", "NO HP", "ASAL", "INSTANSI",
-            "TGL. RESERVASI", "TOTAL KAMAR", "TOTAL TARIF SEWA"
+            "NO",
+            "KODE",
+            "NAMA",
+            "NO HP",
+            "ASAL",
+            "INSTANSI",
+            "TGL. RESERVASI",
+            "TOTAL KAMAR",
+            "TOTAL TARIF SEWA"
         ];
     }
 }
