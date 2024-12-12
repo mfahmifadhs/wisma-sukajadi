@@ -115,7 +115,7 @@
                                                 <td class="text-left">{{ \Carbon\Carbon::parse($month)->isoFormat('MMMM') }}</td>
                                                 <td>Rp {{ number_format($row['pendapatan'], 0, ',', '.') }}</td>
                                                 <td>
-                                                    <form action="{{ route('reservasi.show') }}" method="POST">
+                                                    <form action="{{ route('reservasi.show') }}" method="GET">
                                                         @csrf
                                                         <input type="hidden" name="bulan" value="{{ \Carbon\Carbon::createFromFormat('n', $row['month'])->isoFormat('M') }}">
                                                         <button type="submit" class="btn btn-primary btn-xs rounded font-weight-bold">
@@ -197,7 +197,7 @@
                                     <h4 class="font-weight-bold">{{ $reservasi->where('status_reservasi', 10)->count() }}</h4>
                                     <span class="description-text">PEMILIHAN KAMAR</span>
                                     <h6 class="mt-2">
-                                        <form action="{{ route('reservasi.show') }}" method="POST">
+                                        <form action="{{ route('reservasi.show') }}" method="GET">
                                             @csrf
                                             <input type="hidden" name="status" value="10">
                                             <button type="submit" class="btn btn-default btn-xs">
@@ -213,7 +213,7 @@
                                 <div class="description-block border-right">
                                     <h4 class="font-weight-bold">{{ $reservasi->where('status_reservasi', 11)->count() }}</h4>
                                     <span class="description-text">MENUNGGU PEMBAYARAN</span>
-                                    <form action="{{ route('reservasi.show') }}" method="POST">
+                                    <form action="{{ route('reservasi.show') }}" method="GET">
                                         @csrf
                                         <input type="hidden" name="status" value="11">
                                         <button type="submit" class="btn btn-default btn-xs">
@@ -228,7 +228,7 @@
                                 <div class="description-block border-right">
                                     <h4 class="font-weight-bold">{{ $reservasi->where('status_reservasi', 12)->count() }}</h4>
                                     <span class="description-text">CHECK IN</span>
-                                    <form action="{{ route('reservasi.show') }}" method="POST">
+                                    <form action="{{ route('reservasi.show') }}" method="GET">
                                         @csrf
                                         <input type="hidden" name="status" value="12">
                                         <button type="submit" class="btn btn-default btn-xs">
@@ -243,7 +243,7 @@
                                 <div class="description-block">
                                     <h4 class="font-weight-bold">{{ $reservasi->where('status_reservasi', 14)->count() }}</h4>
                                     <span class="description-text">CHECK OUT</span>
-                                    <form action="{{ route('reservasi.show') }}" method="POST">
+                                    <form action="{{ route('reservasi.show') }}" method="GET">
                                         @csrf
                                         <input type="hidden" name="status" value="14">
                                         <button type="submit" class="btn btn-default btn-xs">
@@ -256,7 +256,7 @@
                                 <div class="description-block">
                                     <h4 class="font-weight-bold">{{ $reservasi->count() }}</h4>
                                     <span class="description-text">SELURUH RESERVASI</span>
-                                    <form action="{{ route('reservasi.show') }}" method="POST">
+                                    <form action="{{ route('reservasi.show') }}" method="GEET">
                                         @csrf
                                         <button type="submit" class="btn btn-default btn-xs">
                                             Selengkapnya <i class="fas fa-arrow-alt-circle-right"></i>
