@@ -84,7 +84,7 @@
                             </div>
                             <div class="w-50 ml-1">
                                 <label class="text-sm font-weight-bold text-dark">Unit Kerja*</label>
-                                <select name="uker" class="text-dark rounded border-secondary uker">
+                                <select name="uker" class="text-dark rounded border-secondary uker" style="width: 100%;">
                                     <option value="">-- PILIH UNIT KERJA --</option>
                                     @foreach ($uker as $row)
                                     <option value="{{ $row->id_unit_kerja }}">{{ strtoupper($row->nama_unit_kerja) }}</option>
