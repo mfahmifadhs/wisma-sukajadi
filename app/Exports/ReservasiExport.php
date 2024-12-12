@@ -10,7 +10,7 @@ use DB;
 
 class ReservasiExport implements FromCollection, WithHeadings, WithMapping
 {
-    protected $res;
+    protected $res = [];
     protected $no = 0;
 
 
