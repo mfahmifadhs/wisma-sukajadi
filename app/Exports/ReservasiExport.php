@@ -27,7 +27,7 @@ class ReservasiExport implements FromCollection, WithHeadings, WithMapping
         }
 
         $this->bulan = $res['bulan'] ?? null; // Gunakan operator null coalescing jika key belum ada
-        $this->tahun = $res['tahun'] ?? null;
+        $this->tahun = $res['tahun'] ?? 2024;
         $this->status = $res['status'] ?? null;
     }
 
