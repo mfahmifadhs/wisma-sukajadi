@@ -276,8 +276,8 @@
                                 $('#reservasiId').text(reservasiData.id);
                                 $('#reservasiNama').text(reservasiData.nama);
                                 $('#reservasiInstansi').text(reservasiData.instansi);
-                                $('#checkIn').text(reservasiData.tanggal_masuk);
-                                $('#checkOut').text(reservasiData.tanggal_keluar);
+                                $('#checkIn').text(reservasiData.masuk);
+                                $('#checkOut').text(reservasiData.keluar);
                                 $('#reservasiTotal').text(reservasiData.total);
 
                                 const detailContainer = $('#reservasiDetail');

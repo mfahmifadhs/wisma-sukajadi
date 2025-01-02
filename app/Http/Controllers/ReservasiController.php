@@ -554,6 +554,8 @@ class ReservasiController extends Controller
                 'status'    => $status,
                 'aksi'      => $aksi,
                 'detail'    => $row->detail,
+                'masuk'     => $row->tanggal_masuk,
+                'keluar'    => $row->tanggal_keluar,
                 'total'     => 'Rp ' . number_format($row->detail->sum('total_harga'), 0, ',', '.')
             ];
 
