@@ -114,6 +114,10 @@
                     <div class="w-75">: <span id="reservasiInstansi"></span></div>
                 </div>
                 <div class="d-flex">
+                    <div class="w-25"><label>CheckIn - CheckOut</label></div>
+                    <div class="w-75">: <span id="checkIn"></span> - <span id="checkOut"></span></div>
+                </div>
+                <div class="d-flex">
                     <div class="w-25"><label>Total Harga</label></div>
                     <div class="w-75">: <span id="reservasiTotal"></span></div>
                 </div>
@@ -174,8 +178,8 @@
                     <div class="form-group">
                         <b>Pilih Tahun</b>
                         <select id="tahun" class="form-control form-control-sm text-center" name="tahun">
-                            <option value="2024" <?php echo $tahun == '2024' ? 'selected' : ''; ?>>2024</option>
                             <option value="2025" <?php echo $tahun == '2025' ? 'selected' : ''; ?>>2025</option>
+                            <option value="2024" <?php echo $tahun == '2024' ? 'selected' : ''; ?>>2024</option>
                             <option value="2023" <?php echo $tahun == '2023' ? 'selected' : ''; ?>>2023</option>
                         </select>
                     </div>
@@ -272,6 +276,8 @@
                                 $('#reservasiId').text(reservasiData.id);
                                 $('#reservasiNama').text(reservasiData.nama);
                                 $('#reservasiInstansi').text(reservasiData.instansi);
+                                $('#checkIn').text(reservasiData.tanggal_masuk);
+                                $('#checkOut').text(reservasiData.tanggal_keluar);
                                 $('#reservasiTotal').text(reservasiData.total);
 
                                 const detailContainer = $('#reservasiDetail');

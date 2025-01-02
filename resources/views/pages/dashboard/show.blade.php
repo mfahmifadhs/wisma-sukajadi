@@ -61,7 +61,7 @@
             <div class="col-md-6 form-group">
                 <div class="card card-primary card-outline" style="height: 50vh;">
                     <div class="card-header">
-                        <h3 class="card-title">Total Pendapatan 2024 (Grafik)</h3>
+                        <h3 class="card-title">Total Pendapatan 2025 (Grafik)</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-default btn-tool" data-card-widget="collapse" collapsed>
                                 <i class="fas fa-minus"></i>
@@ -83,7 +83,7 @@
             <div class="col-md-6 form-group">
                 <div class="card card-primary card-outline scrollable-table-container" style="height: 60vh;">
                     <div class="card-header">
-                        <h3 class="card-title">Total Pendapatan 2024 (Tabel)</h3>
+                        <h3 class="card-title">Total Pendapatan 2025 (Tabel)</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-default btn-tool" data-card-widget="collapse" collapsed>
                                 <i class="fas fa-minus"></i>
@@ -109,7 +109,7 @@
                                         @endphp
                                         <tbody>
                                             @foreach ($data['original'] as $i => $row)
-                                            @php $month = '2024-' . $row['month'] . '-01'; @endphp
+                                            @php $month = '2025-' . $row['month'] . '-01'; @endphp
                                             <tr>
                                                 <td>{{ $i+1 }}</td>
                                                 <td class="text-left">{{ \Carbon\Carbon::parse($month)->isoFormat('MMMM') }}</td>
