@@ -554,8 +554,8 @@ class ReservasiController extends Controller
                 'status'    => $status,
                 'aksi'      => $aksi,
                 'detail'    => $row->detail,
-                'masuk'     => Carbon::parse($row->tanggal_masuk)->isoFormat('DD MMMM Y'),
-                'keluar'    => Carbon::parse($row->tanggal_keluar)->isoFormat('DD MMMM Y'),
+                'masuk'     => Carbon::parse($row->tanggal_masuk)->isoFormat('dddd, DD MMMM Y'),
+                'keluar'    => Carbon::parse($row->tanggal_keluar)->isoFormat('dddd, DD MMMM Y'),
                 'total'     => 'Rp ' . number_format($row->detail->sum('total_harga'), 0, ',', '.')
             ];
 
