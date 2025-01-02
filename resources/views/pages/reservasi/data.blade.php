@@ -115,7 +115,7 @@
                 </div>
                 <div class="d-flex">
                     <div class="w-25"><label>CheckIn - CheckOut</label></div>
-                    <div class="w-75">: <span id="checkIn"></span> - <span id="checkOut"></span></div>
+                    <div class="w-75">: <span id="checkIn"></span> s/d <span id="checkOut"></span></div>
                 </div>
                 <div class="d-flex">
                     <div class="w-25"><label>Total Harga</label></div>
