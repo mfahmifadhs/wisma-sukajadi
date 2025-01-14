@@ -476,11 +476,8 @@
     document.addEventListener("DOMContentLoaded", function() {
         // Tanggal yang dinonaktifkan
         const disabledDates = [
-            "2024-12-24", "2024-12-25", "2024-12-26", "2024-12-27",
-            "2024-12-28", "2024-12-29", "2024-12-30", "2024-12-31",
-            "2025-01-01", "2025-01-02"
+            "2025-01-18", "2025-01-25", "2025-01-26", "2025-01-27"
         ];
-
         const dates = [
             document.getElementById("checkInDate"),
             document.getElementById("checkOutDate")
@@ -489,8 +486,8 @@
         dates.forEach(input => {
             if (input) {
                 // Set min and max range
-                input.min = "2024-12-23";
-                input.max = "2025-01-03";
+                input.min = "2025-01-25";
+                input.max = "2025-01-27";
 
                 // Add event listener
                 input.addEventListener("input", function() {

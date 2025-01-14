@@ -25,7 +25,7 @@ class ReservasiController extends Controller
     public function index(Request $request)
     {
         $listStatus = Status::whereIn('id_status', [10, 11, 12, 13, 14])->orderBy('nama_status', 'ASC');
-        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC')->whereYear('tanggal_reservasi', 2024);
+        $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC')->whereYear('tanggal_reservasi', 2025);
         $bulan      = [];
         $bulanPick  = [];
         $statusPick = [];
