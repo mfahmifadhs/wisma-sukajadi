@@ -61,6 +61,9 @@
                                 @endif
                             </label>
                         </div>
+                        <div class="input-group my-2 font-weight-bold" style="font-size: 14px;">
+                            Anda akan dihubungi oleh resepsionis wisma untuk konfirmasi ketersediaan kamar
+                        </div>
                         <div class="input-group my-2 mt-5">
                             <label class="text-danger">
                                 Hati-hati Penipuan Mengatasnamakan Pengelola Wisma Kemenkes Sukajadi Melalui Website.
