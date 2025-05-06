@@ -198,7 +198,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         // Tanggal yang dinonaktifkan
         const disabledDates = [
-            "2025-04-03", "2025-04-04", "2025-04-05", "2025-04-06", "2025-04-07"
+            "2025-05-09", "2025-05-10", "2025-05-11", "2025-05-12"
         ];
 
         const dates = [
@@ -209,8 +209,8 @@
         dates.forEach(input => {
             if (input) {
                 // Set min and max range
-                input.min = "2025-04-03";
-                input.max = "2025-04-07";
+                input.min = "2025-05-09"
+                input.max = "2025-05-12";
 
                 // Add event listener
                 input.addEventListener("input", function() {
