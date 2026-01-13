@@ -61,7 +61,7 @@
             <div class="col-md-6 form-group">
                 <div class="card card-primary card-outline" style="height: 50vh;">
                     <div class="card-header">
-                        <h3 class="card-title">Total Pendapatan 2025 (Grafik)</h3>
+                        <h3 class="card-title">Total Pendapatan {{ now()->format('Y') }} (Grafik)</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-default btn-tool" data-card-widget="collapse" collapsed>
                                 <i class="fas fa-minus"></i>
@@ -83,7 +83,7 @@
             <div class="col-md-6 form-group">
                 <div class="card card-primary card-outline scrollable-table-container" style="height: 60vh;">
                     <div class="card-header">
-                        <h3 class="card-title">Total Pendapatan 2025 (Tabel)</h3>
+                        <h3 class="card-title">Total Pendapatan {{ Carbon::now()->format('Y') }} (Tabel)</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-default btn-tool" data-card-widget="collapse" collapsed>
                                 <i class="fas fa-minus"></i>

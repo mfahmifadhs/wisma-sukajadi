@@ -178,6 +178,7 @@
                     <div class="form-group">
                         <b>Pilih Tahun</b>
                         <select id="tahun" class="form-control form-control-sm text-center" name="tahun">
+                            <option value="2025" <?php echo $tahun == '2026' ? 'selected' : ''; ?>>2026</option>
                             <option value="2025" <?php echo $tahun == '2025' ? 'selected' : ''; ?>>2025</option>
                             <option value="2024" <?php echo $tahun == '2024' ? 'selected' : ''; ?>>2024</option>
                             <option value="2023" <?php echo $tahun == '2023' ? 'selected' : ''; ?>>2023</option>
