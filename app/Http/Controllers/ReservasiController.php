@@ -438,7 +438,6 @@ class ReservasiController extends Controller
         $bulan   = $request->get('bulan');
         $tahun   = $request->get('tahun');
         $status  = $request->get('status');
-        // dd($request->data);
 
         $listStatus = Status::where('kategori', 'reservasi')->get();
         $reservasi  = Reservasi::orderBy('t_reservasi.tanggal_reservasi', 'DESC')->orderBy('status_reservasi', 'ASC')
