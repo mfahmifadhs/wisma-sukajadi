@@ -476,7 +476,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         // Tanggal yang dinonaktifkan
         const disabledDates = [
-            "2026-03-20, 2026-03-21, 2026-03-22", "2026-03-23", "2026-03-24"
+            "2026-03-20", "2026-03-21", "2026-03-22", "2026-03-23", "2026-03-24"
         ];
         const dates = [
             document.getElementById("checkInDate"),
